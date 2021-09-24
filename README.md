@@ -1,9 +1,13 @@
-# React Project
+# Samsung SDS Hawkeye
+
 
 ## Prerequisites
 
 - NodeJS ^8.9
 - npm ^5.6
+- bootstrap
+
+
 
 ## Steps to Run inside CodeMix
 
