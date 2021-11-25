@@ -11,7 +11,7 @@ export default function Routes() {
       <ChakraProvider theme={theme}>
         <Switch>
           <Route path="/checkin" exact element={<Checkin />} />
-          <Route path="/" exact element={<Home />} />
+          <Route path="/" exact element={<Checkin />} />
         </Switch>
       </ChakraProvider>
     </BrowserRouter>
