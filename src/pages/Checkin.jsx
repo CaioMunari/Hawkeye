@@ -13,7 +13,7 @@ const Checkin = () => {
 
   const removeCapture = useCallback(() => {
     setImageSrc(null);
-  }, [webcamRef]);
+  }, []);
 
   const sendPhoto = () => {
     console.log("sending photo");
