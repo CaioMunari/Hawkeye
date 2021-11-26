@@ -14,11 +14,17 @@ import {
 } from "@chakra-ui/react";
 import { NavLink as RouterLink } from "react-router-dom";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { clearToken } from "../services/auth";
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const location = useLocation().pathname;
+  const navigate = useNavigate();
 
+  const logout = () => {
+    clearToken();
+    navigate("/login");
+  };
   return (
     <Box>
       <Flex
@@ -75,6 +81,7 @@ export default function WithSubnavigation() {
             Student: Rafael Carvalho
           </Box>
           <Button
+            onClick={logout}
             display={{ base: "inline-flex", md: "inline-flex" }}
             fontSize={"sm"}
             fontWeight={600}
@@ -102,27 +109,25 @@ const DesktopNav = ({ location }) => {
   return (
     <Stack direction={"row"} spacing={4}>
       {NAV_ITEMS.map((navItem) => (
-        <>
-          <Link
-            key={navItem.href}
-            as={RouterLink}
-            to={navItem.href}
-            height="100%"
-            p={4}
-            borderRadius={6}
-            color={location === navItem.href ? "white" : "gray.200"}
-            fontWeight={location === navItem.href ? "bold" : "normal"}
-            style={{ outline: "none" }}
-            _hover={{
-              textDecoration: "none",
-              color: linkHoverColor,
-            }}
-            _focus={{ outline: "none" }}
-            bg={location === navItem.href ? "blue.600" : "blue.500"}
-          >
-            {navItem.label}
-          </Link>
-        </>
+        <Link
+          key={navItem.href}
+          as={RouterLink}
+          to={navItem.href}
+          height="100%"
+          p={4}
+          borderRadius={6}
+          color={location === navItem.href ? "white" : "gray.200"}
+          fontWeight={location === navItem.href ? "bold" : "normal"}
+          style={{ outline: "none" }}
+          _hover={{
+            textDecoration: "none",
+            color: linkHoverColor,
+          }}
+          _focus={{ outline: "none" }}
+          bg={location === navItem.href ? "blue.600" : "blue.500"}
+        >
+          {navItem.label}
+        </Link>
       ))}
     </Stack>
   );
