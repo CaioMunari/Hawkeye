@@ -23,7 +23,7 @@ const Checkin = () => {
       direction="column"
       justify="space-around"
       align="center"
-      height="100vh"
+      height="100%"
       width="100%"
       p="2em"
     >
