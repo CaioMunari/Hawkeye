@@ -1,18 +1,12 @@
 import React from "react";
 import { Button, Flex, Input, Stack } from "@chakra-ui/react";
-import { setToken } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
 
-  const login = () => {
-    setToken("teste");
-    navigate("/checkin");
-  };
-
-  const register = () => {
-    navigate("/register");
+  const registerPhoto = () => {
+    navigate("/registerPhoto");
   };
   return (
     <Flex w="100%" h="100vh" align="center" justify="center">
@@ -29,36 +23,26 @@ const Login = () => {
         <Flex
           direction="column"
           width="100%"
-          height={{ base: "40%", md: "70%" }}
+          height={{ base: "25%", md: "70%" }}
           justify="space-between"
           align="center"
-          // border="2px solid red"
           spacing={10}
         >
-          <Input height={50} bg="white" placeholder="User" />
+          <Input height={50} bg="white" placeholder="ID" />
           <Input
             type="password"
             height={50}
             bg="white"
-            placeholder="Password"
+            placeholder="Student Name"
           />
           <Button
             height={50}
             fontWeight="bold"
-            onClick={login}
+            onClick={registerPhoto}
             colorScheme="blue"
             width="40%"
           >
-            Login
-          </Button>
-          <Button
-            height={50}
-            fontWeight="bold"
-            onClick={register}
-            colorScheme="blue"
-            width="40%"
-          >
-            Register
+            Proceed
           </Button>
         </Flex>
       </Stack>
@@ -66,4 +50,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
