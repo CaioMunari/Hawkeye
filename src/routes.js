@@ -21,6 +21,15 @@ export default function Routes() {
             }
           />
           <Route
+            path="/"
+            exact
+            element={
+              <PrivateRoute>
+                <Checkin />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/login"
             exact
             element={
