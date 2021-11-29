@@ -31,11 +31,19 @@ export default function Routes() {
             }
           />
           <Route
+<<<<<<< HEAD
             path="/history"
             exact
             element={
               <PrivateRoute>
                 <History />
+=======
+            path="/"
+            exact
+            element={
+              <PrivateRoute>
+                <Checkin />
+>>>>>>> origin/dev
               </PrivateRoute>
             }
           />
