@@ -8,16 +8,14 @@ const Checkin = () => {
   const webcamRef = useRef(null);
 
   const capture = useCallback(() => {
-    setImageSrc(webcamRef.current.getScreenshot());
+    const img = webcamRef.current.getScreenshot();
+    setImageSrc(img);
+    sendPhoto(img);
   }, [webcamRef]);
 
-  const removeCapture = useCallback(() => {
-    setImageSrc(null);
-  }, []);
-
-  const sendPhoto = () => {
+  const sendPhoto = (img) => {
     console.log("sending photo");
-    console.log(imageSrc);
+    console.log(img);
   };
 
   return (
@@ -25,39 +23,20 @@ const Checkin = () => {
       direction="column"
       justify="space-around"
       align="center"
-      height="100vh"
+      height="100%"
       width="100%"
       p="2em"
     >
       <Camera imageSrc={imageSrc} ref={webcamRef} />
-      {imageSrc ? (
-        <Button
-          colorScheme="red"
-          w={{ base: "50%", xl: "30%", lg: "30%" }}
-          p="8"
-          onClick={removeCapture}
-        >
-          Remove picture
-        </Button>
-      ) : (
-        <Button
-          disabled={imageSrc}
-          colorScheme="blue"
-          w={{ base: "50%", xl: "30%", lg: "30%" }}
-          p="8"
-          onClick={capture}
-        >
-          Take Picture
-        </Button>
-      )}
+
       <Button
+        disabled={imageSrc}
+        colorScheme="blue"
         w={{ base: "50%", xl: "30%", lg: "30%" }}
         p="8"
-        colorScheme="blue"
-        disabled={!imageSrc}
-        onClick={sendPhoto}
+        onClick={capture}
       >
-        Register Result
+        Take Picture
       </Button>
     </Flex>
   );
