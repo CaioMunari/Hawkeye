@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter, Routes as Switch, Route } from "react-router-dom";
-import Checkin from "./pages/Checkin";
 import { ChakraProvider } from "@chakra-ui/react";
-import theme from "./theme";
 import { LoginRoute, PrivateRoute } from "./services/UserRoutes";
+import theme from "./theme";
+import Checkin from "./pages/Checkin";
 import Login from "./pages/Login";
+import History from "./pages/NotificationHistory";
 
 export default function Routes() {
   return (
@@ -12,11 +13,29 @@ export default function Routes() {
       <ChakraProvider theme={theme}>
         <Switch>
           <Route
+            path="/"
+            exact
+            element={
+              <LoginRoute>
+                <Login />
+              </LoginRoute>
+            }
+          />
+          <Route
             path="/checkin"
             exact
             element={
               <PrivateRoute>
                 <Checkin />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/history"
+            exact
+            element={
+              <PrivateRoute>
+                <History />
               </PrivateRoute>
             }
           />
