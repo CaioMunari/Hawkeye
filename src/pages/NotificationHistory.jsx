@@ -1,74 +1,60 @@
-import React, { useRef, useCallback, useState } from "react";
+import React, { useRef, useCallback, useState, useEffect } from "react";
 import {
-  Box,
-  Flex,
-  Text,
-  IconButton,
-  Button,
-  Stack,
-  Collapse,
-  Link,
-  useColorModeValue,
-  useBreakpointValue,
-  useDisclosure,
-  Image,
   List,
   ListItem,
 } from "@chakra-ui/react";
+import {api} from '../services/api'
 import HistoryItem from '../components/HistoryItem'
-
 
 export default function NotificationHistory (){
   
+  //TODO: cath the user id of the logged one
+  const user = 46
 
-  function x(y){
-    alert(y)
+  const [historyList, setHistoryList] = React.useState(null);
+  const [regPhoto, setRegPhoto] = React.useState(null);
+  
+  async function getHistoryList(id) {
+    const response = await api.get("/checkin/list/"+id+"/page/1/size/20");
+    const responsePhoto = await api.get("/photo/reg/thumb/"+id);
+    setHistoryList(response.data);
+    setRegPhoto(responsePhoto.data);
   }
 
+  useEffect(() => {
+    getHistoryList(user);
+  }, []
+  )
+
+  if (!historyList) return (
+    <>
+      <List spacing={5} margin="2rem">
+          <ListItem key={"historyLoadingItem"}>
+              <HistoryItem
+                date={"Loading"}
+                result={"Loading"}
+                transasctions={"Loading"}
+                image={""}
+              />
+          </ListItem>
+      </List>
+    </>
+  )
+//process.env.REACT_APP_HOM_URL+"/photo/reg/thumb/"+item.userId
   return (
     <>
-
       <List spacing={5} margin="2rem">
-        {historyList().map((item) => (
-          <ListItem key={item.date}>
+        {historyList.map((item) => (
+          <ListItem key={item.dateCheck}>
               <HistoryItem
-                date={item.date}
-                result={item.result.toString()}
-                transasctions={item.transasctions}
-                image={item.image}
+                date={item.dateCheck}
+                result={item.approval.toString()}
+                transasctions={item.usage.toString()}
+                image={regPhoto}
               />
           </ListItem>
         ))}
-
       </List>
     </>
   );
 };
-
-function historyList(){
-  let list = [
-    {
-      id:5,
-      name:"Fuu",
-      image:"https://bit.ly/sage-adebayo",
-      date:"01/11/2021-13:25:36",
-      result:true,
-      transasctions:3
-    },{
-      id:5,
-      name:"Fuu",
-      image:"https://bit.ly/sage-adebayo",
-      date:"02/11/2021-13:35:26",
-      result:true,
-      transasctions:3
-    },{
-      id:5,
-      name:"Fuu",
-      image:"https://bit.ly/sage-adebayo",
-      date:"03/11/2021-13:46:06",
-      result:true,
-      transasctions:3
-    }
-  ]
-  return list;
-}

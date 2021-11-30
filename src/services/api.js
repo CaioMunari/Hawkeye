@@ -33,9 +33,13 @@ api.interceptors.response.use(
     return response;
   },
   function (error) {
-    const { status } = error.response;
-    if (status === 401) {
-      window.href.location = "/login";
+    try {
+      const { status } = error.response;
+      if (status === 401) {
+        window.href.location = "/login";
+      }
+    } catch (error) {
+      console.error(error);
     }
     return Promise.reject(error);
   }

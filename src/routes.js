@@ -5,7 +5,6 @@ import Register from "./pages/Register";
 import { ChakraProvider } from "@chakra-ui/react";
 import { LoginRoute, PrivateRoute } from "./services/UserRoutes";
 import theme from "./theme";
-import Checkin from "./pages/Checkin";
 import Login from "./pages/Login";
 import History from "./pages/NotificationHistory";
 
