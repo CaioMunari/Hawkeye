@@ -21,7 +21,13 @@ const CameraImage = ({ src }) => {
       borderRadius="50%"
       animation={animation}
     >
-      <Image src={src} width="100%" height="100%" borderRadius="50%" />
+      <Image
+        src={src}
+        width="100%"
+        height="100%"
+        borderRadius="50%"
+        style={{ objectFit: "cover" }}
+      />
     </Box>
   );
 };

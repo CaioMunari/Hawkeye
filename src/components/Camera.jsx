@@ -4,8 +4,8 @@ import Webcam from "react-webcam";
 import CameraImage from "./CameraImage";
 
 const videoConstraints = {
-  width: 512,
-  height: 512,
+  width: 1080,
+  height: 1080,
   facingMode: "user",
 };
 
@@ -22,13 +22,14 @@ const Camera = React.forwardRef((props, ref) => {
       backgroundPosition="center"
       backgroundRepeat="no-repeat"
       backgroundSize="30%"
+      overflow="hidden"
     >
       {props.imageSrc ? (
         <CameraImage src={props.imageSrc} />
       ) : (
         <Webcam
           ref={ref}
-          style={{ width: "100%", height: "100%", borderRadius: "50%" }}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
           videoConstraints={videoConstraints}
           screenshotFormat="image/jpeg"
         />
