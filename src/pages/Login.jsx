@@ -29,7 +29,7 @@ const Login = () => {
         <Flex
           direction="column"
           width="100%"
-          height={{ base: "40%", md: "70%" }}
+          height={{ base: "40%", md: "80%" }}
           justify="space-between"
           align="center"
           // border="2px solid red"
