@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes as Switch, Route } from "react-router-dom";
+import Checkin from "./pages/Checkin";
+import Register from "./pages/Register";
 import { ChakraProvider } from "@chakra-ui/react";
 import { LoginRoute, PrivateRoute } from "./services/UserRoutes";
 import theme from "./theme";
@@ -14,6 +16,15 @@ export default function Routes() {
         <Switch>
           <Route
             path="/"
+            exact
+            element={
+              <PrivateRoute>
+                <Checkin />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/login"
             exact
             element={
               <LoginRoute>
@@ -31,28 +42,29 @@ export default function Routes() {
             }
           />
           <Route
-<<<<<<< HEAD
             path="/history"
             exact
             element={
               <PrivateRoute>
                 <History />
-=======
-            path="/"
-            exact
-            element={
-              <PrivateRoute>
-                <Checkin />
->>>>>>> origin/dev
               </PrivateRoute>
             }
           />
           <Route
-            path="/login"
+            path="/register"
             exact
             element={
               <LoginRoute>
-                <Login />
+                <Register />
+              </LoginRoute>
+            }
+          />
+          <Route
+            path="/registerPhoto"
+            exact
+            element={
+              <LoginRoute>
+                <Checkin />
               </LoginRoute>
             }
           />
