@@ -11,14 +11,19 @@ export default function NotificationHistory (){
   //TODO: cath the user id of the logged one
   const user = 46
 
+  const baseURL =
+  process.env.REACT_APP_ENVIRONMENT === "development"
+    ? process.env.REACT_APP_LOCAL_URL
+    : process.env.REACT_APP_HOM_URL;
+
   const [historyList, setHistoryList] = React.useState(null);
-  const [regPhoto, setRegPhoto] = React.useState(null);
+  const regPhoto = baseURL+"/photo/reg/thumb/"+user;
   
+  
+
   async function getHistoryList(id) {
     const response = await api.get("/checkin/list/"+id+"/page/1/size/20");
-    const responsePhoto = await api.get("/photo/reg/thumb/"+id);
     setHistoryList(response.data);
-    setRegPhoto(responsePhoto.data);
   }
 
   useEffect(() => {
