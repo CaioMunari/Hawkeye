@@ -28,7 +28,6 @@ const Checkin = () => {
       p="2em"
     >
       <Camera imageSrc={imageSrc} ref={webcamRef} />
-
       <Button
         disabled={imageSrc}
         colorScheme="blue"
