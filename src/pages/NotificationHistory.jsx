@@ -25,11 +25,6 @@ export default function NotificationHistory (){
   
   
 
-  async function getHistoryList(id) {
-    const response = await api.get("/checkin/list/"+id+"/page/"+page+"/size/5");
-    setHistoryList(response.data);
-  }
-
   function alterPage(cmd){
     if(cmd==='next'){
       if(historyList.length>1)
@@ -40,6 +35,10 @@ export default function NotificationHistory (){
   }
 
   useEffect(() => {
+    async function getHistoryList(id) {
+      const response = await api.get("/checkin/list/"+id+"/page/"+page+"/size/5");
+      setHistoryList(response.data);
+    }
     getHistoryList(user);
   }, [page]
   )
