@@ -15,8 +15,10 @@ const Login = () => {
         password: generatePassword(password),
         userName: user,
       });
-      setToken(data);
-      navigate("/checkin");
+      if (data.id !== 0) {
+        setToken(data);
+        navigate("/checkin");
+      }
     } catch (error) {
       console.log(error);
     }
