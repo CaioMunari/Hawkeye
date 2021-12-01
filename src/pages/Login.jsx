@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Flex, Input, Stack } from "@chakra-ui/react";
 import { setToken } from "../services/auth";
 import { useNavigate } from "react-router-dom";
-
+import { api } from "../services/api";
+import { generatePassword } from "../utils/password";
 const Login = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
 
-  const login = () => {
-    setToken("teste");
-    navigate("/checkin");
+  const login = async () => {
+    try {
+      const { data } = await api.post("/access/login", {
+        password: generatePassword(password),
+        userName: user,
+      });
+      setToken(data);
+      navigate("/checkin");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const register = () => {
@@ -35,12 +46,20 @@ const Login = () => {
           // border="2px solid red"
           spacing={10}
         >
-          <Input height={50} bg="white" placeholder="User" />
+          <Input
+            height={50}
+            bg="white"
+            placeholder="User"
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+          />
           <Input
             type="password"
             height={50}
             bg="white"
             placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button
             height={50}
