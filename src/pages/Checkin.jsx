@@ -1,8 +1,8 @@
-import React, { useRef, useCallback, useState } from "react";
+import React, { useRef, useCallback, useState, useEffect } from "react";
 import { Flex } from "@chakra-ui/react";
 import Camera from "../components/Camera";
 import { Button } from "@chakra-ui/react";
-
+import { generateAfapTransactionId } from "../utils/common";
 const Checkin = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const webcamRef = useRef(null);
@@ -17,6 +17,10 @@ const Checkin = () => {
     console.log("sending photo");
     console.log(img);
   };
+
+  useEffect(() => {
+    console.log(generateAfapTransactionId());
+  }, []);
 
   return (
     <Flex
