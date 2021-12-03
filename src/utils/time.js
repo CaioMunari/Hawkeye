@@ -12,7 +12,8 @@ export const timeStamp = () => {
       'MM': zeroAdd(date.getMonth()+1),
       'DD': zeroAdd(date.getDate()),
       'hh': zeroAdd(date.getHours()),
-      'mm': zeroAdd(date.getMinutes())
+      'mm': zeroAdd(date.getMinutes()),
+      'ss': zeroAdd(date.getSeconds())
     }
-    return frag.YYYY+frag.MM+frag.DD+frag.hh+frag.mm
+    return frag.YYYY+frag.MM+frag.DD+frag.hh+frag.mm+frag.ss
   }
