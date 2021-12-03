@@ -18,7 +18,6 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "react-webcam": "^6.0.0",
-    "uuid": "^8.3.2",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.3",
     "workbox-broadcast-update": "^5.1.3",
