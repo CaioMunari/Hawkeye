@@ -3,8 +3,8 @@ import { getToken } from "./auth";
 
 const baseURL =
   process.env.REACT_APP_ENVIRONMENT === "development"
-    ? process.env.REACT_APP_LOCAL_URL
-    : process.env.REACT_APP_HOM_URL;
+    ? process.env.REACT_APP_ADMIN_LOCAL_URL
+    : process.env.REACT_APP_ADMIN_HOM_URL;
 
 const api = axios.create({
   baseURL,
@@ -13,6 +13,11 @@ const api = axios.create({
     Authorization: `Bearer: ${getToken()}`,
     "Access-Control-Allow-Origin": "*",
   },
+});
+
+const motorApi = axios.create({
+  baseURL: process.env.REACT_APP_MOTOR_URL,
+  timeout: 5000,
 });
 
 api.interceptors.request.use(
@@ -44,4 +49,4 @@ api.interceptors.response.use(
   }
 );
 
-export { api };
+export { api, motorApi };
