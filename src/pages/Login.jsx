@@ -42,7 +42,7 @@ const Login = () => {
     try {
       const { data } = await api.get(routes.APISettings(userId));
       if (data) {
-        setProperty("photoId", data);
+        setProperty("minScore", data);
       }
     } catch (error) {
       console.log(error);
