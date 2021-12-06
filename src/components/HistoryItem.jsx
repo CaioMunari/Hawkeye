@@ -7,11 +7,25 @@ import {
     List,
     ListItem,
   } from "@chakra-ui/react"
+  import { 
+    CheckCircleIcon,
+    NotAllowedIcon 
+} from '@chakra-ui/icons'
 
-  export default function HistoryItem({image, date, result, transasctions}) {
+  export default function HistoryItem({image, date, result}) {
     const bg=useColorModeValue("blue.500")
     const color=useColorModeValue("white")
+    const dateObj = new Date(date)
+    const formatedDate = 
+        dateObj.getDay()+"/"+
+        (dateObj.getMonth()+1)+"/"+
+        dateObj.getFullYear()+ 
+        " - " + 
+        dateObj.getHours()+":"+
+        dateObj.getMinutes()+":"+
+        dateObj.getSeconds()
 
+    //console.log(date)
     return (
         <>
             <Stack
@@ -33,9 +47,13 @@ import {
                 <List 
                     color="white"
                     fontSize="lg">
-                    <ListItem>Data: {date? date: "Loading..."}</ListItem>
-                    <ListItem>Resultado: {result? result: "Loading..."}</ListItem>
-                    <ListItem>Transações: {transasctions? transasctions: "Loading..."}</ListItem>
+                    <ListItem>Data: {date?formatedDate : "Loading..."}</ListItem>
+                    <ListItem>Resultado:&nbsp;
+                        {result? 
+                            <CheckCircleIcon color="green.500"/>: 
+                            <NotAllowedIcon color="red.500"/>
+                            }
+                    </ListItem>
                 </List>
                 </Box>
             </Stack>

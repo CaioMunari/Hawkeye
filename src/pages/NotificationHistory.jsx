@@ -4,7 +4,7 @@ import {
   ListItem,
   Stack,
   Button,
-  Text,
+  Text
 } from "@chakra-ui/react";
 import {api} from '../services/api'
 import HistoryItem from '../components/HistoryItem'
@@ -21,7 +21,7 @@ export default function NotificationHistory (){
 
   const [historyList, setHistoryList] = React.useState(null);
   const [page, setPage] = React.useState(1);
-  const regPhoto = baseURL+"/photo/reg/thumb/"+user;
+  const transPhoto = baseURL+"/photo/trans/thumb/";
   
   
 
@@ -38,6 +38,7 @@ export default function NotificationHistory (){
     async function getHistoryList(id) {
       const response = await api.get("/checkin/list/"+id+"/page/"+page+"/size/5");
       setHistoryList(response.data);
+      //console.log(response.data)
     }
     getHistoryList(user);
   }, [page]
@@ -65,9 +66,8 @@ export default function NotificationHistory (){
           <ListItem key={item.dateCheck}>
               <HistoryItem
                 date={item.dateCheck}
-                result={item.approval.toString()}
-                transasctions={item.usage.toString()}
-                image={regPhoto}
+                result={item.approval}
+                image={transPhoto+item.id}
               />
           </ListItem>
         ))}
