@@ -16,6 +16,7 @@ import { NavLink as RouterLink } from "react-router-dom";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { clearToken } from "../services/auth";
+import { api } from "../services/api";
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const location = useLocation().pathname;
@@ -61,7 +62,10 @@ export default function WithSubnavigation() {
             fontFamily={"heading"}
             color={useColorModeValue("white")}
           >
-            <Image width={{ base: 150, md: 200 }} src="/images/SDS_LOGO.jpg" />
+            <Image
+              width={{ base: 150, md: 200 }}
+              src={`${api.defaults.baseURL}/photo/image/org/1/type/ORGLOGO`}
+            />
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
