@@ -14,8 +14,8 @@ const Camera = React.forwardRef((props, ref) => {
     <Box
       border="2px solid"
       borderColor="gray.500"
-      w={["80vw", "60vw", "35vw"]}
-      h={["80vw", "60vw", "35vw"]}
+      w={props.w || ["80vw", "60vw", "35vw"]}
+      h={props.h || ["80vw", "60vw", "35vw"]}
       borderRadius="50%"
       bg="gray.200"
       backgroundImage={!props.imageSrc && "url('/images/camera.png')"}
@@ -25,7 +25,7 @@ const Camera = React.forwardRef((props, ref) => {
       overflow="hidden"
     >
       {props.imageSrc ? (
-        <CameraImage src={props.imageSrc} />
+        <CameraImage src={props.imageSrc} w={props.w} h={props.h} />
       ) : (
         <Webcam
           ref={ref}
