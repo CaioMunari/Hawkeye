@@ -20,19 +20,6 @@ const motorApi = axios.create({
   timeout: 5000,
 });
 
-api.interceptors.request.use(
-  function (config) {
-    if (getToken() === null) {
-      window.href.location = "/login";
-      return false;
-    }
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
-
 api.interceptors.response.use(
   function (response) {
     return response;

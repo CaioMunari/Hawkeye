@@ -8,4 +8,6 @@ export const routes = {
   APIAddUpdate: "/user/updateUser/",
   APIUserProfile: "/user/view/{0}",
   APICheckHealth: "/sabis/user/1",
+  APISettings: (userId) => `/settings/score/${userId}`,
+  APIPhotoId: (userId) => `/photo/reg/id/${userId}`,
 };

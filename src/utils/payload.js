@@ -1,5 +1,5 @@
-import { getUserId } from "../services/auth";
-import { generateAfapTransactionId } from "./common";
+import { getProperty, getUserId } from "../services/auth";
+import { getRandomInt32Id } from "./common";
 import { slicePhotoString } from "./photo";
 
 const TRANSACTION_TYPE_PERSON = { ENROLL: 0, ANALYZE: 1 };
@@ -12,28 +12,30 @@ const TRANSACTION_REFERENCE_PHOTO = {
 export const getCheckinPayload = (photo) => {
   const now = new Date();
   const slicedPhoto = slicePhotoString(photo);
-  return {
-    Id: generateAfapTransactionId(),
-    IdOrg: 1,
-    TransDate: now,
-    Type: TRANSACTION_TYPE_PERSON.ANALYZE,
-    Photos: [{ Id: getUserId(), Image: slicedPhoto }],
-    Users: [
-      {
-        Id: getUserId(),
-        ReferenceId: 1,
-        Date: now,
-        Gender: "M",
-        References: [
-          {
-            Action: TRANSACTION_REFERENCE_PHOTO.KEEP,
-            Id: 1,
-            Image: slicedPhoto,
-            Filename: "test",
-            Date: now,
-          },
-        ],
-      },
-    ],
-  };
+  const userId = getProperty("userId");
+  return [
+    {
+      Id: getRandomInt32Id(),
+      IdOrg: 1,
+      TransDate: now,
+      Type: TRANSACTION_TYPE_PERSON.ANALYZE,
+      Photos: [{ Id: getRandomInt32Id(), Image: slicedPhoto }],
+      Users: [
+        {
+          Id: userId,
+          ReferenceId: userId,
+          Date: now,
+          Gender: "M",
+          References: [
+            {
+              Action: TRANSACTION_REFERENCE_PHOTO.KEEP,
+              Id: getProperty("photoId"),
+              FileName: "",
+              Date: now,
+            },
+          ],
+        },
+      ],
+    },
+  ];
 };

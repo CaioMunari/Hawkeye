@@ -10,3 +10,18 @@ export const getToken = () => JSON.parse(localStorage.getItem(USER_KEY));
 export const getUserId = () => JSON.parse(localStorage.getItem(USER_KEY)).id;
 
 export const clearToken = (token) => localStorage.removeItem(USER_KEY);
+
+export const setProperty = (key, value) => {
+  let payload = JSON.parse(localStorage.getItem(USER_KEY));
+  if (payload === null) {
+    payload = { [key]: value };
+  } else {
+    payload[key] = value;
+  }
+  setToken(payload);
+};
+
+export const getProperty = (key) => {
+  let payload = JSON.parse(localStorage.getItem(USER_KEY));
+  return payload[key];
+};
