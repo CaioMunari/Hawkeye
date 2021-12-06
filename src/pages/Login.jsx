@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Flex, Input, Stack } from "@chakra-ui/react";
-import { getUserId, setProperty, setToken } from "../services/auth";
+import { setProperty } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { generatePassword } from "../utils/password";
