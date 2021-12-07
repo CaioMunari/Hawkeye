@@ -17,7 +17,7 @@ import {
     const color=useColorModeValue("white")
     const dateObj = new Date(date)
     const formatedDate = 
-        dateObj.getDay()+"/"+
+        dateObj.getDate()+"/"+
         (dateObj.getMonth()+1)+"/"+
         dateObj.getFullYear()+ 
         " - " + 
