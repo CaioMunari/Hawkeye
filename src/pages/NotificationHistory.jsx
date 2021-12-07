@@ -7,12 +7,13 @@ import {
   Text
 } from "@chakra-ui/react";
 import {api} from '../services/api'
+import { getToken } from "../services/auth";
 import HistoryItem from '../components/HistoryItem'
 
 export default function NotificationHistory (){
   
   //TODO: cath the user id of the logged one
-  const user = 46
+  const user = JSON.parse(JSON.parse(getToken())).id
 
   const baseURL =
   process.env.REACT_APP_ENVIRONMENT === "development"
