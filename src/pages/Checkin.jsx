@@ -2,25 +2,45 @@ import React, { useRef, useCallback, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import Camera from "../components/Camera";
 import { Button } from "@chakra-ui/react";
-import { getCheckinPayload } from "../utils/payload";
-import { motorApi } from "../services/api";
+import {
+  getAdminCheckinPayload,
+  getMotorCheckinPayload,
+  mockCheckinResponse,
+} from "../utils/payload";
+import { motorApi, api } from "../services/api";
 import { routes } from "../services/routes";
 const Checkin = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const webcamRef = useRef(null);
 
   const capture = useCallback(() => {
+    const sendPhotoToMotor = async (img) => {
+      const payload = getMotorCheckinPayload(img);
+      const { Id: afapTransactionId } = payload;
+      try {
+        await motorApi.post(routes.transaction, payload);
+      } catch (error) {
+        console.log(error);
+      }
+      const response = mockCheckinResponse();
+      const adminPayload = getAdminCheckinPayload(
+        response,
+        img,
+        afapTransactionId
+      );
+      sendPhotoToAdmin(adminPayload);
+    };
+
     const img = webcamRef.current.getScreenshot({ width: 640, height: 640 });
     setImageSrc(img);
-    sendPhoto(img);
+    sendPhotoToMotor(img);
   }, [webcamRef]);
 
-  const sendPhoto = async (img) => {
-    const payload = getCheckinPayload(img);
+  const sendPhotoToAdmin = async (payload) => {
     try {
-      await motorApi.post(routes.transaction, payload);
+      await api.put("/checkin/save", payload);
     } catch (error) {
-      console.log(error);
+      console.log("deu ruim");
     }
   };
 
