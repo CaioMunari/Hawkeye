@@ -26,20 +26,37 @@ const Register = () => {
 
   const registerUser = async () => {
 
-    const adminResponse = await registerAdmin()
-
-    if(adminResponse?.data?.status === 0){
-      const engineResponse = await registerEngine(adminResponse.data.user)
-      
-      if(engineResponse?.data?.status === 0){
-        setRegister(false)
-        navigate("../login", { replace: true });
+    registerAdmin()
+    .then((adminResponse)=>{
+      if(adminResponse?.status === 0){
+        registerEngine(adminResponse.user)
+        .then((engineResponse)=>{
+          if(engineResponse?.status === 0){
+            setRegister(false)
+            navigate("../login", { replace: true });
+          }else{
+            console.log("Not possible to register user on engine, removing temp records.")
+            removeUserAdmin(adminResponse.user.id)
+            setRegister(false)
+            //TODO: error message
+          }
+        })
+        .catch(()=>{
+          console.log(" Engine-Server comunication error")
+          console.log("Not possible to register user on engine, removing temp records.")
+          removeUserAdmin(adminResponse.user.id)
+          setRegister(false)
+        })
       }else{
-        //TODO: error message, delete user from admin
+        setRegister(false)
+        alert("Register error")
+        //TODO: error message
       }
-    }else{
-      //TODO: error message
-    }
+    })
+    .catch(()=>{
+      console.log(" Admin-Server comunication error")
+    })
+
 
   };
 
@@ -47,11 +64,11 @@ const Register = () => {
     const addUserJsonAdmin  = {
       "afapTransactionId": Date.now(),
       "date": timeStamp(),
-      "name": formData.name.split(/\s(.+)/)[0],
-      "lastName": formData.name.split(/\s(.+)/)[1],
+      "name": formData.name,
+      "lastName": formData.lastName,
       "gender": formData.gender,
       "matricula": formData.registration,
-      "userName": formData.username,
+      "userName": formData.userName,
       "password": generatePassword(formData.password),
       "id": 0, //dummy data
       "idGroup": 1, //dummy data
@@ -65,35 +82,31 @@ const Register = () => {
       }
     }
 
-    console.log(addUserJsonAdmin);
+    //console.log(addUserJsonAdmin);
     const adminResponse = await api.put("/user/addUser/",addUserJsonAdmin);
 
     if(adminResponse?.data?.status === 0){
-      console.log(adminResponse.data);
+      console.log("user register (Admin): "+adminResponse.data.message);
       return adminResponse.data
     }else{
-      return ({"status": 500,})
+      console.log("user register (Admin): Fail");
+      return ({"status": 500})
     }
     
   }
 
-  async
+  async function removeUserAdmin(userId){
+    const adminResponse = await api.delete("/user/rollback/{id}?userId="+userId);
+    console.log("User removal from Admin: "+adminResponse.data);
+
+    if(adminResponse?.data === "true"){
+      return adminResponse.data
+    }else{
+      return ({"status": 500,})
+    }
+  }
 
   async function registerEngine(user){
-
-    /*user
-      {
-        "message": "string",
-        "status": 0,
-        "user": {
-          "id": 0,
-          "photo": {
-            "id": 0,
-            "image": "string"
-          }
-        }
-      }
-    */
 
     const addUserJsonEngine =  [{
       Id: Number(Date.now().toString().slice(3,12)), //não pode ser numero long, int32
@@ -104,7 +117,7 @@ const Register = () => {
       Type: 0,
       Photos: [{  //dados para transação, checkin
         Id: Number(Date.now().toString().slice(3,12)), //numero randomico para transação
-        Image: imageSrc.slice(23,imageSrc.length) 
+        Image: ""
       }],
       Users: [
         {
@@ -118,7 +131,7 @@ const Register = () => {
               Action: 1,
               Id: user.photo.id, //id da foto no admin
               FileName:"", //não utilizado mas tem que existir, vai em branco
-              Image: user.photo.image, //só enviado se for cadastro, no checkin remove esse objeto
+              Image: imageSrc.slice(23,imageSrc.length), //só enviado se for cadastro, no checkin remove esse objeto
               Date: new Date(),
             },
           ],
@@ -126,14 +139,16 @@ const Register = () => {
       ],
     }];
 
-    console.log(addUserJsonEngine);
+    //console.log(addUserJsonEngine);
     const engineResponse = await api.post("/sabis/transaction/",addUserJsonEngine);
     //the engine return an array
     
     if(engineResponse?.data[0]?.status === 0){
+      console.log("user register (Engine): "+engineResponse.data[0].message);
       console.log(engineResponse.data);
       return engineResponse.data[0]
     }else{
+      console.log("user register (Engine): Fail");
       return ({"status": 500,})
     }
 
