@@ -4,15 +4,15 @@ import {
   ListItem,
   Stack,
   Button,
-  Text,
+  Text
 } from "@chakra-ui/react";
 import {api} from '../services/api'
+import { getToken } from "../services/auth";
 import HistoryItem from '../components/HistoryItem'
 
 export default function NotificationHistory (){
   
-  //TODO: cath the user id of the logged one
-  const user = 46
+  
 
   const baseURL =
   process.env.REACT_APP_ENVIRONMENT === "development"
@@ -21,7 +21,7 @@ export default function NotificationHistory (){
 
   const [historyList, setHistoryList] = React.useState(null);
   const [page, setPage] = React.useState(1);
-  const regPhoto = baseURL+"/photo/reg/thumb/"+user;
+  const transPhoto = baseURL+"/photo/trans/thumb/";
   
   
 
@@ -38,7 +38,9 @@ export default function NotificationHistory (){
     async function getHistoryList(id) {
       const response = await api.get("/checkin/list/"+id+"/page/"+page+"/size/5");
       setHistoryList(response.data);
+      //console.log(response.data)
     }
+    const user = JSON.parse(JSON.parse(getToken())).id
     getHistoryList(user);
   }, [page]
   )
@@ -65,9 +67,8 @@ export default function NotificationHistory (){
           <ListItem key={item.dateCheck}>
               <HistoryItem
                 date={item.dateCheck}
-                result={item.approval.toString()}
-                transasctions={item.usage.toString()}
-                image={regPhoto}
+                result={item.approval}
+                image={transPhoto+item.id}
               />
           </ListItem>
         ))}
