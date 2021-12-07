@@ -12,8 +12,7 @@ import HistoryItem from '../components/HistoryItem'
 
 export default function NotificationHistory (){
   
-  //TODO: cath the user id of the logged one
-  const user = JSON.parse(JSON.parse(getToken())).id
+  
 
   const baseURL =
   process.env.REACT_APP_ENVIRONMENT === "development"
@@ -41,6 +40,7 @@ export default function NotificationHistory (){
       setHistoryList(response.data);
       //console.log(response.data)
     }
+    const user = JSON.parse(JSON.parse(getToken())).id
     getHistoryList(user);
   }, [page]
   )
