@@ -24,6 +24,7 @@ export default function NotificationHistory() {
     async function getHistoryList(id) {
       const response = await api.get(routes.APICheckInUserHistory(id, page));
       setHistoryList(response.data);
+      //console.log(response.data)
     }
     const user = getProperty("userId");
     getHistoryList(user);
