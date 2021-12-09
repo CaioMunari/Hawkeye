@@ -19,16 +19,16 @@ const Checkin = () => {
       const { Id: afapTransactionId } = payload;
       try {
         await motorApi.post(routes.transaction, payload);
+        const response = mockCheckinResponse();
+        const adminPayload = getAdminCheckinPayload(
+          response,
+          img,
+          afapTransactionId
+        );
+        sendPhotoToAdmin(adminPayload);
       } catch (error) {
         console.log(error);
       }
-      const response = mockCheckinResponse();
-      const adminPayload = getAdminCheckinPayload(
-        response,
-        img,
-        afapTransactionId
-      );
-      sendPhotoToAdmin(adminPayload);
     };
 
     const img = webcamRef.current.getScreenshot({ width: 640, height: 640 });
@@ -38,7 +38,7 @@ const Checkin = () => {
 
   const sendPhotoToAdmin = async (payload) => {
     try {
-      await api.put("/checkin/save", payload);
+      await api.put(routes.APIAddCheckInUser, payload);
     } catch (error) {
       console.log("deu ruim");
     }

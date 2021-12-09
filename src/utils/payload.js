@@ -5,7 +5,8 @@ import {
   getScoreFromResponse,
 } from "./common";
 import { slicePhotoString } from "./photo";
-
+import { timeStamp } from "../utils/time";
+import { generatePassword } from "./password";
 const TRANSACTION_TYPE_PERSON = { ENROLL: 0, ANALYZE: 1 };
 const TRANSACTION_REFERENCE_PHOTO = {
   KEEP: 0,
@@ -14,7 +15,7 @@ const TRANSACTION_REFERENCE_PHOTO = {
 };
 
 export const getMotorCheckinPayload = (photo) => {
-  const now = new Date();
+  const now = Date.now();
   const slicedPhoto = slicePhotoString(photo);
   const userId = getProperty("userId");
   return [
@@ -83,6 +84,67 @@ export const mockCheckinResponse = () => {
                   Score: 75,
                 },
               ],
+            },
+          ],
+        },
+      ],
+    },
+  ];
+};
+
+export const getAdminRegisterPayload = (formData, photo) => {
+  const now = Date.now();
+  const slicedPhoto = slicePhotoString(photo);
+  return {
+    afapTransactionId: now,
+    date: timeStamp(),
+    name: formData.name,
+    lastName: formData.lastName,
+    gender: formData.gender,
+    matricula: formData.registration,
+    userName: formData.userName,
+    password: generatePassword(formData.password),
+    id: 0, //dummy data
+    idGroup: 1, //dummy data
+    orgId: 1, //dummy data
+    birthDate: "19800101", //dummy data
+    rg: "000000000", //dummy data
+    cpf: "00000000000", //dummy data
+    photo: {
+      id: 0, //dummy data
+      image: slicedPhoto,
+    },
+  };
+};
+
+export const getMotorRegisterPayload = (user, formData, photo) => {
+  const now = new Date();
+  const slicedPhoto = slicePhotoString(photo);
+  return [
+    {
+      Id: getRandomInt32Id(),
+      TransDate: now,
+      IdOrg: 1,
+      Type: TRANSACTION_TYPE_PERSON.ENROLL,
+      Photos: [
+        {
+          Id: getRandomInt32Id(),
+          Image: "",
+        },
+      ],
+      Users: [
+        {
+          Id: user.id,
+          ReferenceId: user.id,
+          Gender: formData.gender,
+          Date: now,
+          References: [
+            {
+              Action: TRANSACTION_REFERENCE_PHOTO.INSERT,
+              Id: user.photo.id,
+              FileName: "",
+              Image: slicedPhoto,
+              Date: now,
             },
           ],
         },
