@@ -3,8 +3,8 @@ import { getToken } from "./auth";
 
 const baseURL =
   process.env.REACT_APP_ENVIRONMENT === "development"
-    ? process.env.REACT_APP_LOCAL_URL
-    : process.env.REACT_APP_HOM_URL;
+    ? process.env.REACT_APP_ADMIN_LOCAL_URL
+    : process.env.REACT_APP_ADMIN_HOM_URL;
 
 const api = axios.create({
   baseURL,
@@ -15,18 +15,10 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use(
-  function (config) {
-    if (getToken() === null) {
-      window.href.location = "/login";
-      return false;
-    }
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
+const motorApi = axios.create({
+  baseURL: process.env.REACT_APP_MOTOR_URL,
+  timeout: 5000,
+});
 
 api.interceptors.response.use(
   function (response) {
@@ -44,4 +36,4 @@ api.interceptors.response.use(
   }
 );
 
-export { api };
+export { api, motorApi };
