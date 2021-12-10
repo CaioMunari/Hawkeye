@@ -71,7 +71,7 @@ const Login = () => {
       h="100vh"
       align="center"
       justify="flex-end"
-      padding={{ base: "0", md: "12vw" }}
+      padding={{ base: "0", md: "10rem" }}
       background="purple.700"
     >
       <form>
