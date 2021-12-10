@@ -1,16 +1,21 @@
-import React, { useState } from "react";
-import { Button, Flex, Input, Stack } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Flex, Stack, Text } from "@chakra-ui/react";
 import { setProperty } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { generatePassword } from "../utils/password";
 import { routes } from "../services/routes";
+import { Heading } from "@chakra-ui/react";
+import Button from "../components/Button";
+import Input from "../components/Input";
 const Login = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const login = async () => {
+    setError(false);
     try {
       const { data } = await api.post(routes.APIUserLogin, {
         password: generatePassword(password),
@@ -21,8 +26,11 @@ const Login = () => {
         getSettings(data.id);
         setProperty("userId", data.id);
         navigate("/checkin");
+      } else {
+        setError(true);
       }
     } catch (error) {
+      setError(true);
       console.log(error);
     }
   };
@@ -53,62 +61,79 @@ const Login = () => {
     navigate("/register");
   };
 
+  useEffect(() => {
+    console.log("error", error);
+  }, [error]);
+
   return (
-    <Flex w="100%" h="100vh" align="center" justify="center">
-      <Stack
-        direction="column"
-        width={{ base: "100vw", md: "25vw" }}
-        bg="gray.200"
-        height={{ base: "100vh", md: "30vh" }}
-        px={6}
-        align="center"
-        justify={{ base: "center", md: "space-around" }}
-        borderRadius={8}
-      >
-        <Flex
+    <Flex
+      w="100%"
+      h="100vh"
+      align="center"
+      justify="flex-end"
+      padding={{ base: "0", md: "12vw" }}
+      background="purple.700"
+    >
+      <form>
+        <Stack
           direction="column"
-          width="100%"
-          height={{ base: "40%", md: "80%" }}
-          justify="space-between"
-          align="center"
-          // border="2px solid red"
-          spacing={10}
+          minWidth={{ base: "100vw", md: "25vw" }}
+          bg="white"
+          height={{ base: "100vh", md: "auto" }}
+          p={12}
+          justify={{ base: "center", md: "flex-start" }}
+          borderRadius={{ base: 0, md: 12 }}
         >
+          <Heading fontWeight="normal" style={{ marginBottom: 30 }}>
+            Login
+          </Heading>
           <Input
-            height={50}
             bg="white"
             placeholder="User"
             value={user}
             onChange={(e) => setUser(e.target.value)}
+            isInvalid={error}
+            errorBorderColor="red.500"
           />
           <Input
             type="password"
-            height={50}
             bg="white"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            isInvalid={error}
+            errorBorderColor="red.500"
           />
           <Button
-            height={50}
-            fontWeight="bold"
             onClick={login}
-            colorScheme="blue"
-            width="40%"
+            colorScheme="teal"
+            width="100%"
+            style={{ marginTop: 25, textTransform: "uppercase" }}
           >
-            Login
+            Entrar
           </Button>
+          <Text
+            color="purple.400"
+            fontWeight="500"
+            fontSize="1.4em"
+            style={{ marginTop: 50 }}
+            textAlign="center"
+            width="100%"
+          >
+            Ainda não tem cadastro?
+          </Text>
           <Button
-            height={50}
-            fontWeight="bold"
+            background="white"
+            color="gray"
+            border="1px solid #ccc"
+            width="100%"
             onClick={register}
-            colorScheme="blue"
-            width="40%"
+            style={{ marginTop: 25, textTransform: "uppercase" }}
           >
-            Register
+            Cadastrar
           </Button>
-        </Flex>
-      </Stack>
+        </Stack>
+      </form>
     </Flex>
   );
 };
