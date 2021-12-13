@@ -14,7 +14,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
 
-  const login = async () => {
+  const login = async (e) => {
+    e.preventDefault();
     setError(false);
     try {
       const { data } = await api.post(routes.APIUserLogin, {
@@ -74,7 +75,7 @@ const Login = () => {
       padding={{ base: "0", md: "10rem" }}
       background="purple.700"
     >
-      <form>
+      <form onSubmit={login}>
         <Stack
           direction="column"
           minWidth={{ base: "100vw", md: "25vw" }}
@@ -108,6 +109,7 @@ const Login = () => {
             onClick={login}
             colorScheme="teal"
             width="100%"
+            type="submit"
             style={{ marginTop: 25, textTransform: "uppercase" }}
           >
             Entrar
