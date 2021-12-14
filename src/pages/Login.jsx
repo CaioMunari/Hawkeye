@@ -95,6 +95,7 @@ const Login = () => {
             onChange={(e) => setUser(e.target.value)}
             isInvalid={error}
             errorBorderColor="red.500"
+            color={error && "red"}
           />
           <Input
             type="password"
@@ -104,7 +105,19 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             isInvalid={error}
             errorBorderColor="red.500"
+            color={error && "red"}
           />
+          {error && (
+            <Text
+              color="red"
+              fontSize="0.9rem"
+              style={{ marginTop: 10 }}
+              textAlign="center"
+              width="100%"
+            >
+              Suas informações de login não estão corretas!
+            </Text>
+          )}
           <Button
             onClick={login}
             colorScheme="teal"
