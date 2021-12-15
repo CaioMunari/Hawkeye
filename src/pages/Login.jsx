@@ -67,14 +67,7 @@ const Login = () => {
   }, [error]);
 
   return (
-    <Flex
-      w="100%"
-      h="100vh"
-      align="center"
-      justify="flex-end"
-      padding={{ base: "0", md: "10rem" }}
-      background="purple.700"
-    >
+    <Flex width="100%" align="center" justify="flex-end">
       <form onSubmit={login}>
         <Stack
           direction="column"
@@ -121,6 +114,7 @@ const Login = () => {
           <Button
             onClick={login}
             colorScheme="teal"
+            backgroundColor="teal.300"
             width="100%"
             type="submit"
             style={{ marginTop: 25, textTransform: "uppercase" }}
@@ -129,8 +123,8 @@ const Login = () => {
           </Button>
           <Text
             color="purple.400"
-            fontWeight="500"
-            fontSize="1.4em"
+            fontWeight="normal"
+            fontSize="1.6em"
             style={{ marginTop: 50 }}
             textAlign="center"
             width="100%"
