@@ -1,53 +1,69 @@
-import React from "react";
-import {
-  Box,
-  Flex,
-  keyframes,
-  usePrefersReducedMotion,
-} from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { Box, Flex } from "@chakra-ui/react";
 import "boxicons";
 
+const backgrounds = {
+  notReached: "transparent",
+  current: "transparent",
+  completed: "yellow.400",
+};
+const borders = {
+  notReached: "white",
+  current: "yellow.400",
+  completed: "transparent",
+};
+
+const iconColor = {
+  notReached: "white",
+  current: "#ECC94B",
+  completed: "white",
+};
+
+const lines = {
+  notReached: "white",
+  current: "white",
+  completed: "#ECC94B",
+};
+
 const StepIndicator = ({ steps, step }) => {
-  const prefersReducedMotion = usePrefersReducedMotion();
-
-  const opacity = keyframes`
-  from { opacity: 0.2 }
-  to { opacity: 1 }
-`;
-  const animation = prefersReducedMotion
-    ? undefined
-    : `${opacity}  0.3s linear`;
-
   let i = 1;
   let newStepsArr = [];
-  while (i <= steps.length) {
-    let isSelected = i <= step;
-    let isLineSelected = i < step;
+
+  const getStatus = (i) => {
+    if (i < step) {
+      return "completed";
+    } else if (i === step) {
+      return "current";
+    } else {
+      return "notReached";
+    }
+  };
+  while (i <= 3) {
+    let status = getStatus(i);
     newStepsArr.push(
-      <Flex align="center" marginTop={{ base: 5, md: 0 }} pb={5}>
+      <Flex align="center">
         <Box
           display="flex"
           alignItems="center"
           p="1em"
           border="1px solid white"
-          borderColor={isSelected ? "yellow" : "white"}
+          borderColor={borders[status]}
+          backgroundColor={backgrounds[status]}
           borderRadius="50%"
-          animation={isSelected && animation}
         >
           <box-icon
             type="solid"
             name={steps[i - 1]}
             size="2em"
-            color={isSelected ? "yellow" : "white"}
+            color={iconColor[status]}
           />
         </Box>
-        {i < steps.length && (
+        {i < 3 && (
           <Box
-            animation={isLineSelected && animation}
             style={{
               height: 1.5,
               width: 50,
-              background: isLineSelected ? "yellow" : "white",
+              background: lines[status],
             }}
           />
         )}
@@ -56,7 +72,7 @@ const StepIndicator = ({ steps, step }) => {
 
     i++;
   }
-  return <Flex>{newStepsArr}</Flex>;
+  return <Flex py={5}>{newStepsArr}</Flex>;
 };
 
 export default StepIndicator;

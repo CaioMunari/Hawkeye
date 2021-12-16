@@ -12,18 +12,20 @@ const SecondStep = ({
   formData,
 }) => {
   const [enableNextStep, setEnableNextStep] = useState(false);
-
   useEffect(() => {
     const isValid = verify(["username", "password"]);
     setEnableNextStep(isValid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   return (
     <>
-      <Flex direction="column" width="100%">
-        <Heading fontWeight="normal">Cadastro</Heading>
+      <Flex direction="column" width="100%" height="80%">
+        <Heading fontSize="3em" fontWeight="normal">
+          Cadastro
+        </Heading>
         <Heading
-          fontSize="1em"
+          fontSize="1.5em"
           fontWeight="normal"
           style={{ marginBottom: 30 }}
         >
@@ -32,13 +34,13 @@ const SecondStep = ({
         <Flex
           direction="column"
           width="100%"
-          justify="space-between"
+          height="100%"
+          justify="flex-start"
           align="center"
         >
           <Input
             isInvalid={inputValidation.username}
             errorBorderColor="crimson"
-            bg="white"
             onChange={handleChange}
             name="username"
             placeholder="Nome de usuário"
@@ -47,20 +49,18 @@ const SecondStep = ({
           <Input
             isInvalid={inputValidation.password}
             errorBorderColor="crimson"
-            bg="white"
             onChange={handleChange}
             name="password"
             placeholder="Senha"
             type="password"
-            mb={5}
             value={formData.password}
           />
         </Flex>
       </Flex>
-      <Flex width="100%" justify="space-between" mt={25}>
+      <Flex width="100%" justify="space-between">
         <Button
+          color="gray.400"
           background="white"
-          color="gray"
           border="1px solid #ccc"
           width="40%"
           type="submit"
@@ -74,7 +74,6 @@ const SecondStep = ({
         </Button>
         <Button
           colorScheme="teal"
-          backgroundColor="teal.300"
           width="40%"
           type="submit"
           style={{ textTransform: "uppercase" }}

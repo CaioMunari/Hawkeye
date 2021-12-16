@@ -3,6 +3,7 @@ import { Flex, HStack, RadioGroup, Radio, Heading } from "@chakra-ui/react";
 import Button from "../Button";
 import Input from "../Input";
 import { useNavigate } from "react-router-dom";
+import { getResponsiveValue } from "../../utils/screen";
 
 const FirstStep = ({
   handleChange,
@@ -17,23 +18,27 @@ const FirstStep = ({
   useEffect(() => {
     const isValid = verify(["name", "gender", "registration"]);
     setEnableNextStep(isValid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   return (
     <>
-      <Flex direction="column" w="100%">
-        <Heading fontWeight="normal">Cadastro</Heading>
+      <Flex direction="column" w="100%" height="80%">
+        <Heading fontSize="3em" fontWeight="normal">
+          Cadastro
+        </Heading>
         <Heading
-          fontSize="1em"
+          fontSize="1.5em"
           fontWeight="normal"
-          style={{ marginBottom: 30 }}
+          style={{ marginBottom: getResponsiveValue(3, "em") }}
         >
           Dados Escolares
         </Heading>
         <Flex
           direction="column"
           width="100%"
-          justify="space-between"
+          height="100%"
+          justify="flex-start"
           align="center"
         >
           <Input
@@ -50,6 +55,7 @@ const FirstStep = ({
             defaultValue=""
             name="gender"
             width="100%"
+            style={{ marginBottom: "2em" }}
           >
             <HStack
               spacing="24px"
@@ -90,11 +96,11 @@ const FirstStep = ({
       </Flex>
       <Flex width="100%" justify="space-between">
         <Button
-          background="white"
-          color="gray"
-          border="1px solid #ccc"
           width="40%"
           type="submit"
+          color="gray.400"
+          background="white"
+          border="1px solid #ccc"
           onClick={() => navigate("/login")}
           loadingText="Submitting"
           style={{
@@ -105,7 +111,6 @@ const FirstStep = ({
         </Button>
         <Button
           colorScheme="teal"
-          backgroundColor="teal.300"
           width="40%"
           type="submit"
           style={{ textTransform: "uppercase" }}

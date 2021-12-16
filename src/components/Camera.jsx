@@ -16,7 +16,7 @@ const Camera = React.forwardRef((props, ref) => {
       borderColor="gray.500"
       w={props.w || ["80vw", "60vw", "35vw"]}
       h={props.h || ["80vw", "60vw", "35vw"]}
-      borderRadius="50%"
+      borderRadius="16px"
       bg="gray.200"
       backgroundImage={!props.imageSrc && "url('/images/camera.png')"}
       backgroundPosition="center"

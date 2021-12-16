@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Flex, Stack } from "@chakra-ui/react";
+import { Button, Flex, Stack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { api, motorApi } from "../services/api";
 import {
@@ -11,10 +11,15 @@ import StepIndicator from "../components/StepIndicator";
 import FirstStep from "../components/Register/FirstStep";
 import SecondStep from "../components/Register/SecondStep";
 import ThirdStep from "../components/Register/ThirdStep";
+import ConclusionStep from "../components/Register/ConclusionStep";
+import useOrientation from "../hooks/useOrientation";
+import { getResponsiveValue } from "../utils/screen";
 const Register = () => {
+  const { getOrientationValue } = useOrientation();
   const navigate = useNavigate();
   const [register, setRegister] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(3);
   const initialFormData = Object.freeze({
     username: "",
@@ -28,6 +33,7 @@ const Register = () => {
   const [inputValidation, setInputValidation] = useState(initialFormData);
 
   const registerUser = async () => {
+    setIsLoading(true);
     registerAdmin()
       .then((adminResponse) => {
         if (adminResponse?.status === 0) {
@@ -35,7 +41,6 @@ const Register = () => {
             .then((engineResponse) => {
               if (engineResponse?.status === 0) {
                 setRegister(false);
-                navigate("../login", { replace: true });
               } else {
                 console.log(
                   "Not possible to register user on engine, removing temp records."
@@ -62,6 +67,9 @@ const Register = () => {
       .catch(() => {
         console.log(" Admin-Server comunication error");
       });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   };
 
   async function registerAdmin() {
@@ -111,15 +119,6 @@ const Register = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-
-    // if (e.target.name === "name") {
-    //   const fullName = e.target.value.trim();
-    //   setFormData({
-    //     ...formData,
-    //     name: fullName.split(/\s(.+)/)[0],
-    //     lastName: fullName.split(/\s(.+)/)[1],
-    //   });
-    // }
   }
 
   function verify(keysToValidate = Object.keys(formData)) {
@@ -158,20 +157,27 @@ const Register = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageSrc, register]);
 
-  const icons = ["user-detail", "key", "face-mask"];
+  const icons = ["user-detail", "key", "face-mask", ""];
   return (
-    <Flex flexDirection="column" align="center" w="100%" justify="flex-start">
+    <Flex
+      style={{ boxSizing: "border-box" }}
+      flexDirection="column"
+      justify="center"
+      align="center"
+      w="100%"
+    >
       <StepIndicator steps={icons} step={step} />
-      <div style={{ marginBottom: 15 }}></div>
+      <div style={{ marginBottom: "1em" }}></div>
       <Stack
         direction="column"
-        minWidth={{ base: "100vw", md: "45vw" }}
+        minWidth={{ base: "100vw", md: getOrientationValue("55vw", "100vw") }}
         bg="white"
-        height={{ base: "100%", md: "auto" }}
-        p={12}
+        height={{ base: "100%", md: getOrientationValue("75vh", "100%") }}
+        px={getResponsiveValue(4, "em")}
+        py={{ base: "2em", md: getResponsiveValue(4, "em") }}
         align="flex-start"
-        justify={{ base: "space-between", md: "flex-start" }}
-        borderRadius={{ base: 0, md: 12 }}
+        justify="space-between"
+        borderRadius={{ base: 0, md: getOrientationValue(12, 0) }}
       >
         {
           {
@@ -202,6 +208,20 @@ const Register = () => {
                 inputValidation={inputValidation}
                 prevStep={() => setStep(step - 1)}
                 nextStep={() => setStep(step + 1)}
+                isLoading={isLoading}
+                imageSrc={imageSrc}
+                setImageSrc={setImageSrc}
+              />
+            ),
+            4: (
+              <ConclusionStep
+                formData={formData}
+                handleChange={handleChange}
+                verify={verify}
+                inputValidation={inputValidation}
+                prevStep={() => setStep(step - 1)}
+                nextStep={registerUser}
+                isLoading={isLoading}
                 imageSrc={imageSrc}
                 setImageSrc={setImageSrc}
               />

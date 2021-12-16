@@ -1,10 +1,11 @@
 import { Input } from "@chakra-ui/react";
 import React from "react";
+import { getResponsiveValue } from "../utils/screen";
 
-const CustomButton = ({ children, ...props }) => {
+const CustomInput = ({ children, ...props }) => {
   return (
     <Input
-      style={{ marginTop: 12, marginBottom: 12 }}
+      style={{ marginBottom: getResponsiveValue(1, "em") }}
       backgroundColor="gray.200"
       p={8}
       borderRadius={0}
@@ -15,4 +16,4 @@ const CustomButton = ({ children, ...props }) => {
   );
 };
 
-export default CustomButton;
+export default CustomInput;
