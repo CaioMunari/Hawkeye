@@ -163,7 +163,8 @@ const Register = () => {
       justify="flex-start"
       align="center"
       w="100%"
-      h="100vh"
+      minH="100vh"
+      background="transparent"
       px={{ base: "0", md: "5em" }}
     >
       <StepIndicator steps={icons} step={step} />

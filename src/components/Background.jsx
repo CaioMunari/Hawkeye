@@ -8,7 +8,7 @@ const Background = ({ children }) => {
       backgroundRepeat="no-repeat"
       backgroundSize="cover"
       w="100%"
-      h="100vh"
+      minH="100vh"
       backgroundColor="purple.500"
       backgroundBlendMode={"multiply"}
     >

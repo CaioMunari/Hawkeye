@@ -5,7 +5,7 @@ import Header from "../components/Header";
 const UnauthenticatedLayout = ({ children }) => {
   return (
     <Background>
-      <Flex h="100vh" direction="column" maxH="100vh">
+      <Flex direction="column">
         <Header />
         {children}
       </Flex>
