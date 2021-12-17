@@ -7,7 +7,7 @@ import { getResponsiveValue } from "../../utils/screen";
 
 const FirstStep = ({
   handleChange,
-  inputValidation,
+
   verify,
   nextStep,
   formData,
@@ -42,7 +42,6 @@ const FirstStep = ({
           align="center"
         >
           <Input
-            isInvalid={inputValidation.name || inputValidation.lastName}
             errorBorderColor="crimson"
             bg="white"
             onChange={handleChange}
@@ -65,7 +64,6 @@ const FirstStep = ({
               color="inherit"
             >
               <Radio
-                isInvalid={inputValidation.gender}
                 errorBorderColor="crimson"
                 value="M"
                 onChange={handleChange}
@@ -73,7 +71,6 @@ const FirstStep = ({
                 Masculino
               </Radio>
               <Radio
-                isInvalid={inputValidation.gender}
                 errorBorderColor="crimson"
                 value="F"
                 onChange={handleChange}
@@ -84,7 +81,6 @@ const FirstStep = ({
           </RadioGroup>
 
           <Input
-            isInvalid={inputValidation.registration}
             errorBorderColor="crimson"
             bg="white"
             onChange={handleChange}

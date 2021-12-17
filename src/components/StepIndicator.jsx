@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Flex } from "@chakra-ui/react";
-import "boxicons";
 
 const backgrounds = {
   notReached: "transparent",

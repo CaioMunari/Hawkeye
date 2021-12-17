@@ -95,11 +95,13 @@ export const mockCheckinResponse = () => {
 export const getAdminRegisterPayload = (formData, photo) => {
   const now = Date.now();
   const slicedPhoto = slicePhotoString(photo);
+  const fullname = formData.name.trim();
+  const [name, lastName] = fullname.split(" ");
   return {
     afapTransactionId: now,
     date: timeStamp(),
-    name: formData.name,
-    lastName: formData.lastName,
+    name: name,
+    lastName: lastName,
     gender: formData.gender,
     matricula: formData.registration,
     userName: formData.userName,

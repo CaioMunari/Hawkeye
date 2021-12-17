@@ -1,17 +1,10 @@
 import React, { useRef, useCallback } from "react";
-import { Flex, Heading } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 import Button from "../Button";
 import Camera from "../Camera";
 import CameraButton from "../CameraButton";
 import useOrientation from "../../hooks/useOrientation";
-const ThirdStep = ({
-  handleChange,
-  verify,
-  nextStep,
-  prevStep,
-  setImageSrc,
-  imageSrc,
-}) => {
+const ThirdStep = ({ nextStep, prevStep, setImageSrc, imageSrc }) => {
   const webcamRef = useRef(null);
   const { getOrientationValue } = useOrientation();
   const capture = useCallback(() => {
@@ -56,9 +49,13 @@ const ThirdStep = ({
               />
             </CameraButton>
           </Flex>
+          <Text color="gray" width="55%" textAlign="center">
+            Aponte o rosto para câmera e clique no botão da câmera para capturar
+            sua foto.
+          </Text>
         </Flex>
       </Flex>
-      <Flex width="100%" justify="space-between" mt={5}>
+      <Flex width="100%" justify="space-between">
         <Button
           background="white"
           color="gray"

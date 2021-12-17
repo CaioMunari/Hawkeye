@@ -1,10 +1,8 @@
-import { Box, Flex } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { Flex } from "@chakra-ui/react";
+import React from "react";
 import Button from "./Button";
 
 import useOrientation from "../hooks/useOrientation";
-
-import "boxicons";
 
 const CameraButton = ({ children, capture, imageSrc, deleteImage }) => {
   const { getOrientationValue } = useOrientation();
@@ -19,15 +17,14 @@ const CameraButton = ({ children, capture, imageSrc, deleteImage }) => {
         width="60%"
         justify="flex-end"
         align="center"
-        py={10}
-        // border="1px solid red"
+        py={getOrientationValue(5, 2)}
       >
         {children}
         <Button
           borderRadius="50%"
           width="3rem"
           height="3rem"
-          p="2.5rem"
+          colorScheme="gray"
           border="3px solid #ccc"
           style={{ marginLeft: "5%" }}
           onClick={!imageSrc ? capture : deleteImage}

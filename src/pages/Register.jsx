@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Flex, Stack } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Flex } from "@chakra-ui/react";
 import { api, motorApi } from "../services/api";
 import {
   getAdminRegisterPayload,
@@ -12,15 +11,13 @@ import FirstStep from "../components/Register/FirstStep";
 import SecondStep from "../components/Register/SecondStep";
 import ThirdStep from "../components/Register/ThirdStep";
 import ConclusionStep from "../components/Register/ConclusionStep";
-import useOrientation from "../hooks/useOrientation";
-import { getResponsiveValue } from "../utils/screen";
+import StatusStep from "../components/Register/StatusStep";
+import Paper from "../components/Paper";
 const Register = () => {
-  const { getOrientationValue } = useOrientation();
-  const navigate = useNavigate();
   const [register, setRegister] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const initialFormData = Object.freeze({
     username: "",
     password: "",
@@ -30,7 +27,7 @@ const Register = () => {
     gender: "",
   });
   const [formData, setFormData] = useState(initialFormData);
-  const [inputValidation, setInputValidation] = useState(initialFormData);
+  const [inputValidation] = useState(initialFormData);
 
   const registerUser = async () => {
     setIsLoading(true);
@@ -74,6 +71,7 @@ const Register = () => {
 
   async function registerAdmin() {
     const payload = getAdminRegisterPayload(formData, imageSrc);
+    console.log(payload);
     try {
       const adminResponse = await api.put(routes.APIAddUser, payload);
       if (adminResponse?.data?.status === 0) {
@@ -162,23 +160,14 @@ const Register = () => {
     <Flex
       style={{ boxSizing: "border-box" }}
       flexDirection="column"
-      justify="center"
+      justify="flex-start"
       align="center"
       w="100%"
+      h="100vh"
+      px={{ base: "0", md: "5em" }}
     >
       <StepIndicator steps={icons} step={step} />
-      <div style={{ marginBottom: "1em" }}></div>
-      <Stack
-        direction="column"
-        minWidth={{ base: "100vw", md: getOrientationValue("55vw", "100vw") }}
-        bg="white"
-        height={{ base: "100%", md: getOrientationValue("75vh", "100%") }}
-        px={getResponsiveValue(4, "em")}
-        py={{ base: "2em", md: getResponsiveValue(4, "em") }}
-        align="flex-start"
-        justify="space-between"
-        borderRadius={{ base: 0, md: getOrientationValue(12, 0) }}
-      >
+      <Paper>
         {
           {
             1: (
@@ -186,7 +175,6 @@ const Register = () => {
                 formData={formData}
                 handleChange={handleChange}
                 verify={verify}
-                inputValidation={inputValidation}
                 nextStep={() => setStep(step + 1)}
               />
             ),
@@ -195,7 +183,6 @@ const Register = () => {
                 formData={formData}
                 handleChange={handleChange}
                 verify={verify}
-                inputValidation={inputValidation}
                 prevStep={() => setStep(step - 1)}
                 nextStep={() => setStep(step + 1)}
               />
@@ -205,7 +192,6 @@ const Register = () => {
                 formData={formData}
                 handleChange={handleChange}
                 verify={verify}
-                inputValidation={inputValidation}
                 prevStep={() => setStep(step - 1)}
                 nextStep={() => setStep(step + 1)}
                 isLoading={isLoading}
@@ -226,9 +212,10 @@ const Register = () => {
                 setImageSrc={setImageSrc}
               />
             ),
+            5: <StatusStep nextStep={registerUser} />,
           }[step]
         }
-      </Stack>
+      </Paper>
     </Flex>
   );
 };

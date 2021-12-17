@@ -1,15 +1,15 @@
 import { Flex } from "@chakra-ui/react";
 import React from "react";
+import Background from "../components/Background";
+import Header from "../components/Header";
 const UnauthenticatedLayout = ({ children }) => {
   return (
-    <Flex
-      h="100vh"
-      maxH="100vh"
-      px={{ base: "0", md: "5em" }}
-      background="purple.700"
-    >
-      {children}
-    </Flex>
+    <Background>
+      <Flex h="100vh" direction="column" maxH="100vh">
+        <Header />
+        {children}
+      </Flex>
+    </Background>
   );
 };
 

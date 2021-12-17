@@ -3,14 +3,7 @@ import { Flex, Heading } from "@chakra-ui/react";
 import Button from "../Button";
 import Input from "../Input";
 
-const SecondStep = ({
-  handleChange,
-  inputValidation,
-  verify,
-  nextStep,
-  prevStep,
-  formData,
-}) => {
+const SecondStep = ({ handleChange, verify, nextStep, prevStep, formData }) => {
   const [enableNextStep, setEnableNextStep] = useState(false);
   useEffect(() => {
     const isValid = verify(["username", "password"]);
@@ -39,7 +32,6 @@ const SecondStep = ({
           align="center"
         >
           <Input
-            isInvalid={inputValidation.username}
             errorBorderColor="crimson"
             onChange={handleChange}
             name="username"
@@ -47,7 +39,6 @@ const SecondStep = ({
             value={formData.username}
           />
           <Input
-            isInvalid={inputValidation.password}
             errorBorderColor="crimson"
             onChange={handleChange}
             name="password"

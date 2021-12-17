@@ -1,7 +1,6 @@
 import React from "react";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import Button from "../Button";
-import { useNavigate } from "react-router-dom";
 import useOrientation from "../../hooks/useOrientation";
 import CameraImage from "../CameraImage";
 const ConclusionStep = ({
@@ -37,22 +36,20 @@ const ConclusionStep = ({
             marginLeft={10}
             justify="flex-start"
           >
-            <Text fontSize="2em" fontWeight="semibold">
-              {formData?.name || "Fabricio Silva"}
-            </Text>
+            <Text fontSize="2em">{formData?.name || "Fabricio Silva"}</Text>
             <Flex>
-              <Text fontWeight="semibold" fontSize="1em" color="gray">
+              <Text fontSize="1em" color="gray">
                 Usuário:
               </Text>
-              <Text ml={2} fontSize="1em" fontWeight="semibold">
+              <Text ml={2} fontSize="1em">
                 {formData?.username || "fabricio.silva"}
               </Text>
             </Flex>
             <Flex>
-              <Text fontWeight="semibold" fontSize="1em" color="gray">
+              <Text fontSize="1em" color="gray">
                 Matrícula:
               </Text>
-              <Text ml={2} fontSize="1em" fontWeight="semibold">
+              <Text ml={2} fontSize="1em">
                 {formData?.registration || "1234567890"}
               </Text>
             </Flex>

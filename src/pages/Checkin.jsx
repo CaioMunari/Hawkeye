@@ -1,7 +1,7 @@
 import React, { useRef, useCallback, useState } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import Camera from "../components/Camera";
-import { Button } from "@chakra-ui/react";
+import Button from "../components/Button";
 import {
   getAdminCheckinPayload,
   getMotorCheckinPayload,
@@ -9,9 +9,12 @@ import {
 } from "../utils/payload";
 import { motorApi, api } from "../services/api";
 import { routes } from "../services/routes";
+import useOrientation from "../hooks/useOrientation";
+import Paper from "../components/Paper";
 const Checkin = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const webcamRef = useRef(null);
+  const { getOrientationValue } = useOrientation();
 
   const capture = useCallback(() => {
     const sendPhotoToMotor = async (img) => {
@@ -44,25 +47,38 @@ const Checkin = () => {
     }
   };
 
+  const imageSize = getOrientationValue("25vw", "80vw");
   return (
     <Flex
       direction="column"
       justify="space-around"
       align="center"
-      height="100%"
+      height="100vh"
       width="100%"
-      p="2em"
+      p={getOrientationValue("2em", 0)}
     >
-      <Camera imageSrc={imageSrc} ref={webcamRef} />
-      <Button
-        disabled={imageSrc}
-        colorScheme="blue"
-        w={{ base: "50%", xl: "30%", lg: "30%" }}
-        p="8"
-        onClick={capture}
-      >
-        Take Picture
-      </Button>
+      <Paper title="Check-in">
+        <Flex direction="column" w="100%">
+          <Heading fontSize="3em" fontWeight="normal">
+            Check-in
+          </Heading>
+        </Flex>
+        <Camera
+          w={imageSize}
+          h={imageSize}
+          imageSrc={imageSrc}
+          ref={webcamRef}
+        />
+        <Button
+          w={imageSize}
+          disabled={imageSrc}
+          colorScheme="teal"
+          p="8"
+          onClick={capture}
+        >
+          Verificar minha foto
+        </Button>
+      </Paper>
     </Flex>
   );
 };
