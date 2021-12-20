@@ -13,6 +13,7 @@ import ThirdStep from "../components/Register/ThirdStep";
 import ConclusionStep from "../components/Register/ConclusionStep";
 import StatusStep from "../components/Register/StatusStep";
 import Paper from "../components/Paper";
+import useOrientation from "../hooks/useOrientation";
 const Register = () => {
   const [register, setRegister] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
@@ -29,6 +30,7 @@ const Register = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [inputValidation] = useState(initialFormData);
 
+  const { getOrientationValue } = useOrientation();
   const registerUser = async () => {
     setIsLoading(true);
     registerAdmin()
@@ -166,6 +168,7 @@ const Register = () => {
       minH="90vh"
       background="transparent"
       px={{ base: "0", md: "5em" }}
+      marginTop={{ base: "0", md: getOrientationValue("-5%", 0) }}
     >
       <StepIndicator steps={icons} step={step} />
       <Paper>

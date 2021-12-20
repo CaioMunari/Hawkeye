@@ -61,7 +61,7 @@ const StepIndicator = ({ steps, step }) => {
           <Box
             style={{
               height: 1.5,
-              width: 50,
+              width: 100,
               background: lines[status],
             }}
           />
