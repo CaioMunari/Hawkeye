@@ -83,7 +83,7 @@ const Login = () => {
           bg="white"
           height={{ base: "100vh", md: "auto" }}
           p={12}
-          justify={{ base: "center", md: "flex-start" }}
+          justify={{ base: "flex-start", md: "flex-start" }}
           borderRadius={{ base: 0, md: 12 }}
         >
           <Heading fontWeight="normal" style={{ marginBottom: 30 }}>

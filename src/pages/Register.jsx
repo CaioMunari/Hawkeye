@@ -163,7 +163,7 @@ const Register = () => {
       justify="flex-start"
       align="center"
       w="100%"
-      minH="100vh"
+      minH="90vh"
       background="transparent"
       px={{ base: "0", md: "5em" }}
     >

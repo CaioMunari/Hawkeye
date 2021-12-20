@@ -16,7 +16,7 @@ const Paper = ({ children, title, subtitle }) => {
       justify="space-between"
       borderRadius={{ base: 0, md: getOrientationValue(24, 0) }}
     >
-      {children}>
+      {children}
     </Stack>
   );
 };
