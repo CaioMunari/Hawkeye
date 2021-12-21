@@ -24,11 +24,11 @@ const FirstStep = ({
   return (
     <>
       <Flex direction="column" w="100%" height="80%">
-        <Heading fontSize="3em" fontWeight="normal">
+        <Heading fontSize="3rem" fontWeight="normal">
           Cadastro
         </Heading>
         <Heading
-          fontSize="1.5em"
+          fontSize="1.5rem"
           fontWeight="normal"
           style={{ marginBottom: getResponsiveValue(3, "em") }}
         >
@@ -54,7 +54,7 @@ const FirstStep = ({
             defaultValue=""
             name="gender"
             width="100%"
-            style={{ marginBottom: "2em" }}
+            style={{ marginBottom: "2rem" }}
           >
             <HStack
               spacing="24px"

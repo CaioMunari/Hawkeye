@@ -14,11 +14,11 @@ const SecondStep = ({ handleChange, verify, nextStep, prevStep, formData }) => {
   return (
     <>
       <Flex direction="column" width="100%" height="80%">
-        <Heading fontSize="3em" fontWeight="normal">
+        <Heading fontSize="3rem" fontWeight="normal">
           Cadastro
         </Heading>
         <Heading
-          fontSize="1.5em"
+          fontSize="1.5rem"
           fontWeight="normal"
           style={{ marginBottom: 30 }}
         >

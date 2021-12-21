@@ -16,10 +16,10 @@ const ThirdStep = ({ nextStep, prevStep, setImageSrc, imageSrc }) => {
   return (
     <>
       <Flex direction="column" w="100%" h="100%">
-        <Heading fontSize="3em" fontWeight="normal">
+        <Heading fontSize="3rem" fontWeight="normal">
           Cadastro
         </Heading>
-        <Heading fontSize="1.5em" fontWeight="normal">
+        <Heading fontSize="1.5rem" fontWeight="normal">
           Verificação Facial
         </Heading>
 

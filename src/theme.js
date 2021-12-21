@@ -37,12 +37,18 @@ const theme = extendTheme({
       "html, body": {
         margin: 0,
         padding: 0,
+        fontSize: "93.75%",
       },
       "*": {
         boxSizing: "border-box",
       },
       a: {
         outline: "none",
+      },
+      [`@media screen and (max-width: 1366px)`]: {
+        html: {
+          fontSize: "87.5%",
+        },
       },
     },
   },

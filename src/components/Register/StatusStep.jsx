@@ -16,10 +16,10 @@ const StatusStep = ({ nextStep }) => {
       >
         <Box w="100%" align="center">
           <box-icon name="check-circle" color="#4DCCC4" size="15em" />
-          <Text fontSize="1.5em" colorScheme="black" mt={2}>
+          <Text fontSize="1.5rem" colorScheme="black" mt={2}>
             Cadastro realizado com sucesso!
           </Text>
-          <Text width="50%" fontSize="1em" textAlign="center" color="gray.500">
+          <Text width="50%" fontSize="1rem" textAlign="center" color="gray.500">
             Agora você pode realizar seu acesso usando as credenciais
             cadastradas.
           </Text>

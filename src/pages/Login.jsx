@@ -71,6 +71,7 @@ const Login = () => {
   return (
     <Flex
       width="100%"
+      flex={1}
       h="100%"
       align="center"
       justify={getOrientationValue("flex-end", "center")}

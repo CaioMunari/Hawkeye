@@ -168,7 +168,7 @@ const Register = () => {
       minH="90vh"
       background="transparent"
       px={{ base: "0", md: "5em" }}
-      marginTop={{ base: "0", md: getOrientationValue("-5%", 0) }}
+      marginTop={{ base: "0", md: getOrientationValue("-3%", 0) }}
     >
       <StepIndicator steps={icons} step={step} />
       <Paper>

@@ -36,20 +36,20 @@ const ConclusionStep = ({
             marginLeft={10}
             justify="flex-start"
           >
-            <Text fontSize="2em">{formData?.name || "Fabricio Silva"}</Text>
+            <Text fontSize="2rem">{formData?.name || "Fabricio Silva"}</Text>
             <Flex>
-              <Text fontSize="1em" color="gray">
+              <Text fontSize="1rem" color="gray">
                 Usuário:
               </Text>
-              <Text ml={2} fontSize="1em">
+              <Text ml={2} fontSize="1rem">
                 {formData?.username || "fabricio.silva"}
               </Text>
             </Flex>
             <Flex>
-              <Text fontSize="1em" color="gray">
+              <Text fontSize="1rem" color="gray">
                 Matrícula:
               </Text>
-              <Text ml={2} fontSize="1em">
+              <Text ml={2} fontSize="1rem">
                 {formData?.registration || "1234567890"}
               </Text>
             </Flex>

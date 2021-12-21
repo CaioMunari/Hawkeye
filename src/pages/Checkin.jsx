@@ -59,7 +59,7 @@ const Checkin = () => {
     >
       <Paper title="Check-in">
         <Flex direction="column" w="100%">
-          <Heading fontSize="3em" fontWeight="normal">
+          <Heading fontSize="3rem" fontWeight="normal">
             Check-in
           </Heading>
         </Flex>
