@@ -14,7 +14,10 @@ import ConclusionStep from "../components/Register/ConclusionStep";
 import StatusStep from "../components/Register/StatusStep";
 import Paper from "../components/Paper";
 import useOrientation from "../hooks/useOrientation";
+import { useNavigate } from "react-router-dom";
+
 const Register = () => {
+  const navigate = useNavigate();
   const [register, setRegister] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -216,7 +219,16 @@ const Register = () => {
                 setImageSrc={setImageSrc}
               />
             ),
-            5: <StatusStep nextStep={registerUser} />,
+            5: (
+              <StatusStep
+                title="Cadastro realizado com sucesso!"
+                subtitle="Agora você pode realizar seu acesso usando as credenciais
+            cadastradas."
+                buttonText="ir para o login"
+                nextStep={registerUser}
+                onClick={() => navigate("/login")}
+              />
+            ),
           }[step]
         }
       </Paper>

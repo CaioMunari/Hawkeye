@@ -1,15 +1,18 @@
-import React, { useEffect } from "react";
-import { List, ListItem, Stack, Button, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Stack, Button, Flex, Heading, Box, Image } from "@chakra-ui/react";
 import { api } from "../services/api";
 import { getProperty } from "../services/auth";
-import HistoryItem from "../components/HistoryItem";
 import { routes } from "../services/routes";
+import Paper from "../components/Paper";
+import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import moment from "moment";
+import IconButton from "../components/IconButton";
 
 export default function NotificationHistory() {
   const baseURL = api.defaults.baseURL;
 
-  const [historyList, setHistoryList] = React.useState(null);
-  const [page, setPage] = React.useState(0);
+  const [historyList, setHistoryList] = useState([]);
+  const [page, setPage] = useState(0);
 
   function alterPage(cmd) {
     if (cmd === "next") {
@@ -30,72 +33,123 @@ export default function NotificationHistory() {
     getHistoryList(user);
   }, [page]);
 
-  if (!historyList)
-    return (
-      <>
-        <List spacing={5} margin="2rem">
-          <ListItem key={"historyLoadingItem"}>
-            <HistoryItem
-              date={"Loading"}
-              result={"Loading"}
-              transasctions={"Loading"}
-              image={""}
-            />
-          </ListItem>
-        </List>
-      </>
-    );
-
   return (
-    <>
-      <List spacing={5} margin="2rem">
-        {historyList.map((item) => (
-          <ListItem key={item.dateCheck}>
-            <HistoryItem
-              date={item.dateCheck}
-              result={item.approval}
-              image={baseURL + routes.APITransPhotoThumbnail(item.id)}
-            />
-          </ListItem>
-        ))}
-      </List>
-      <PageNav />
-    </>
+    <Flex
+      direction="column"
+      justify="flex-start"
+      align="center"
+      width="100%"
+      h="70%"
+    >
+      <Paper>
+        <Flex direction="column" w="100%" height="80%">
+          <Heading fontSize="3rem" fontWeight="normal">
+            Histórico
+          </Heading>
+          <Box overflowY="auto" h="55vh">
+            <Table variant="striped">
+              <Thead>
+                <Tr>
+                  <Th fontSize="1rem" fontWeight="normal" color="#944CCD">
+                    Foto
+                  </Th>
+                  <Th fontSize="1rem" fontWeight="normal" color="#944CCD">
+                    Nº Transação
+                  </Th>
+                  <Th fontSize="1rem" fontWeight="normal" color="#944CCD">
+                    Data e horário
+                  </Th>
+                  <Th fontSize="1rem" fontWeight="normal" color="#944CCD">
+                    Status
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {historyList.map((item) => (
+                  <Tr>
+                    <Td>
+                      <Image
+                        w="2.5rem"
+                        h="2.5rem"
+                        borderRadius="8px"
+                        src={baseURL + routes.APITransPhotoThumbnail(item.id)}
+                        alt=""
+                      />
+                    </Td>
+                    <Td>{item.id}</Td>
+                    <Td>
+                      {moment(item.dateCheck).format("DD/MM/YYYY HH:mm:ss")}
+                    </Td>
+                    <Td>
+                      {item.approval === true ? (
+                        <IconButton
+                          size="2.5rem"
+                          name="check-circle"
+                          type="solid"
+                          color="#4DCCC4"
+                        />
+                      ) : (
+                        <IconButton
+                          size="2.5rem"
+                          name="x-circle"
+                          type="solid"
+                          color="#DF5552"
+                        />
+                      )}
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </Box>
+          <PageNav />
+        </Flex>
+      </Paper>
+    </Flex>
   );
 
   function PageNav() {
     return (
-      <Stack direction={"row"} align="center" justify="center" spacing={6}>
+      <Stack direction={"row"} align="center" justify="flex-end" pt={4}>
         <Button
-          onClick={() => {
-            if (page + 1 > 1) alterPage("prev");
-          }}
-          isActive={page + 1 === 1 ? true : false}
-          display={{ base: "inline-flex", md: "inline-flex" }}
-          fontSize={"sm"}
-          fontWeight={600}
-          color={"white"}
-          bg={"blue.500"}
+          onClick={() => page + 1 > 1 && alterPage("prev")}
+          disabled={page + 1 === 1 ? true : false}
+          width="2rem"
+          colorScheme="purple"
           _hover={{
-            bg: "gray.500",
+            cursor: "pointer",
           }}
         >
-          &lt;
+          <box-icon
+            size="2rem"
+            type="solid"
+            color="#fff"
+            name="left-arrow-alt"
+          ></box-icon>
         </Button>
-        <Text>{page + 1}</Text>
+        <Box
+          border="1px solid"
+          py={2}
+          px={4}
+          borderColor="gray.300"
+          fontWeight="bold"
+          borderRadius="4px "
+        >
+          {page + 1}
+        </Box>
         <Button
           onClick={() => alterPage("next")}
           display={{ base: "inline-flex", md: "inline-flex" }}
-          isActive={historyList.length !== 5}
-          fontSize={"sm"}
-          fontWeight={600}
-          color={"white"}
-          bg={"blue.500"}
-          _hover={{
-            bg: "gray.500",
-          }}
+          disabled={historyList.length !== 5}
+          colorScheme="purple"
+          width="2rem"
         >
-          &gt;
+          <box-icon
+            size="2rem"
+            type="solid"
+            color="#fff"
+            name="right-arrow-alt"
+          ></box-icon>
         </Button>
       </Stack>
     );

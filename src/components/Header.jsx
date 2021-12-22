@@ -21,15 +21,24 @@ export default function WithSubnavigation() {
     >
       <img width="200px" alt="Logo" src={"/images/logo.svg"} />
       {getToken() !== null && (
-        <Flex justify="space-between" width="10%">
+        <Flex>
           <IconButton
-            // onClick={() => navigate("/history")}
+            onClick={() => navigate("/checkin")}
+            name="face"
+            size="2em"
+            color="#F8F9FA"
+            text="Checkin"
+          />
+          <IconButton
+            style={{ marginLeft: "1rem" }}
+            onClick={() => navigate("/history")}
             name="spreadsheet"
             size="2em"
             color="#F8F9FA"
             text="Histórico"
           />
           <IconButton
+            style={{ marginLeft: "1rem" }}
             onClick={logout}
             name="log-out"
             size="2em"

@@ -13,7 +13,7 @@ const ConclusionStep = ({
   const { getOrientationValue } = useOrientation();
   return (
     <>
-      <Flex direction="column" justify="center" w="100%">
+      <Flex direction="column" justify="flex-start" w="100%" flex={1}>
         <Heading fontWeight="normal" fontSize="3em">
           Concluir Cadastro
         </Heading>
@@ -24,6 +24,7 @@ const ConclusionStep = ({
           justify="flex-start"
           py={5}
           px={10}
+          flex={1}
         >
           <CameraImage
             src={imageSrc}

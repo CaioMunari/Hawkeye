@@ -15,10 +15,12 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { getOrientationValue } = useOrientation();
   const login = async (e) => {
     e.preventDefault();
     setError(false);
+    setIsLoading(true);
     try {
       const { data } = await api.post(routes.APIUserLogin, {
         password: generatePassword(password),
@@ -36,6 +38,7 @@ const Login = () => {
       setError(true);
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const getPhotoId = async (userId) => {
@@ -127,6 +130,7 @@ const Login = () => {
             width="100%"
             type="submit"
             style={{ marginTop: 25, textTransform: "uppercase" }}
+            isLoading={isLoading}
           >
             Entrar
           </Button>

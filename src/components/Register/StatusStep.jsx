@@ -1,10 +1,8 @@
 import React from "react";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import Button from "../Button";
-import { useNavigate } from "react-router-dom";
 
-const StatusStep = ({ nextStep }) => {
-  const navigate = useNavigate();
+const StatusStep = ({ title, subtitle, buttonText, onClick }) => {
   return (
     <>
       <Flex
@@ -13,27 +11,32 @@ const StatusStep = ({ nextStep }) => {
         w="100%"
         align="center"
         h="100%"
+        flex={1}
       >
-        <Box w="100%" align="center">
+        <Flex
+          direction="column"
+          w="100%"
+          justify="center"
+          align="center"
+          flex={1}
+        >
           <box-icon name="check-circle" color="#4DCCC4" size="15em" />
           <Text fontSize="1.5rem" colorScheme="black" mt={2}>
-            Cadastro realizado com sucesso!
+            {title}
           </Text>
           <Text width="50%" fontSize="1rem" textAlign="center" color="gray.500">
-            Agora você pode realizar seu acesso usando as credenciais
-            cadastradas.
+            {subtitle}
           </Text>
-        </Box>
+        </Flex>
         <Button
           colorScheme="teal"
           backgroundColor="teal.300"
-          width="40%"
           type="submit"
           style={{ textTransform: "uppercase" }}
           fontWeight="bold"
-          onClick={() => navigate("/login")}
+          onClick={onClick}
         >
-          ir para o login
+          {buttonText}
         </Button>
       </Flex>
     </>
