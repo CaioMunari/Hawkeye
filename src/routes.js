@@ -7,6 +7,7 @@ import { LoginRoute, PrivateRoute } from "./services/UserRoutes";
 import theme from "./theme";
 import Login from "./pages/Login";
 import History from "./pages/NotificationHistory";
+import "boxicons";
 
 export default function Routes() {
   return (

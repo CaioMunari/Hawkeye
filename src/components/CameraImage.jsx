@@ -10,7 +10,7 @@ const blink = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
 `;
-const CameraImage = ({ src ,w ,h }) => {
+const CameraImage = ({ src, w, h }) => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const animation = prefersReducedMotion ? undefined : `${blink} .5s linear`;
   return (
@@ -18,14 +18,14 @@ const CameraImage = ({ src ,w ,h }) => {
       bg="pink"
       w={w || ["80vw", "60vw", "35vw"]}
       h={h || ["80vw", "60vw", "35vw"]}
-      borderRadius="50%"
+      borderRadius="16px"
       animation={animation}
     >
       <Image
         src={src}
         width="100%"
         height="100%"
-        borderRadius="50%"
+        borderRadius="16px"
         style={{ objectFit: "cover" }}
       />
     </Box>

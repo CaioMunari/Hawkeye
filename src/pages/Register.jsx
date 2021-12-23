@@ -1,28 +1,27 @@
-import React, { useRef, useCallback, useState, useEffect } from "react";
-import {
-  Button,
-  Flex,
-  Input,
-  Stack,
-  HStack,
-  RadioGroup,
-  Radio,
-  FormLabel,
-} from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import Camera from "../components/Camera";
+import React, { useState, useEffect } from "react";
+import { Flex } from "@chakra-ui/react";
 import { api, motorApi } from "../services/api";
 import {
   getAdminRegisterPayload,
   getMotorRegisterPayload,
 } from "../utils/payload";
 import { routes } from "../services/routes";
+import StepIndicator from "../components/StepIndicator";
+import FirstStep from "../components/Register/FirstStep";
+import SecondStep from "../components/Register/SecondStep";
+import ThirdStep from "../components/Register/ThirdStep";
+import ConclusionStep from "../components/Register/ConclusionStep";
+import StatusStep from "../components/Register/StatusStep";
+import Paper from "../components/Paper";
+import useOrientation from "../hooks/useOrientation";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
   const [register, setRegister] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
-  const webcamRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [step, setStep] = useState(1);
   const initialFormData = Object.freeze({
     username: "",
     password: "",
@@ -32,9 +31,11 @@ const Register = () => {
     gender: "",
   });
   const [formData, setFormData] = useState(initialFormData);
-  const [inputValidation, setInputValidation] = useState(initialFormData);
+  const [inputValidation] = useState(initialFormData);
 
+  const { getOrientationValue } = useOrientation();
   const registerUser = async () => {
+    setIsLoading(true);
     registerAdmin()
       .then((adminResponse) => {
         if (adminResponse?.status === 0) {
@@ -42,7 +43,6 @@ const Register = () => {
             .then((engineResponse) => {
               if (engineResponse?.status === 0) {
                 setRegister(false);
-                navigate("../login", { replace: true });
               } else {
                 console.log(
                   "Not possible to register user on engine, removing temp records."
@@ -69,10 +69,14 @@ const Register = () => {
       .catch(() => {
         console.log(" Admin-Server comunication error");
       });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   };
 
   async function registerAdmin() {
     const payload = getAdminRegisterPayload(formData, imageSrc);
+    console.log(payload);
     try {
       const adminResponse = await api.put(routes.APIAddUser, payload);
       if (adminResponse?.data?.status === 0) {
@@ -116,55 +120,38 @@ const Register = () => {
   function handleChange(e) {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
-
-    if (e.target.name === "name") {
-      const fullName = e.target.value.trim();
-      setFormData({
-        ...formData,
-        name: fullName.split(/\s(.+)/)[0],
-        lastName: fullName.split(/\s(.+)/)[1],
-      });
-    }
   }
 
-  const capture = useCallback(() => {
-    const img = webcamRef.current.getScreenshot({ width: 640, height: 640 });
-    setImageSrc(img);
-    //console.log(img)
-  }, [webcamRef]);
-
-  const requestRegister = () => {
-    if (!imageSrc) {
-      capture();
-      setRegister(true);
-    } else {
-      setRegister(true);
-    }
-  };
-
-  function verify() {
-    const keys = Object.keys(formData);
-
+  function verify(keysToValidate = Object.keys(formData)) {
+    const keys = keysToValidate;
     let tempForm = {};
     let numberOfErrors = keys.length;
-
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      if (formData[key] === "" || formData[key] === undefined) {
-        tempForm[key] = true;
+      if (key === "name") {
+        let trimmedName = formData[key].trim().split(" ");
+        if (trimmedName.length === 2) {
+          tempForm[key] = false;
+          numberOfErrors--;
+        } else {
+          tempForm[key] = true;
+        }
       } else {
-        tempForm[key] = false;
-        numberOfErrors--;
+        if (formData[key] === "" || formData[key] === undefined) {
+          tempForm[key] = true;
+        } else {
+          tempForm[key] = false;
+          numberOfErrors--;
+        }
       }
     }
-    setInputValidation(tempForm);
-
     if (numberOfErrors <= 0) {
-      requestRegister();
+      return true;
+      // requestRegister();
     } else {
-      console.log("Dados não preenchidos");
+      return false;
     }
   }
 
@@ -173,127 +160,78 @@ const Register = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageSrc, register]);
 
+  const icons = ["user-detail", "key", "face-mask", ""];
   return (
-    <Flex w="100%" h="100vh" align="center" justify="center">
-      <Stack
-        direction="column"
-        width={{ base: "100vw", md: "45vw" }}
-        bg="gray.200"
-        height={{ base: "100vh", md: "70vh" }}
-        px={6}
-        align="center"
-        borderRadius={8}
-        p={5}
-      >
-        <Flex
-          direction="column"
-          width="100%"
-          height={{ base: "25%", md: "80%" }}
-          justify="space-between"
-          align="center"
-          spacing={15}
-        >
-          <Input
-            isInvalid={inputValidation.name || inputValidation.lastName}
-            errorBorderColor="crimson"
-            height={50}
-            bg="white"
-            onChange={handleChange}
-            name="name"
-            placeholder="Nome"
-          />
-          <RadioGroup defaultValue="" name="gender" width="100%">
-            <HStack
-              spacing="24px"
-              height={50}
-              bg="white"
-              borderRadius="5"
-              color="inherit"
-              pl={5}
-            >
-              <FormLabel color="#A0AEC0">Sexo: </FormLabel>
-              <Radio
-                isInvalid={inputValidation.gender}
-                errorBorderColor="crimson"
-                value="M"
-                onChange={handleChange}
-              >
-                Masculino
-              </Radio>
-              <Radio
-                isInvalid={inputValidation.gender}
-                errorBorderColor="crimson"
-                value="F"
-                onChange={handleChange}
-              >
-                Feminino
-              </Radio>
-            </HStack>
-          </RadioGroup>
-
-          <Input
-            isInvalid={inputValidation.registration}
-            errorBorderColor="crimson"
-            height={50}
-            bg="white"
-            onChange={handleChange}
-            name="registration"
-            placeholder="Matricula"
-          />
-          <Flex direction="row" width="100%">
-            <Input
-              isInvalid={inputValidation.username}
-              errorBorderColor="crimson"
-              height={50}
-              bg="white"
-              onChange={handleChange}
-              name="username"
-              placeholder="Usuario"
-            />
-            <Input
-              isInvalid={inputValidation.password}
-              errorBorderColor="crimson"
-              height={50}
-              bg="white"
-              onChange={handleChange}
-              name="password"
-              placeholder="Senha"
-              type="password"
-              mb={5}
-            />
-          </Flex>
-        </Flex>
-
-        <Flex
-          direction="column"
-          justify="center"
-          align="center"
-          height={{ base: "auto", md: "60vh" }}
-          onClick={() => {
-            imageSrc ? setImageSrc(null) : capture();
-          }}
-        >
-          <Camera
-            id="teste"
-            imageSrc={imageSrc}
-            ref={webcamRef}
-            w="250px"
-            h="250px"
-          />
-        </Flex>
-
-        <Button
-          fontWeight="bold"
-          onClick={verify}
-          colorScheme="blue"
-          mt={5}
-          p="5"
-          isLoading={register ? true : false}
-          loadingText="Submitting"
-        >
-          Cadastrar
-        </Button>
-      </Stack>
+    <Flex
+      style={{ boxSizing: "border-box" }}
+      flexDirection="column"
+      justify="flex-start"
+      align="center"
+      w="100%"
+      minH="90vh"
+      background="transparent"
+      px={{ base: "0", md: "5em" }}
+      marginTop={{ base: "0", md: getOrientationValue("-3%", 0) }}
+    >
+      <StepIndicator steps={icons} step={step} />
+      <Paper>
+        {
+          {
+            1: (
+              <FirstStep
+                formData={formData}
+                handleChange={handleChange}
+                verify={verify}
+                nextStep={() => setStep(step + 1)}
+              />
+            ),
+            2: (
+              <SecondStep
+                formData={formData}
+                handleChange={handleChange}
+                verify={verify}
+                prevStep={() => setStep(step - 1)}
+                nextStep={() => setStep(step + 1)}
+              />
+            ),
+            3: (
+              <ThirdStep
+                formData={formData}
+                handleChange={handleChange}
+                verify={verify}
+                prevStep={() => setStep(step - 1)}
+                nextStep={() => setStep(step + 1)}
+                isLoading={isLoading}
+                imageSrc={imageSrc}
+                setImageSrc={setImageSrc}
+              />
+            ),
+            4: (
+              <ConclusionStep
+                formData={formData}
+                handleChange={handleChange}
+                verify={verify}
+                inputValidation={inputValidation}
+                prevStep={() => setStep(step - 1)}
+                nextStep={registerUser}
+                isLoading={isLoading}
+                imageSrc={imageSrc}
+                setImageSrc={setImageSrc}
+              />
+            ),
+            5: (
+              <StatusStep
+                title="Cadastro realizado com sucesso!"
+                subtitle="Agora você pode realizar seu acesso usando as credenciais
+            cadastradas."
+                buttonText="ir para o login"
+                nextStep={registerUser}
+                onClick={() => navigate("/login")}
+              />
+            ),
+          }[step]
+        }
+      </Paper>
     </Flex>
   );
 };
