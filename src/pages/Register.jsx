@@ -16,6 +16,12 @@ import Paper from "../components/Paper";
 import useOrientation from "../hooks/useOrientation";
 import { useNavigate } from "react-router-dom";
 
+const minLength = {
+  username: 6,
+  password: 6,
+  registration: 6,
+};
+
 const Register = () => {
   const navigate = useNavigate();
   const [register, setRegister] = useState(false);
@@ -31,7 +37,8 @@ const Register = () => {
     gender: "",
   });
   const [formData, setFormData] = useState(initialFormData);
-  const [inputValidation] = useState(initialFormData);
+  const [inputValidation, setInputValidation] = useState(initialFormData);
+  const [errorForm, setErrorForm] = useState(initialFormData);
 
   const { getOrientationValue } = useOrientation();
   const registerUser = async () => {
@@ -139,7 +146,11 @@ const Register = () => {
           tempForm[key] = true;
         }
       } else {
-        if (formData[key] === "" || formData[key] === undefined) {
+        let minSize = 1;
+        if (minLength[key]) {
+          minSize = minLength[key];
+        }
+        if (formData[key].length < minSize || formData[key] === undefined) {
           tempForm[key] = true;
         } else {
           tempForm[key] = false;
@@ -147,13 +158,18 @@ const Register = () => {
         }
       }
     }
+    setInputValidation(tempForm);
     if (numberOfErrors <= 0) {
       return true;
-      // requestRegister();
     } else {
       return false;
     }
   }
+
+  const validateError = (e) => {
+    let key = e.target.name;
+    setErrorForm({ ...errorForm, [key]: inputValidation[key] });
+  };
 
   useEffect(() => {
     if (register) registerUser();
@@ -183,6 +199,8 @@ const Register = () => {
                 handleChange={handleChange}
                 verify={verify}
                 nextStep={() => setStep(step + 1)}
+                validateError={validateError}
+                errorForm={errorForm}
               />
             ),
             2: (
@@ -192,6 +210,8 @@ const Register = () => {
                 verify={verify}
                 prevStep={() => setStep(step - 1)}
                 nextStep={() => setStep(step + 1)}
+                validateError={validateError}
+                errorForm={errorForm}
               />
             ),
             3: (

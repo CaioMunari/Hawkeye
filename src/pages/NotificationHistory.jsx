@@ -50,23 +50,23 @@ export default function NotificationHistory() {
             <Table variant="striped">
               <Thead>
                 <Tr>
-                  <Th fontSize="1rem" fontWeight="normal" color="#944CCD">
+                  <Th fontSize="1.2rem" fontWeight="normal" color="#944CCD">
                     Foto
                   </Th>
-                  <Th fontSize="1rem" fontWeight="normal" color="#944CCD">
+                  <Th fontSize="1.2rem" fontWeight="normal" color="#944CCD">
                     Nº Transação
                   </Th>
-                  <Th fontSize="1rem" fontWeight="normal" color="#944CCD">
+                  <Th fontSize="1.2rem" fontWeight="normal" color="#944CCD">
                     Data e horário
                   </Th>
-                  <Th fontSize="1rem" fontWeight="normal" color="#944CCD">
+                  <Th fontSize="1.2rem" fontWeight="normal" color="#944CCD">
                     Status
                   </Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {historyList.map((item) => (
-                  <Tr>
+                  <Tr key={item.id}>
                     <Td>
                       <Image
                         w="2.5rem"
