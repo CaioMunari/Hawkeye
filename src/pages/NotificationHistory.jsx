@@ -66,7 +66,7 @@ export default function NotificationHistory() {
               </Thead>
               <Tbody>
                 {historyList.map((item) => (
-                  <Tr>
+                  <Tr key={item.id}>
                     <Td>
                       <Image
                         w="2.5rem"
