@@ -7,7 +7,8 @@ import { getResponsiveValue } from "../../utils/screen";
 
 const FirstStep = ({
   handleChange,
-
+  validateError,
+  inputValidation,
   verify,
   nextStep,
   formData,
@@ -39,7 +40,7 @@ const FirstStep = ({
           width="100%"
           height="100%"
           justify="flex-start"
-          align="center"
+          align="flex-start"
         >
           <Input
             errorBorderColor="crimson"
@@ -48,17 +49,22 @@ const FirstStep = ({
             name="name"
             placeholder="Nome"
             value={formData.name}
+            description="Insira nome e sobrenome"
+            onBlur={validateError}
+            error={inputValidation?.name}
           />
+
           <RadioGroup
             value={formData.gender}
             defaultValue=""
             name="gender"
             width="100%"
-            style={{ marginBottom: "2rem" }}
+            onBlur={validateError}
+            error={inputValidation?.gender}
           >
             <HStack
               spacing="24px"
-              height={50}
+              height={16}
               bg="white"
               borderRadius="5"
               color="inherit"
@@ -79,7 +85,6 @@ const FirstStep = ({
               </Radio>
             </HStack>
           </RadioGroup>
-
           <Input
             errorBorderColor="crimson"
             bg="white"
@@ -87,10 +92,12 @@ const FirstStep = ({
             name="registration"
             placeholder="Matricula"
             value={formData.registration}
+            description="Insira uma matrícula com ao menos 6 caracteres"
+            min="6"
           />
         </Flex>
       </Flex>
-      <Flex width="100%" justify="space-between">
+      <Flex pt={2} width="100%" justify="space-between">
         <Button
           width="40%"
           type="submit"

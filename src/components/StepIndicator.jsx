@@ -40,7 +40,7 @@ const StepIndicator = ({ steps, step }) => {
   while (i <= 3) {
     let status = getStatus(i);
     newStepsArr.push(
-      <Flex align="center">
+      <Flex key={i} align="center">
         <Box
           display="flex"
           alignItems="center"

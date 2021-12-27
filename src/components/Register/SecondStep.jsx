@@ -3,7 +3,15 @@ import { Flex, Heading } from "@chakra-ui/react";
 import Button from "../Button";
 import Input from "../Input";
 
-const SecondStep = ({ handleChange, verify, nextStep, prevStep, formData }) => {
+const SecondStep = ({
+  handleChange,
+  verify,
+  nextStep,
+  prevStep,
+  formData,
+  validateError,
+  inputValidation,
+}) => {
   const [enableNextStep, setEnableNextStep] = useState(false);
   useEffect(() => {
     const isValid = verify(["username", "password"]);
@@ -29,22 +37,26 @@ const SecondStep = ({ handleChange, verify, nextStep, prevStep, formData }) => {
           width="100%"
           height="100%"
           justify="flex-start"
-          align="center"
+          align="flex-start"
         >
           <Input
-            errorBorderColor="crimson"
             onChange={handleChange}
             name="username"
             placeholder="Nome de usuário"
             value={formData.username}
+            description="Insira um nome de usuário com ao menos 6 caracteres"
+            onBlur={validateError}
+            error={inputValidation?.username}
           />
           <Input
-            errorBorderColor="crimson"
             onChange={handleChange}
             name="password"
             placeholder="Senha"
             type="password"
             value={formData.password}
+            description="Insira uma senha com ao menos 6 caracteres"
+            onBlur={validateError}
+            error={inputValidation?.password}
           />
         </Flex>
       </Flex>

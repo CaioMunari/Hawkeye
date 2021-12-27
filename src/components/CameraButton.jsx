@@ -17,7 +17,6 @@ const CameraButton = ({ children, capture, imageSrc, deleteImage }) => {
         width="60%"
         justify="flex-end"
         align="center"
-        py={getOrientationValue(5, 2)}
       >
         {children}
         <Button

@@ -12,8 +12,6 @@ const videoConstraints = {
 const Camera = React.forwardRef((props, ref) => {
   return (
     <Box
-      border="2px solid"
-      borderColor="gray.500"
       w={props.w || ["80vw", "60vw", "35vw"]}
       h={props.h || ["80vw", "60vw", "35vw"]}
       borderRadius="16px"

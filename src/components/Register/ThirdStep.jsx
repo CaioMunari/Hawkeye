@@ -49,7 +49,12 @@ const ThirdStep = ({ nextStep, prevStep, setImageSrc, imageSrc }) => {
               />
             </CameraButton>
           </Flex>
-          <Text color="gray" width="55%" textAlign="center">
+          <Text
+            style={{ marginTop: "1rem" }}
+            color="gray"
+            width="55%"
+            textAlign="center"
+          >
             Aponte o rosto para câmera e clique no botão da câmera para capturar
             sua foto.
           </Text>
