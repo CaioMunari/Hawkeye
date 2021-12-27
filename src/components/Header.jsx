@@ -19,16 +19,15 @@ export default function WithSubnavigation() {
       py="2em"
       align="center"
     >
-      <img width="200px" alt="Logo" src={"/images/logo.svg"} />
+      <img
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate("/checkin")}
+        width="200px"
+        alt="Logo"
+        src={"/images/logo.svg"}
+      />
       {getToken() !== null && (
         <Flex>
-          <IconButton
-            onClick={() => navigate("/checkin")}
-            name="face"
-            size="2em"
-            color="#F8F9FA"
-            text="Checkin"
-          />
           <IconButton
             style={{ marginLeft: "1rem" }}
             onClick={() => navigate("/history")}
