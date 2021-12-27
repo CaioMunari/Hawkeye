@@ -8,7 +8,7 @@ import { getResponsiveValue } from "../../utils/screen";
 const FirstStep = ({
   handleChange,
   validateError,
-  inputValidation,
+  errorForm,
   verify,
   nextStep,
   formData,
@@ -21,6 +21,18 @@ const FirstStep = ({
     setEnableNextStep(isValid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
+
+  const getBackToLogin = () => {
+    if (
+      window.confirm(
+        "Deseja voltar à tela de Login? Todos os dados do cadastro serão perdidos!"
+      )
+    ) {
+      navigate("/login");
+    } else {
+      // They clicked no
+    }
+  };
 
   return (
     <>
@@ -51,7 +63,7 @@ const FirstStep = ({
             value={formData.name}
             description="Insira nome e sobrenome"
             onBlur={validateError}
-            error={inputValidation?.name}
+            error={errorForm?.name}
           />
 
           <RadioGroup
@@ -60,7 +72,7 @@ const FirstStep = ({
             name="gender"
             width="100%"
             onBlur={validateError}
-            error={inputValidation?.gender}
+            error={errorForm?.gender}
           >
             <HStack
               spacing="24px"
@@ -94,6 +106,8 @@ const FirstStep = ({
             value={formData.registration}
             description="Insira uma matrícula com ao menos 6 caracteres"
             min="6"
+            onBlur={validateError}
+            error={errorForm?.registration}
           />
         </Flex>
       </Flex>
@@ -104,7 +118,7 @@ const FirstStep = ({
           color="gray.400"
           background="white"
           border="1px solid #ccc"
-          onClick={() => navigate("/login")}
+          onClick={getBackToLogin}
           loadingText="Submitting"
           style={{
             textTransform: "uppercase",

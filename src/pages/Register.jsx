@@ -38,6 +38,7 @@ const Register = () => {
   });
   const [formData, setFormData] = useState(initialFormData);
   const [inputValidation, setInputValidation] = useState(initialFormData);
+  const [errorForm, setErrorForm] = useState(initialFormData);
 
   const { getOrientationValue } = useOrientation();
   const registerUser = async () => {
@@ -166,7 +167,8 @@ const Register = () => {
   }
 
   const validateError = (e) => {
-    return inputValidation[e.target.name];
+    let key = e.target.name;
+    setErrorForm({ ...errorForm, [key]: inputValidation[key] });
   };
 
   useEffect(() => {
@@ -198,7 +200,7 @@ const Register = () => {
                 verify={verify}
                 nextStep={() => setStep(step + 1)}
                 validateError={validateError}
-                inputValidation={inputValidation}
+                errorForm={errorForm}
               />
             ),
             2: (
@@ -209,7 +211,7 @@ const Register = () => {
                 prevStep={() => setStep(step - 1)}
                 nextStep={() => setStep(step + 1)}
                 validateError={validateError}
-                inputValidation={inputValidation}
+                errorForm={errorForm}
               />
             ),
             3: (

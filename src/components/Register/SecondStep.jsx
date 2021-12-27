@@ -10,7 +10,7 @@ const SecondStep = ({
   prevStep,
   formData,
   validateError,
-  inputValidation,
+  errorForm,
 }) => {
   const [enableNextStep, setEnableNextStep] = useState(false);
   useEffect(() => {
@@ -46,7 +46,7 @@ const SecondStep = ({
             value={formData.username}
             description="Insira um nome de usuário com ao menos 6 caracteres"
             onBlur={validateError}
-            error={inputValidation?.username}
+            error={errorForm?.username}
           />
           <Input
             onChange={handleChange}
@@ -56,7 +56,7 @@ const SecondStep = ({
             value={formData.password}
             description="Insira uma senha com ao menos 6 caracteres"
             onBlur={validateError}
-            error={inputValidation?.password}
+            error={errorForm?.password}
           />
         </Flex>
       </Flex>
