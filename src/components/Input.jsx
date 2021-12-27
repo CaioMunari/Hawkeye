@@ -12,7 +12,7 @@ const CustomInput = ({ children, ...props }) => {
         backgroundColor="gray.200"
         p={8}
         borderRadius={0}
-        borderColor={props.error === true && "red"}
+        borderColor={props.error === true ? "red" : "gray.200"}
         {...props}
       >
         {children}
