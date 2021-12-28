@@ -43,7 +43,7 @@ const SerialNumber = () => {
           justify={{ base: "flex-start", md: "flex-start" }}
           borderRadius={{ base: 0, md: 12 }}
         >
-          <Heading w="50%" fontWeight="normal" style={{ marginBottom: 30 }}>
+          <Heading w="50%" fontWeight="normal" style={{ marginBottom: 5 }}>
             Registro do dispositivo
           </Heading>
           <Heading
@@ -61,6 +61,7 @@ const SerialNumber = () => {
             onChange={(e) => setSerialNumber(e.target.value)}
             isInvalid={error}
             errorBorderColor="red.500"
+            description="Você pode encontrar o serial number na parte traseira deste dispositivo."
             color={error && "red"}
           />
           {error && (
