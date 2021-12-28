@@ -31,6 +31,7 @@ const SerialNumber = () => {
       align="center"
       justify={getOrientationValue("flex-end", "center")}
       px={{ base: "0", md: getOrientationValue("5rem", "0") }}
+      flex={1}
     >
       <form style={{ width: "30%" }} onSubmit={registerSerialNumber}>
         <Stack
