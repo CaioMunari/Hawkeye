@@ -95,7 +95,7 @@ const Login = () => {
           </Heading>
           <Input
             bg="white"
-            placeholder="User"
+            placeholder="Nome de usuário"
             value={user}
             onChange={(e) => setUser(e.target.value)}
             isInvalid={error}
@@ -105,7 +105,7 @@ const Login = () => {
           <Input
             type="password"
             bg="white"
-            placeholder="Password"
+            placeholder="Senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             isInvalid={error}

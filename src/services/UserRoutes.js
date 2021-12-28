@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import UnauthenticatedLayout from "../layout/UnauthenticatedLayout";
-import { isAuthenticated } from "./auth";
+import { isAuthenticated, isSNRegistered } from "./auth";
 
 export function PrivateRoute({ children }) {
   const auth = isAuthenticated();
@@ -10,9 +10,16 @@ export function PrivateRoute({ children }) {
 
 export function LoginRoute({ children }) {
   const auth = isAuthenticated();
+  const SN = isSNRegistered();
   return auth ? (
     <Navigate to="/checkin" />
-  ) : (
+  ) : SN ? (
     <UnauthenticatedLayout>{children}</UnauthenticatedLayout>
+  ) : (
+    <Navigate to="/serialnumber" />
   );
+}
+
+export function SerialNumberRoute({ children }) {
+  return <UnauthenticatedLayout>{children}</UnauthenticatedLayout>;
 }

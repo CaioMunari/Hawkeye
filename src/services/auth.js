@@ -1,4 +1,5 @@
 export const USER_KEY = "sabis-token";
+export const SERIAL_NUMBER_KEY = "sabis-sn";
 
 export const isAuthenticated = () => localStorage.getItem(USER_KEY) !== null;
 
@@ -10,6 +11,15 @@ export const getToken = () => JSON.parse(localStorage.getItem(USER_KEY));
 export const getUserId = () => JSON.parse(localStorage.getItem(USER_KEY)).id;
 
 export const clearToken = () => localStorage.removeItem(USER_KEY);
+
+export const setSNToken = (sn) =>
+  localStorage.setItem(SERIAL_NUMBER_KEY, JSON.stringify(sn));
+
+export const getSNToken = () =>
+  JSON.parse(localStorage.getItem(SERIAL_NUMBER_KEY));
+
+export const isSNRegistered = () =>
+  localStorage.getItem(SERIAL_NUMBER_KEY) !== null;
 
 export const setProperty = (key, value) => {
   let payload = JSON.parse(localStorage.getItem(USER_KEY));

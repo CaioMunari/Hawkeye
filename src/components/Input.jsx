@@ -22,6 +22,8 @@ const CustomInput = ({ children, ...props }) => {
           style={{
             marginBottom: getResponsiveValue(0.2, "rem"),
             color: props.error === true && "red",
+            fontSize: "0.8rem",
+            width: "75%",
           }}
         >
           {props.description}

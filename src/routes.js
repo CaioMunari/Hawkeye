@@ -3,11 +3,16 @@ import { BrowserRouter, Routes as Switch, Route } from "react-router-dom";
 import Checkin from "./pages/Checkin";
 import Register from "./pages/Register";
 import { ChakraProvider } from "@chakra-ui/react";
-import { LoginRoute, PrivateRoute } from "./services/UserRoutes";
+import {
+  LoginRoute,
+  PrivateRoute,
+  SerialNumberRoute,
+} from "./services/UserRoutes";
 import theme from "./theme";
 import Login from "./pages/Login";
 import History from "./pages/NotificationHistory";
 import "boxicons";
+import SerialNumber from "./pages/SerialNumber";
 
 export default function Routes() {
   return (
@@ -30,6 +35,15 @@ export default function Routes() {
               <LoginRoute>
                 <Login />
               </LoginRoute>
+            }
+          />
+          <Route
+            path="/serialnumber"
+            exact
+            element={
+              <SerialNumberRoute>
+                <SerialNumber />
+              </SerialNumberRoute>
             }
           />
           <Route
