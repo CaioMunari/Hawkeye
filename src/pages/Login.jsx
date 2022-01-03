@@ -29,6 +29,7 @@ const Login = () => {
       if (data && data.id !== 0) {
         getPhotoId(data.id);
         getSettings(data.id);
+        getUserInfo(data.id);
         setProperty("userId", data.id);
         navigate("/checkin");
       } else {
@@ -46,6 +47,17 @@ const Login = () => {
       const { data } = await api.get(routes.APIPhotoId(userId));
       if (data) {
         setProperty("photoId", data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserInfo = async (userId) => {
+    try {
+      const { data } = await api.get(routes.APIUserView(userId));
+      if (data) {
+        setProperty("userInfo", data);
       }
     } catch (error) {
       console.log(error);
