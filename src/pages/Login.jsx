@@ -27,9 +27,9 @@ const Login = () => {
         userName: user,
       });
       if (data && data.id !== 0) {
+        await getUserInfo(data.id);
         getPhotoId(data.id);
         getSettings(data.id);
-        getUserInfo(data.id);
         setProperty("userId", data.id);
         navigate("/checkin");
       } else {
