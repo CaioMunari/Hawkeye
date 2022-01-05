@@ -15,15 +15,19 @@ const SerialNumber = () => {
 
   navigator.serviceWorker.ready.then(async (registration) => {
     console.log("REGISTRADO");
-    setInterval(() => {
-      updateList();
-    }, 5000);
+    Notification.requestPermission().then(function (permission) {
+      if (permission === "granted") {
+        setInterval(() => {
+          updateList();
+        }, 5000);
+      } else console.error("Permission was not granted.");
+    });
   });
 
   const updateList = () => {
     // setInterval(() => {
     const newList = [...list];
-    setList([...newList, new Date().toString()]);
+    setList([...newList, Math.random()]);
     // }, 5000);
   };
 
