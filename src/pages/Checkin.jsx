@@ -46,6 +46,7 @@ const Checkin = () => {
     };
 
     const img = webcamRef.current.getScreenshot({ width: 640, height: 640 });
+    console.log(img);
     setImageSrc(img);
     sendPhotoToMotor(img);
   }, [webcamRef]);
@@ -59,7 +60,7 @@ const Checkin = () => {
     }
   };
 
-  const imageSize = getOrientationValue("25vw", "80vw");
+  const imageSize = getOrientationValue("22vw", "80vw");
   return (
     <Flex
       direction="column"

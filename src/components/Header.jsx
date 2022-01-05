@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { clearToken, getToken } from "../services/auth";
 import useOrientation from "../hooks/useOrientation";
 import IconButton from "./IconButton";
+import UserInfo from "./UserInfo";
 export default function WithSubnavigation() {
   const navigate = useNavigate();
   const { getOrientationValue } = useOrientation();
@@ -27,20 +28,21 @@ export default function WithSubnavigation() {
         src={"/images/logo.svg"}
       />
       {getToken() !== null && (
-        <Flex>
+        <Flex align="center">
           <IconButton
             style={{ marginLeft: "1rem" }}
             onClick={() => navigate("/history")}
             name="spreadsheet"
-            size="2em"
+            size="2rem"
             color="#F8F9FA"
             text="Histórico"
           />
+          <UserInfo style={{ marginLeft: "1rem" }} />
           <IconButton
             style={{ marginLeft: "1rem" }}
             onClick={logout}
             name="log-out"
-            size="2em"
+            size="2rem"
             color="#F8F9FA"
           ></IconButton>
         </Flex>

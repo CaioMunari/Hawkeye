@@ -7,7 +7,7 @@ export const routes = {
     `/checkin/list/${id}/page/${page}/size/5`,
   APIUserLogin: "/access/login",
   APIAddUpdate: "/user/updateUser/",
-  APIUserProfile: "/user/view/{0}",
+  APIUserView: (userId) => `/user/view/${userId}`,
   APICheckHealth: "/sabis/user/1",
   APITransPhotoThumbnail: (id) => `/photo/trans/thumb/${id}`,
   APISettings: (userId) => `/settings/score/${userId}`,
