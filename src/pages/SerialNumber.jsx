@@ -11,35 +11,6 @@ const SerialNumber = () => {
   const navigate = useNavigate();
   const [serialNumber, setSerialNumber] = useState(getSNToken());
   const [error, setError] = useState(false);
-  // const [list, setList] = useState([]);
-
-  navigator.serviceWorker.ready.then(async (registration) => {
-    console.log("REGISTRADO");
-    Notification.requestPermission().then(function (permission) {
-      if (permission === "granted") {
-        setInterval(() => {
-          const greeting = new Notification("Hi, How are you?", {
-            body: "Have a good day",
-            icon: "./images/logo.svg",
-          });
-
-          // navigate to the https://www.javascripttutorial.net/ on click
-          greeting.addEventListener("click", function () {
-            window.open(
-              "https://www.javascripttutorial.net/web-apis/javascript-notification/"
-            );
-          });
-        }, 5000);
-      } else console.error("Permission was not granted.");
-    });
-  });
-
-  // const updateList = () => {
-  //   // setInterval(() => {
-  //   const newList = [...list];
-  //   setList([...newList, Math.random()]);
-  //   // }, 5000);
-  // };
 
   const { getOrientationValue } = useOrientation();
 
