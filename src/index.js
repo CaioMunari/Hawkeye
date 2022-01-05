@@ -4,10 +4,6 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import Routes from "./routes";
 
-navigator.serviceWorker.ready.then(async (registration) => {
-  alert("Teste");
-});
-
 ReactDOM.render(
   <React.StrictMode>
     <Routes />

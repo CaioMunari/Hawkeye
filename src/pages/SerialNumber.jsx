@@ -11,6 +11,21 @@ const SerialNumber = () => {
   const navigate = useNavigate();
   const [serialNumber, setSerialNumber] = useState(getSNToken());
   const [error, setError] = useState(false);
+  const [list, setList] = useState([]);
+
+  navigator.serviceWorker.ready.then(async (registration) => {
+    console.log("REGISTRADO");
+    setInterval(() => {
+      updateList();
+    }, 5000);
+  });
+
+  const updateList = () => {
+    // setInterval(() => {
+    const newList = [...list];
+    setList([...newList, new Date().toString()]);
+    // }, 5000);
+  };
 
   const { getOrientationValue } = useOrientation();
 
@@ -84,6 +99,9 @@ const SerialNumber = () => {
           >
             Registrar
           </Button>
+          {list.map((item) => (
+            <Text key={item}>{item}</Text>
+          ))}
         </Stack>
       </form>
     </Flex>
