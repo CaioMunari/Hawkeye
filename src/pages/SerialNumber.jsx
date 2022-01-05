@@ -11,7 +11,7 @@ const SerialNumber = () => {
   const navigate = useNavigate();
   const [serialNumber, setSerialNumber] = useState(getSNToken());
   const [error, setError] = useState(false);
-  const [list, setList] = useState([]);
+  // const [list, setList] = useState([]);
 
   navigator.serviceWorker.ready.then(async (registration) => {
     console.log("REGISTRADO");
@@ -113,9 +113,6 @@ const SerialNumber = () => {
           >
             Registrar
           </Button>
-          {list.map((item) => (
-            <Text key={item}>{item}</Text>
-          ))}
         </Stack>
       </form>
     </Flex>
