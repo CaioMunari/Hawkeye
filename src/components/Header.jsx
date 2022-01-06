@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { clearToken, getToken } from "../services/auth";
+import { clearToken, isAuthenticated } from "../services/auth";
 import useOrientation from "../hooks/useOrientation";
 import IconButton from "./IconButton";
 import UserInfo from "./UserInfo";
@@ -27,7 +27,7 @@ export default function WithSubnavigation() {
         alt="Logo"
         src={"/images/logo.svg"}
       />
-      {getToken() !== null && (
+      {isAuthenticated() && (
         <Flex align="center">
           <IconButton
             style={{ marginLeft: "1rem" }}

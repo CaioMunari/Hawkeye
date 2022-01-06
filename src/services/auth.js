@@ -1,5 +1,6 @@
 export const USER_KEY = "sabis-token";
 export const SERIAL_NUMBER_KEY = "sabis-sn";
+export const APP_ID_KEY = "sabis-appId";
 
 export const isAuthenticated = () => localStorage.getItem(USER_KEY) !== null;
 
@@ -18,6 +19,10 @@ export const setSNToken = (sn) =>
 export const getSNToken = () =>
   JSON.parse(localStorage.getItem(SERIAL_NUMBER_KEY));
 
+export const setAppID = (appId) =>
+  localStorage.setItem(APP_ID_KEY, JSON.stringify(appId));
+
+export const getAppID = () => JSON.parse(localStorage.getItem(APP_ID_KEY));
 export const isSNRegistered = () =>
   localStorage.getItem(SERIAL_NUMBER_KEY) !== null;
 

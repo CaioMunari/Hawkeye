@@ -15,3 +15,11 @@ export const checkScoreStatus = (response) => {
   }
   return false;
 };
+
+export const generateAppID = () => {
+  const dateHex = new Date().getTime().toString(16);
+  const missingSize = 16 - dateHex.length;
+  var navigator_info = window.navigator;
+  let uid = navigator_info.userAgent.replace(/\D+/g, "");
+  return dateHex + uid.slice(-1 * missingSize);
+};
