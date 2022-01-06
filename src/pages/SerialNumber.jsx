@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Flex, Stack, Text } from "@chakra-ui/react";
-import { getSNToken, setProperty, setSNToken } from "../services/auth";
+import { getSNToken, setAppID, setSNToken } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { Heading } from "@chakra-ui/react";
 import Button from "../components/Button";
@@ -22,7 +22,7 @@ const SerialNumber = () => {
       setError(true);
       return;
     }
-    setProperty("appId", appId);
+    setAppID(appId);
     setSNToken(serialNumber);
     navigate("/login");
   };

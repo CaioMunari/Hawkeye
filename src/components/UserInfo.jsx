@@ -4,7 +4,6 @@ import { getProperty } from "../services/auth";
 import { buildBase64URL } from "../utils/photo";
 const UserInfo = ({ style }) => {
   const userInfo = getProperty("userInfo");
-  console.log(userInfo);
   return (
     <Flex align="center" justify="space-between" style={style}>
       <Heading fontSize="1rem" fontWeight="normal" color="#F8F9FA">
