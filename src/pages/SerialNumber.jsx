@@ -36,16 +36,15 @@ const SerialNumber = () => {
       px={{ base: "0", md: getOrientationValue("5rem", "0") }}
       flex={1}
     >
-      <form style={{ width: "30%" }} onSubmit={registerSerialNumber}>
-        <Stack
-          direction="column"
-          minWidth={{ base: "100vw", md: getOrientationValue("20vw", "80vw") }}
-          bg="white"
-          height={{ base: "100vh", md: "auto" }}
-          p={12}
-          justify={{ base: "flex-start", md: "flex-start" }}
-          borderRadius={{ base: 0, md: 12 }}
-        >
+      <Stack
+        direction="column"
+        width={getOrientationValue("30%", "60%")}
+        bg="white"
+        p={"3rem"}
+        justify={{ base: "flex-start", md: "flex-start" }}
+        borderRadius="24px"
+      >
+        <form style={{ width: "100%" }} onSubmit={registerSerialNumber}>
           <Heading w="50%" fontWeight="normal" style={{ marginBottom: 5 }}>
             Registro do dispositivo
           </Heading>
@@ -78,7 +77,9 @@ const SerialNumber = () => {
               Digite um número de dispositivo correto!
             </Text>
           )}
+          <br></br>
           <Button
+            w="100%"
             onClick={registerSerialNumber}
             colorScheme="teal"
             backgroundColor="teal.300"
@@ -87,8 +88,8 @@ const SerialNumber = () => {
           >
             Registrar
           </Button>
-        </Stack>
-      </form>
+        </form>
+      </Stack>
     </Flex>
   );
 };
