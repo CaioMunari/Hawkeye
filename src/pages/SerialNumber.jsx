@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Flex, Stack, Text } from "@chakra-ui/react";
-import { getSNToken, setSNToken } from "../services/auth";
+import { getSNToken, setProperty, setSNToken } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { Heading } from "@chakra-ui/react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import useOrientation from "../hooks/useOrientation";
+import { generateAppID } from "../utils/common";
 
 const SerialNumber = () => {
   const navigate = useNavigate();
@@ -16,10 +17,12 @@ const SerialNumber = () => {
 
   const registerSerialNumber = (e) => {
     e.preventDefault();
+    const appId = generateAppID();
     if (!serialNumber || serialNumber.length < 5) {
       setError(true);
       return;
     }
+    setProperty("appId", appId);
     setSNToken(serialNumber);
     navigate("/login");
   };
