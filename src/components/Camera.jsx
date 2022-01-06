@@ -14,7 +14,7 @@ const Camera = React.forwardRef((props, ref) => {
     <Box
       w={props.w || ["80vw", "60vw", "35vw"]}
       h={props.h || ["80vw", "60vw", "35vw"]}
-      borderRadius="16px"
+      borderRadius="50%"
       bg="gray.200"
       backgroundImage={!props.imageSrc && "url('/images/camera.png')"}
       backgroundPosition="center"
@@ -27,7 +27,12 @@ const Camera = React.forwardRef((props, ref) => {
       ) : (
         <Webcam
           ref={ref}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            borderRadius: "50%",
+          }}
           videoConstraints={videoConstraints}
           screenshotFormat="image/jpeg"
           screenshotQuality={1}

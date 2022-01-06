@@ -28,7 +28,7 @@ const SecondStep = ({
         <Heading
           fontSize="1.5rem"
           fontWeight="normal"
-          style={{ marginBottom: 30 }}
+          style={{ marginBottom: "2em" }}
         >
           Dados de Acesso
         </Heading>
@@ -79,6 +79,7 @@ const SecondStep = ({
           colorScheme="teal"
           width="40%"
           type="submit"
+          border="1px solid white"
           style={{ textTransform: "uppercase" }}
           fontWeight="bold"
           onClick={nextStep}

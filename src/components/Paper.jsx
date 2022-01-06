@@ -1,20 +1,19 @@
 import { Stack } from "@chakra-ui/react";
 import React from "react";
 import useOrientation from "../hooks/useOrientation";
-import { getResponsiveValue } from "../utils/screen";
-const Paper = ({ children, title, subtitle }) => {
+const Paper = ({ children }) => {
   const { getOrientationValue } = useOrientation();
   return (
     <Stack
       direction="column"
-      minWidth={{ base: "100vw", md: getOrientationValue("55vw", "100vw") }}
+      minWidth={{ base: "100vw", md: getOrientationValue("55vw", "85vw") }}
       bg="white"
-      minHeight={{ base: "100%", md: getOrientationValue("55vh", "100%") }}
-      px={getResponsiveValue(4, "em")}
-      py={{ base: "2em", md: getResponsiveValue(4, "em") }}
+      minHeight={{ base: "100%", md: getOrientationValue("65vh", "65vh") }}
+      padding={"3rem"}
       align="center"
       justify="space-between"
-      borderRadius={{ base: 0, md: getOrientationValue(24, 0) }}
+      borderRadius="24px"
+      marginTop={{ base: 0, md: getOrientationValue("0", "1rem") }}
     >
       {children}
     </Stack>

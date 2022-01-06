@@ -18,7 +18,6 @@ const CameraImage = ({ src, w, h }) => {
       bg="pink"
       w={w || ["80vw", "60vw", "35vw"]}
       h={h || ["80vw", "60vw", "35vw"]}
-      borderRadius="16px"
       animation={animation}
     >
       <Image
@@ -26,7 +25,7 @@ const CameraImage = ({ src, w, h }) => {
         width="100%"
         height="100%"
         borderRadius="16px"
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "cover", borderRadius: "50%" }}
       />
     </Box>
   );

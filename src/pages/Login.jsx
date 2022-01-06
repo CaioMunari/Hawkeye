@@ -95,8 +95,8 @@ const Login = () => {
       <form onSubmit={login}>
         <Stack
           direction="column"
-          minWidth={{ base: "100vw", md: getOrientationValue("25vw", "80vw") }}
-          bg="white"
+          width={{ base: "100vw", md: getOrientationValue("25vw", "60vw") }}
+          bg={"white"}
           height={{ base: "100vh", md: "auto" }}
           p={12}
           justify={{ base: "flex-start", md: "flex-start" }}
@@ -164,7 +164,7 @@ const Login = () => {
             onClick={register}
             style={{ marginTop: 25, textTransform: "uppercase" }}
           >
-            Cadastrar
+            Quero me cadastrar
           </Button>
         </Stack>
       </form>

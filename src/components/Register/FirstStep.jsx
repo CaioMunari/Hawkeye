@@ -43,7 +43,7 @@ const FirstStep = ({
         <Heading
           fontSize="1.5rem"
           fontWeight="normal"
-          style={{ marginBottom: getResponsiveValue(3, "em") }}
+          style={{ marginBottom: getResponsiveValue(2, "em") }}
         >
           Dados Escolares
         </Heading>

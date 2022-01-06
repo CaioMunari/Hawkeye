@@ -184,8 +184,7 @@ const Register = () => {
       justify="flex-start"
       align="center"
       w="100%"
-      minH="90vh"
-      background="transparent"
+      h="90vh"
       px={{ base: "0", md: "5em" }}
       marginTop={{ base: "0", md: getOrientationValue("-3%", 0) }}
     >

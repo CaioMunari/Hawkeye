@@ -22,14 +22,12 @@ const ConclusionStep = ({
           width="100%"
           align="center"
           justify="flex-start"
-          py={5}
-          px={10}
           flex={1}
         >
           <CameraImage
             src={imageSrc}
-            w={{ base: "220px", md: getOrientationValue("18vw", "80vw") }}
-            h={{ base: "220px", md: getOrientationValue("18vw", "80vw") }}
+            w={{ base: "220px", md: getOrientationValue("18vw", "50vw") }}
+            h={{ base: "220px", md: getOrientationValue("18vw", "50vw") }}
           />
           <Flex
             mt={{ base: 5, md: 0 }}

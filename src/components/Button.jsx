@@ -3,7 +3,12 @@ import React from "react";
 
 const CustomButton = ({ children, ...props }) => {
   return (
-    <Button p={8} borderRadius={0} {...props}>
+    <Button
+      style={{ boxSizing: "border-box" }}
+      p={8}
+      borderRadius={0}
+      {...props}
+    >
       {children}
     </Button>
   );
