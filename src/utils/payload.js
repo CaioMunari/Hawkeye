@@ -28,7 +28,7 @@ export const getMotorCheckinPayload = (photo) => {
       Users: [
         {
           Id: userId,
-          ReferenceId: userId,
+          ReferenceId: 1,
           Date: now,
           Gender: "M",
           References: [
@@ -137,7 +137,7 @@ export const getMotorRegisterPayload = (user, formData, photo) => {
       Users: [
         {
           Id: user.id,
-          ReferenceId: user.id,
+          ReferenceId: 1,
           Gender: formData.gender,
           Date: now,
           References: [
