@@ -28,14 +28,16 @@ const Checkin = () => {
       const payload = getMotorCheckinPayload(img);
       const { Id: afapTransactionId } = payload;
       try {
-        await motorApi.post(routes.transaction, payload);
+        // await motorApi.post(routes.transaction, payload);
         const response = mockCheckinResponse();
         const adminPayload = getAdminCheckinPayload(
           response,
           img,
           afapTransactionId
         );
-        sendPhotoToAdmin(adminPayload);
+        setTimeout(() => {
+          sendPhotoToAdmin(adminPayload);
+        }, 2000);
       } catch (error) {
         setImageSrc(null);
         console.log(error);
@@ -56,7 +58,7 @@ const Checkin = () => {
       await api.put(routes.APIAddCheckInUser, payload);
       setSuccess(true);
     } catch (error) {
-      console.log("deu ruim");
+      console.log(error);
     }
   };
 
