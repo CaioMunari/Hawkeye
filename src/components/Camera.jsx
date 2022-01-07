@@ -1,7 +1,8 @@
 import React from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Webcam from "react-webcam";
 import CameraImage from "./CameraImage";
+import Spinner from "./Spinner";
 
 const videoConstraints = {
   width: 640,
@@ -11,7 +12,9 @@ const videoConstraints = {
 
 const Camera = React.forwardRef((props, ref) => {
   return (
-    <Box
+    <Flex
+      justify="center"
+      align="center"
       w={props.w || ["80vw", "60vw", "35vw"]}
       h={props.h || ["80vw", "60vw", "35vw"]}
       borderRadius="50%"
@@ -22,6 +25,7 @@ const Camera = React.forwardRef((props, ref) => {
       backgroundSize="30%"
       overflow="hidden"
     >
+      {props.isLoading && <Spinner w={props.w} h={props.h} />}
       {props.imageSrc ? (
         <CameraImage src={props.imageSrc} w={props.w} h={props.h} />
       ) : (
@@ -38,7 +42,7 @@ const Camera = React.forwardRef((props, ref) => {
           screenshotQuality={1}
         />
       )}
-    </Box>
+    </Flex>
   );
 });
 

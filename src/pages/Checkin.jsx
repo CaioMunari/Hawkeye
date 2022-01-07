@@ -37,14 +37,14 @@ const Checkin = () => {
         );
         setTimeout(() => {
           sendPhotoToAdmin(adminPayload);
-        }, 2000);
+        }, 5000);
       } catch (error) {
         setImageSrc(null);
         console.log(error);
       }
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
+      }, 5000);
     };
 
     const img = webcamRef.current.getScreenshot({ width: 640, height: 640 });
@@ -88,6 +88,7 @@ const Checkin = () => {
               </Heading>
             </Flex>
             <Camera
+              isLoading={isLoading}
               w={imageSize}
               h={imageSize}
               imageSrc={imageSrc}
@@ -98,7 +99,6 @@ const Checkin = () => {
               disabled={imageSrc}
               colorScheme="teal"
               onClick={capture}
-              isLoading={isLoading}
               loadingText="Verificando..."
             >
               Verificar minha foto
