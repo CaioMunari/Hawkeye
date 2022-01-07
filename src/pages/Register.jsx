@@ -17,7 +17,7 @@ import useOrientation from "../hooks/useOrientation";
 import { useNavigate } from "react-router-dom";
 
 const minLength = {
-  username: 6,
+  userName: 6,
   password: 6,
   registration: 6,
 };
@@ -29,7 +29,7 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
   const initialFormData = Object.freeze({
-    username: "",
+    userName: "",
     password: "",
     name: "",
     lastName: "",
@@ -43,39 +43,48 @@ const Register = () => {
   const { getOrientationValue } = useOrientation();
   const registerUser = async () => {
     setIsLoading(true);
-    registerAdmin()
-      .then((adminResponse) => {
-        if (adminResponse?.status === 0) {
-          registerEngine(adminResponse.user)
-            .then((engineResponse) => {
-              if (engineResponse?.status === 0) {
-                setRegister(false);
-              } else {
-                console.log(
-                  "Not possible to register user on engine, removing temp records."
-                );
-                removeUserAdmin(adminResponse.user.id);
-                setRegister(false);
-                //TODO: error message
-              }
-            })
-            .catch(() => {
-              console.log(" Engine-Server comunication error");
-              console.log(
-                "Not possible to register user on engine, removing temp records."
-              );
-              removeUserAdmin(adminResponse.user.id);
-              setRegister(false);
-            });
-        } else {
-          setRegister(false);
-          alert("Register error");
-          //TODO: error message
-        }
-      })
-      .catch(() => {
-        console.log(" Admin-Server comunication error");
-      });
+    try {
+      await registerAdmin();
+      // removeUserAdmin(response.user.id);
+      setTimeout(() => {
+        setStep(5);
+      }, 4000);
+    } catch (error) {
+      console.log(error);
+    }
+    // .then((adminResponse) => {
+    //   if (adminResponse?.status === 0) {
+    //     registerEngine(adminResponse.user)
+    //       .then((engineResponse) => {
+    //         if (engineResponse?.status === 0) {
+    //           setRegister(false);
+    //         } else {
+    //           console.log(
+    //             "Not possible to register user on engine, removing temp records."
+    //           );
+    //           removeUserAdmin(adminResponse.user.id);
+    //           setRegister(false);
+    //           //TODO: error message
+    //         }
+    //       })
+    //       .catch(() => {
+    //         console.log(" Engine-Server comunication error");
+    //         console.log(
+    //           "Not possible to register user on engine, removing temp records."
+    //         );
+    //         removeUserAdmin(adminResponse.user.id);
+    //         setRegister(false);
+    //       });
+    //   } else {
+    //     setRegister(false);
+    //     alert("Register error");
+    //     //TODO: error message
+    //   }
+    // })
+    // .catch(() => {
+    //   console.log(" Admin-Server comunication error");
+    // });
+
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);

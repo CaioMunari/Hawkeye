@@ -41,7 +41,7 @@ const ConclusionStep = ({
                 Usuário:
               </Text>
               <Text ml={2} fontSize="1rem">
-                {formData?.username || "fabricio.silva"}
+                {formData?.userName || "fabricio.silva"}
               </Text>
             </Flex>
             <Flex>

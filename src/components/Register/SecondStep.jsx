@@ -14,7 +14,7 @@ const SecondStep = ({
 }) => {
   const [enableNextStep, setEnableNextStep] = useState(false);
   useEffect(() => {
-    const isValid = verify(["username", "password"]);
+    const isValid = verify(["userName", "password"]);
     setEnableNextStep(isValid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
@@ -41,12 +41,12 @@ const SecondStep = ({
         >
           <Input
             onChange={handleChange}
-            name="username"
+            name="userName"
             placeholder="Nome de usuário"
-            value={formData.username}
+            value={formData.userName}
             description="Insira um nome de usuário com ao menos 6 caracteres"
             onBlur={validateError}
-            error={errorForm?.username}
+            error={errorForm?.userName}
           />
           <Input
             onChange={handleChange}
