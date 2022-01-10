@@ -46,6 +46,8 @@ const Register = () => {
     try {
       await registerAdmin();
       // removeUserAdmin(response.user.id);
+      // await registerEngine(response.user);
+
       setTimeout(() => {
         setStep(5);
       }, 4000);
