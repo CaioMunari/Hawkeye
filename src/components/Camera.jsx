@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import Webcam from "react-webcam";
 import CameraImage from "./CameraImage";
 import Spinner from "./Spinner";
@@ -27,7 +27,13 @@ const Camera = React.forwardRef((props, ref) => {
     >
       {props.isLoading && <Spinner w={props.w} h={props.h} />}
       {props.imageSrc ? (
-        <CameraImage src={props.imageSrc} w={props.w} h={props.h} />
+        <CameraImage
+          success={props.success}
+          checkinIsCompleted={props.checkinIsCompleted}
+          src={props.imageSrc}
+          w={props.w}
+          h={props.h}
+        />
       ) : (
         <Webcam
           ref={ref}

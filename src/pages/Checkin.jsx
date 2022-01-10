@@ -1,5 +1,5 @@
-import React, { useRef, useCallback, useState } from "react";
-import { Flex, Heading } from "@chakra-ui/react";
+import React, { useRef, useCallback, useState, useEffect } from "react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 import Camera from "../components/Camera";
 import Button from "../components/Button";
 import {
@@ -13,18 +13,22 @@ import useOrientation from "../hooks/useOrientation";
 import Paper from "../components/Paper";
 import StatusStep from "../components/Register/StatusStep";
 import { useNavigate } from "react-router-dom";
+import { getProperty } from "../services/auth";
 
 const Checkin = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [checkinIsCompleted, setCheckinIsCompleted] = useState(false);
+  const [lastStep, setLastStep] = useState(false);
   const webcamRef = useRef(null);
   const { getOrientationValue } = useOrientation();
 
   const capture = useCallback(() => {
     setIsLoading(true);
     const sendPhotoToMotor = async (img) => {
+      setCheckinIsCompleted(false);
       const payload = getMotorCheckinPayload(img);
       const { Id: afapTransactionId } = payload;
       try {
@@ -35,32 +39,42 @@ const Checkin = () => {
           img,
           afapTransactionId
         );
-        setTimeout(() => {
-          sendPhotoToAdmin(adminPayload);
-        }, 5000);
+        await sendPhotoToAdmin(adminPayload);
       } catch (error) {
+        setSuccess(false);
         setImageSrc(null);
-        console.log(error);
       }
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 5000);
     };
-
     const img = webcamRef.current.getScreenshot({ width: 640, height: 640 });
-    console.log(img);
     setImageSrc(img);
     sendPhotoToMotor(img);
   }, [webcamRef]);
 
+  const user = getProperty("userInfo");
   const sendPhotoToAdmin = async (payload) => {
     try {
       await api.put(routes.APIAddCheckInUser, payload);
       setSuccess(true);
     } catch (error) {
+      setSuccess(false);
       console.log(error);
     }
+    setIsLoading(false);
+    setCheckinIsCompleted(true);
   };
+
+  const clearCheckin = () => {
+    setImageSrc(null);
+    setCheckinIsCompleted(false);
+  };
+
+  useEffect(() => {
+    if (success === true) {
+      setTimeout(() => {
+        setLastStep(true);
+      }, 2000);
+    }
+  }, [success]);
 
   const imageSize = getOrientationValue("22vw", "80vw");
   return (
@@ -73,7 +87,7 @@ const Checkin = () => {
       width="100%"
     >
       <Paper title="Check-in">
-        {success ? (
+        {lastStep !== false ? (
           <StatusStep
             title="Checkin realizado com sucesso!"
             subtitle=""
@@ -86,6 +100,9 @@ const Checkin = () => {
               <Heading fontSize="3rem" fontWeight="normal">
                 Check-in
               </Heading>
+              <Heading fontSize="1.5rem" fontWeight="normal">
+                {`${user.name} ${user.lastName}`}
+              </Heading>
             </Flex>
             <Camera
               isLoading={isLoading}
@@ -93,16 +110,44 @@ const Checkin = () => {
               h={imageSize}
               imageSrc={imageSrc}
               ref={webcamRef}
+              checkinIsCompleted={checkinIsCompleted}
+              success={success}
             />
-            <Button
-              w={imageSize}
-              disabled={imageSrc}
-              colorScheme="teal"
-              onClick={capture}
-              loadingText="Verificando..."
-            >
-              Verificar minha foto
-            </Button>
+            {checkinIsCompleted && success === false && (
+              <Text
+                style={{ marginTop: "1rem" }}
+                color="gray"
+                width="50%"
+                textAlign="center"
+              >
+                Verificação inválida! Tente novamente.
+              </Text>
+            )}
+            {checkinIsCompleted ? (
+              <Button
+                style={{ marginTop: "1rem" }}
+                w={imageSize}
+                disabled={success === true}
+                colorScheme="teal"
+                onClick={success === false && clearCheckin}
+                loadingText="Verificando..."
+              >
+                {success === false
+                  ? "Tentar novamente"
+                  : "Verificar minha foto"}
+              </Button>
+            ) : (
+              <Button
+                style={{ marginTop: "1rem" }}
+                w={imageSize}
+                disabled={imageSrc}
+                colorScheme="teal"
+                onClick={capture}
+                loadingText="Verificando..."
+              >
+                Verificar minha foto
+              </Button>
+            )}
           </>
         )}
       </Paper>
