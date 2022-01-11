@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Flex } from "@chakra-ui/react";
-import { api, motorApi } from "../services/api";
-import {
-  getAdminRegisterPayload,
-  getMotorRegisterPayload,
-} from "../utils/payload";
+import { api } from "../services/api";
+import { getAdminRegisterPayload } from "../utils/payload";
 import { routes } from "../services/routes";
 import StepIndicator from "../components/StepIndicator";
 import FirstStep from "../components/Register/FirstStep";
@@ -24,7 +21,7 @@ const minLength = {
 
 const Register = () => {
   const navigate = useNavigate();
-  const [register, setRegister] = useState(false);
+  const [register] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
@@ -109,31 +106,31 @@ const Register = () => {
     }
   }
 
-  async function removeUserAdmin(userId) {
-    const adminResponse = await api.delete(routes.APIRemoveUser(userId));
-    console.log("User removal from Admin: " + adminResponse.data);
+  // async function removeUserAdmin(userId) {
+  //   const adminResponse = await api.delete(routes.APIRemoveUser(userId));
+  //   console.log("User removal from Admin: " + adminResponse.data);
 
-    if (adminResponse?.data === "true") {
-      return adminResponse.data;
-    } else {
-      return { status: 500 };
-    }
-  }
+  //   if (adminResponse?.data === "true") {
+  //     return adminResponse.data;
+  //   } else {
+  //     return { status: 500 };
+  //   }
+  // }
 
-  async function registerEngine(user) {
-    const payload = getMotorRegisterPayload(user, formData, imageSrc);
+  // async function registerEngine(user) {
+  //   const payload = getMotorRegisterPayload(user, formData, imageSrc);
 
-    const engineResponse = await motorApi.post(routes.transaction, payload);
+  //   const engineResponse = await motorApi.post(routes.transaction, payload);
 
-    if (engineResponse?.data[0]?.status === 0) {
-      console.log("user register (Engine): " + engineResponse.data[0].message);
-      console.log(engineResponse.data);
-      return engineResponse.data[0];
-    } else {
-      console.log("user register (Engine): Fail");
-      return { status: 500 };
-    }
-  }
+  //   if (engineResponse?.data[0]?.status === 0) {
+  //     console.log("user register (Engine): " + engineResponse.data[0].message);
+  //     console.log(engineResponse.data);
+  //     return engineResponse.data[0];
+  //   } else {
+  //     console.log("user register (Engine): Fail");
+  //     return { status: 500 };
+  //   }
+  // }
 
   function handleChange(e) {
     setFormData({

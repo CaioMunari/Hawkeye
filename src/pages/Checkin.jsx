@@ -7,7 +7,7 @@ import {
   getMotorCheckinPayload,
   mockCheckinResponse,
 } from "../utils/payload";
-import { motorApi, api } from "../services/api";
+import { api } from "../services/api";
 import { routes } from "../services/routes";
 import useOrientation from "../hooks/useOrientation";
 import Paper from "../components/Paper";
