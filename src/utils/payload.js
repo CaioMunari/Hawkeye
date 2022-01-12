@@ -3,6 +3,7 @@ import {
   checkScoreStatus,
   getRandomInt32Id,
   getScoreFromResponse,
+  generateAppID,
 } from "./common";
 import { slicePhotoString } from "./photo";
 import { timeStamp } from "../utils/time";
@@ -154,3 +155,20 @@ export const getMotorRegisterPayload = (user, formData, photo) => {
     },
   ];
 };
+
+export const getRegisterDevicePayload = (sn) => {
+  return {
+    appId: generateAppID(),
+    groupId: 1,
+    id: 0,
+    imei: "IMEI NOT FOUND",
+    macAddress: "MAC ADDRESS NOT FOUND",
+    model: window.navigator.userAgent,
+    origin: 1, //pwa
+    sn,
+    token: "TOKEN NOT FOUND",
+  };
+};
+
+// STATUS 0 DEU CERTO
+// STATUS 1 DEU ERRO

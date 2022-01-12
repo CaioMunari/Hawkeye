@@ -6,25 +6,44 @@ import { Heading } from "@chakra-ui/react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import useOrientation from "../hooks/useOrientation";
-import { generateAppID } from "../utils/common";
-
+import { getRegisterDevicePayload } from "../utils/payload";
+import { api } from "../services/api";
+import { routes } from "../services/routes";
 const SerialNumber = () => {
   const navigate = useNavigate();
   const [serialNumber, setSerialNumber] = useState(getSNToken());
   const [error, setError] = useState(false);
-
+  const [errorMsg, setErrorMsg] = useState("");
   const { getOrientationValue } = useOrientation();
 
-  const registerSerialNumber = (e) => {
+  const registerSerialNumber = async (e) => {
     e.preventDefault();
-    const appId = generateAppID();
     if (!serialNumber || serialNumber.length < 5) {
       setError(true);
+      setErrorMsg("Insira um Serial Number válido!");
       return;
     }
-    setAppID(appId);
-    setSNToken(serialNumber);
-    navigate("/login");
+    const payload = getRegisterDevicePayload(serialNumber);
+    try {
+      const { data: response } = await api.post(
+        routes.APISaveDevice(),
+        payload
+      );
+      if (response.status === 1) {
+        setError(true);
+        if (response.message.includes("Invalid")) {
+          setErrorMsg("Dispositivo não identificado!");
+        } else if (response.message.includes("Serial in use")) {
+          setErrorMsg("Dispositivo já cadastrado!");
+        }
+      } else {
+        setAppID(payload.appId);
+        setSNToken(serialNumber);
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -71,10 +90,9 @@ const SerialNumber = () => {
               color="red"
               fontSize="0.9rem"
               style={{ marginTop: 10 }}
-              textAlign="center"
               width="50%"
             >
-              Digite um número de dispositivo correto!
+              {errorMsg}
             </Text>
           )}
           <br></br>

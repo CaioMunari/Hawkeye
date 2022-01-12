@@ -13,4 +13,5 @@ export const routes = {
   APISettings: (userId) => `/settings/score/${userId}`,
   APIPhotoId: (userId) => `/photo/reg/id/${userId}`,
   APIRemoveUser: (userId) => `/user/rollback/{id}?userId=${userId}`,
+  APISaveDevice: () => `/device/save`,
 };
