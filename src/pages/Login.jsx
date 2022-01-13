@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Flex, Stack, Text } from "@chakra-ui/react";
 import { setProperty } from "../services/auth";
 import { useNavigate } from "react-router-dom";

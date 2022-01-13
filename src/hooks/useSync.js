@@ -1,7 +1,7 @@
 import moment from "moment";
 import { useState, useEffect, createContext, useContext } from "react";
 import { api } from "../services/api";
-import { getLastCheckin, getProperty } from "../services/auth";
+import { getLastCheckin } from "../services/auth";
 import { routes } from "../services/routes";
 import { getDeviceUsagePayload } from "../utils/payload";
 import useInterval from "./useInterval";
@@ -19,6 +19,7 @@ export const SyncProvider = ({ children }) => {
     if (lastCheckin) {
       setSync(true);
     }
+    // eslint-disable-next-line
   }, [sync]);
 
   useInterval(

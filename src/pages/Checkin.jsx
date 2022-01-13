@@ -13,7 +13,7 @@ import useOrientation from "../hooks/useOrientation";
 import Paper from "../components/Paper";
 import StatusStep from "../components/Register/StatusStep";
 import { useNavigate } from "react-router-dom";
-import { getProperty, setLastCheckin, setProperty } from "../services/auth";
+import { getProperty, setLastCheckin } from "../services/auth";
 import { useSync } from "../hooks/useSync";
 const Checkin = () => {
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ const Checkin = () => {
     const img = webcamRef.current.getScreenshot({ width: 640, height: 640 });
     setImageSrc(img);
     sendPhotoToMotor(img);
+    // eslint-disable-next-line
   }, [webcamRef]);
 
   const user = getProperty("userInfo");
