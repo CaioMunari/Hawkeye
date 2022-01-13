@@ -13,8 +13,8 @@ import useOrientation from "../hooks/useOrientation";
 import Paper from "../components/Paper";
 import StatusStep from "../components/Register/StatusStep";
 import { useNavigate } from "react-router-dom";
-import { getProperty } from "../services/auth";
-
+import { getProperty, setLastCheckin, setProperty } from "../services/auth";
+import { useSync } from "../hooks/useSync";
 const Checkin = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState(null);
@@ -24,7 +24,7 @@ const Checkin = () => {
   const [lastStep, setLastStep] = useState(false);
   const webcamRef = useRef(null);
   const { getOrientationValue } = useOrientation();
-
+  const { sync, setSync } = useSync();
   const capture = useCallback(() => {
     setIsLoading(true);
     const sendPhotoToMotor = async (img) => {
@@ -55,6 +55,10 @@ const Checkin = () => {
     try {
       await api.put(routes.APIAddCheckInUser, payload);
       setSuccess(true);
+      setLastCheckin(new Date());
+      if (!sync) {
+        setSync(true);
+      }
     } catch (error) {
       setSuccess(false);
       console.log(error);

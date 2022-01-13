@@ -14,4 +14,5 @@ export const routes = {
   APIPhotoId: (userId) => `/photo/reg/id/${userId}`,
   APIRemoveUser: (userId) => `/user/rollback/{id}?userId=${userId}`,
   APISaveDevice: () => `/device/save`,
+  APISaveUsage: () => `/device/usage/save`,
 };

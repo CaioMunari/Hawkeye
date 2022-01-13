@@ -170,5 +170,9 @@ export const getRegisterDevicePayload = (sn) => {
   };
 };
 
-// STATUS 0 DEU CERTO
-// STATUS 1 DEU ERRO
+export const getDeviceUsagePayload = (hours) => {
+  return {
+    hours: new Date().getTime(),
+    sn: getSNToken(),
+  };
+};
