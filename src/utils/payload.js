@@ -1,4 +1,4 @@
-import { getProperty } from "../services/auth";
+import { getProperty, getSNToken } from "../services/auth";
 import {
   checkScoreStatus,
   getRandomInt32Id,
@@ -57,7 +57,7 @@ export const getAdminCheckinPayload = (response, photo, afapTransactionId) => {
     imei: "IMEI NOT FOUND",
     regPhoto: getProperty("photoId"),
     score,
-    sn: "SN NOT FOUND",
+    sn: getSNToken(),
     transactionalPhoto: slicedPhoto,
     userId: getProperty("userId"),
   };
