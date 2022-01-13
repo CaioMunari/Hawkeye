@@ -79,10 +79,6 @@ const Login = () => {
     navigate("/register");
   };
 
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
-
   return (
     <Flex
       width="100%"
