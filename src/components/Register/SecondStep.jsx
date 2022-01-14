@@ -11,6 +11,8 @@ const SecondStep = ({
   formData,
   validateError,
   errorForm,
+  errorMsgs,
+  isLoading,
 }) => {
   const [enableNextStep, setEnableNextStep] = useState(false);
   useEffect(() => {
@@ -47,6 +49,7 @@ const SecondStep = ({
             value={formData.userName}
             onBlur={validateError}
             error={errorForm?.userName}
+            errorMsg={errorMsgs?.userName}
           />
           <Input
             onChange={handleChange}
@@ -69,7 +72,6 @@ const SecondStep = ({
           width="40%"
           type="submit"
           onClick={prevStep}
-          loadingText="Submitting"
           style={{
             textTransform: "uppercase",
           }}
@@ -84,8 +86,8 @@ const SecondStep = ({
           style={{ textTransform: "uppercase" }}
           fontWeight="bold"
           onClick={nextStep}
-          loadingText="Submitting"
-          disabled={!enableNextStep}
+          disabled={!enableNextStep || isLoading}
+          isLoading={isLoading}
         >
           Próximo
         </Button>

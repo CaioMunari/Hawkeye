@@ -16,4 +16,6 @@ export const routes = {
   APIRemoveUser: (userId) => `/user/rollback/{id}?userId=${userId}`,
   APISaveDevice: () => `/device/save`,
   APISaveUsage: () => `/device/usage/save`,
+  APICheckRegistration: (matricula) => `/user/matricula/${matricula}`,
+  APICheckUsername: (username) => `/user/username/${username}`,
 };
