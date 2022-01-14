@@ -10,10 +10,10 @@ export const SyncContext = createContext(null);
 
 export const SyncProvider = ({ children }) => {
   const [sync, setSync] = useState(false);
-  const [hours, setHours] = useState(false);
+  const [hours, setHours] = useState(1);
 
-  const lastCheckin = getLastCheckin();
-  const lastCheckinDate = moment(lastCheckin);
+  let lastCheckin = getLastCheckin();
+  let lastCheckinDate = moment(lastCheckin);
   useEffect(() => {
     if (!lastCheckin) return;
     if (lastCheckin) {
@@ -26,16 +26,20 @@ export const SyncProvider = ({ children }) => {
     () => {
       syncDeviceUse();
     },
-    sync === true ? 5 * 1000 : null
+    sync === true ? 60 * 60 * 1000 : null
   );
 
   const syncDeviceUse = async () => {
-    if (!moment().isSameOrAfter(lastCheckinDate, "day")) {
+    lastCheckin = getLastCheckin();
+    lastCheckinDate = moment(lastCheckin);
+    if (!moment().isSame(lastCheckinDate, "day")) {
       return false;
     }
     const payload = getDeviceUsagePayload(hours);
-    setHours(hours + 1);
-    await api.post(routes.APISaveUsage(), payload);
+    const { data: response } = await api.post(routes.APISaveUsage(), payload);
+    if (response.status === 1) {
+      setHours(hours + 1);
+    }
   };
 
   return (

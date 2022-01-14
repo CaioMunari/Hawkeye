@@ -172,7 +172,7 @@ export const getRegisterDevicePayload = (sn) => {
 
 export const getDeviceUsagePayload = (hours) => {
   return {
-    hours: new Date().getTime(),
+    hours,
     sn: getSNToken(),
   };
 };
