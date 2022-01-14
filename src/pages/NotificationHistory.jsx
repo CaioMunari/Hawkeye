@@ -75,7 +75,7 @@ export default function NotificationHistory() {
                 {historyList.map((item) => (
                   <Tr key={item.id}>
                     <Td>
-                      <Zoom zoomMargin={10}>
+                      <Zoom overlayBgColorEnd="rgba(0,0,0,0.7)" zoomMargin={10}>
                         <Image
                           w="2.5rem"
                           h="2.5rem"
@@ -86,7 +86,7 @@ export default function NotificationHistory() {
                       </Zoom>
                     </Td>
                     <Td>
-                      <Zoom zoomMargin={10}>
+                      <Zoom overlayBgColorEnd="rgba(0,0,0,0.7)" zoomMargin={10}>
                         <Image
                           w="2.5rem"
                           h="2.5rem"
