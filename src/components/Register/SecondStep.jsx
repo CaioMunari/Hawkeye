@@ -42,15 +42,16 @@ const SecondStep = ({
           <Input
             onChange={handleChange}
             name="userName"
+            maxLength={255}
             placeholder="Nome de usuário"
             value={formData.userName}
-            description="Insira um nome de usuário com ao menos 6 caracteres"
             onBlur={validateError}
             error={errorForm?.userName}
           />
           <Input
             onChange={handleChange}
             name="password"
+            maxLength={255}
             placeholder="Senha"
             type="password"
             value={formData.password}

@@ -55,6 +55,7 @@ const FirstStep = ({
           align="flex-start"
         >
           <Input
+            maxLength={510}
             errorBorderColor="crimson"
             bg="white"
             onChange={handleChange}
@@ -100,12 +101,11 @@ const FirstStep = ({
           <Input
             errorBorderColor="crimson"
             bg="white"
+            maxLength={255}
             onChange={handleChange}
             name="registration"
             placeholder="Número de matrícula"
             value={formData.registration}
-            description="Insira uma matrícula com ao menos 6 caracteres"
-            min="6"
             onBlur={validateError}
             error={errorForm?.registration}
           />

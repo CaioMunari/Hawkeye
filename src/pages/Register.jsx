@@ -14,9 +14,7 @@ import useOrientation from "../hooks/useOrientation";
 import { useNavigate } from "react-router-dom";
 
 const minLength = {
-  userName: 6,
   password: 6,
-  registration: 6,
 };
 
 const Register = () => {
