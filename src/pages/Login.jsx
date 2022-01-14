@@ -94,11 +94,11 @@ const Login = () => {
           width={{ base: "100vw", md: getOrientationValue("25vw", "60vw") }}
           bg={"white"}
           height={{ base: "100vh", md: "auto" }}
-          p={12}
+          p={10}
           justify={{ base: "flex-start", md: "flex-start" }}
           borderRadius={{ base: 0, md: 12 }}
         >
-          <Heading fontWeight="normal" style={{ marginBottom: 30 }}>
+          <Heading fontWeight="normal" style={{ marginBottom: "1rem" }}>
             Login
           </Heading>
           <Input
@@ -124,11 +124,11 @@ const Login = () => {
             <Text
               color="red"
               fontSize="0.9rem"
-              style={{ marginTop: 10 }}
-              textAlign="center"
+              style={{ marginTop: "0.5rem" }}
               width="100%"
             >
-              Suas informações de login não estão corretas!
+              Suas informações de login não estão corretas! Tente novamente. Em
+              caso de persistência, contate o administrador
             </Text>
           )}
           <Button
@@ -137,7 +137,7 @@ const Login = () => {
             backgroundColor="teal.300"
             width="100%"
             type="submit"
-            style={{ marginTop: 25, textTransform: "uppercase" }}
+            style={{ marginTop: "1rem", textTransform: "uppercase" }}
             isLoading={isLoading}
           >
             Entrar
@@ -146,7 +146,7 @@ const Login = () => {
             color="purple.400"
             fontWeight="normal"
             fontSize="1.6em"
-            style={{ marginTop: 50 }}
+            style={{ marginTop: "2rem" }}
             textAlign="center"
             width="100%"
           >
@@ -158,7 +158,7 @@ const Login = () => {
             border="1px solid #ccc"
             width="100%"
             onClick={register}
-            style={{ marginTop: 25, textTransform: "uppercase" }}
+            style={{ marginTop: "1rem", textTransform: "uppercase" }}
           >
             Quero me cadastrar
           </Button>
