@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Flex } from "@chakra-ui/react";
-import { api, motorApi } from "../services/api";
-import {
-  getAdminRegisterPayload,
-  getMotorRegisterPayload,
-} from "../utils/payload";
+import { api } from "../services/api";
+import { getAdminRegisterPayload } from "../utils/payload";
 import { routes } from "../services/routes";
 import StepIndicator from "../components/StepIndicator";
 import FirstStep from "../components/Register/FirstStep";
@@ -17,19 +14,19 @@ import useOrientation from "../hooks/useOrientation";
 import { useNavigate } from "react-router-dom";
 
 const minLength = {
-  username: 6,
+  userName: 6,
   password: 6,
   registration: 6,
 };
 
 const Register = () => {
   const navigate = useNavigate();
-  const [register, setRegister] = useState(false);
+  const [register] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
   const initialFormData = Object.freeze({
-    username: "",
+    userName: "",
     password: "",
     name: "",
     lastName: "",
@@ -43,39 +40,50 @@ const Register = () => {
   const { getOrientationValue } = useOrientation();
   const registerUser = async () => {
     setIsLoading(true);
-    registerAdmin()
-      .then((adminResponse) => {
-        if (adminResponse?.status === 0) {
-          registerEngine(adminResponse.user)
-            .then((engineResponse) => {
-              if (engineResponse?.status === 0) {
-                setRegister(false);
-              } else {
-                console.log(
-                  "Not possible to register user on engine, removing temp records."
-                );
-                removeUserAdmin(adminResponse.user.id);
-                setRegister(false);
-                //TODO: error message
-              }
-            })
-            .catch(() => {
-              console.log(" Engine-Server comunication error");
-              console.log(
-                "Not possible to register user on engine, removing temp records."
-              );
-              removeUserAdmin(adminResponse.user.id);
-              setRegister(false);
-            });
-        } else {
-          setRegister(false);
-          alert("Register error");
-          //TODO: error message
-        }
-      })
-      .catch(() => {
-        console.log(" Admin-Server comunication error");
-      });
+    try {
+      await registerAdmin();
+      // removeUserAdmin(response.user.id);
+      // await registerEngine(response.user);
+
+      setTimeout(() => {
+        setStep(5);
+      }, 4000);
+    } catch (error) {
+      console.log(error);
+    }
+    // .then((adminResponse) => {
+    //   if (adminResponse?.status === 0) {
+    //     registerEngine(adminResponse.user)
+    //       .then((engineResponse) => {
+    //         if (engineResponse?.status === 0) {
+    //           setRegister(false);
+    //         } else {
+    //           console.log(
+    //             "Not possible to register user on engine, removing temp records."
+    //           );
+    //           removeUserAdmin(adminResponse.user.id);
+    //           setRegister(false);
+    //           //TODO: error message
+    //         }
+    //       })
+    //       .catch(() => {
+    //         console.log(" Engine-Server comunication error");
+    //         console.log(
+    //           "Not possible to register user on engine, removing temp records."
+    //         );
+    //         removeUserAdmin(adminResponse.user.id);
+    //         setRegister(false);
+    //       });
+    //   } else {
+    //     setRegister(false);
+    //     alert("Register error");
+    //     //TODO: error message
+    //   }
+    // })
+    // .catch(() => {
+    //   console.log(" Admin-Server comunication error");
+    // });
+
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
@@ -98,31 +106,31 @@ const Register = () => {
     }
   }
 
-  async function removeUserAdmin(userId) {
-    const adminResponse = await api.delete(routes.APIRemoveUser(userId));
-    console.log("User removal from Admin: " + adminResponse.data);
+  // async function removeUserAdmin(userId) {
+  //   const adminResponse = await api.delete(routes.APIRemoveUser(userId));
+  //   console.log("User removal from Admin: " + adminResponse.data);
 
-    if (adminResponse?.data === "true") {
-      return adminResponse.data;
-    } else {
-      return { status: 500 };
-    }
-  }
+  //   if (adminResponse?.data === "true") {
+  //     return adminResponse.data;
+  //   } else {
+  //     return { status: 500 };
+  //   }
+  // }
 
-  async function registerEngine(user) {
-    const payload = getMotorRegisterPayload(user, formData, imageSrc);
+  // async function registerEngine(user) {
+  //   const payload = getMotorRegisterPayload(user, formData, imageSrc);
 
-    const engineResponse = await motorApi.post(routes.transaction, payload);
+  //   const engineResponse = await motorApi.post(routes.transaction, payload);
 
-    if (engineResponse?.data[0]?.status === 0) {
-      console.log("user register (Engine): " + engineResponse.data[0].message);
-      console.log(engineResponse.data);
-      return engineResponse.data[0];
-    } else {
-      console.log("user register (Engine): Fail");
-      return { status: 500 };
-    }
-  }
+  //   if (engineResponse?.data[0]?.status === 0) {
+  //     console.log("user register (Engine): " + engineResponse.data[0].message);
+  //     console.log(engineResponse.data);
+  //     return engineResponse.data[0];
+  //   } else {
+  //     console.log("user register (Engine): Fail");
+  //     return { status: 500 };
+  //   }
+  // }
 
   function handleChange(e) {
     setFormData({
@@ -184,8 +192,7 @@ const Register = () => {
       justify="flex-start"
       align="center"
       w="100%"
-      minH="90vh"
-      background="transparent"
+      h="90vh"
       px={{ base: "0", md: "5em" }}
       marginTop={{ base: "0", md: getOrientationValue("-3%", 0) }}
     >

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Flex, Stack, Text } from "@chakra-ui/react";
 import { setProperty } from "../services/auth";
 import { useNavigate } from "react-router-dom";
@@ -79,10 +79,6 @@ const Login = () => {
     navigate("/register");
   };
 
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
-
   return (
     <Flex
       width="100%"
@@ -95,8 +91,8 @@ const Login = () => {
       <form onSubmit={login}>
         <Stack
           direction="column"
-          minWidth={{ base: "100vw", md: getOrientationValue("25vw", "80vw") }}
-          bg="white"
+          width={{ base: "100vw", md: getOrientationValue("25vw", "60vw") }}
+          bg={"white"}
           height={{ base: "100vh", md: "auto" }}
           p={12}
           justify={{ base: "flex-start", md: "flex-start" }}
@@ -164,7 +160,7 @@ const Login = () => {
             onClick={register}
             style={{ marginTop: 25, textTransform: "uppercase" }}
           >
-            Cadastrar
+            Quero me cadastrar
           </Button>
         </Stack>
       </form>
