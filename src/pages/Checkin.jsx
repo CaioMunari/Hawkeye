@@ -81,7 +81,7 @@ const Checkin = () => {
     }
   }, [success]);
 
-  const imageSize = getOrientationValue("22vw", "80vw");
+  const imageSize = getOrientationValue("22vw", "50vw");
   return (
     <Flex
       direction="column"
@@ -131,7 +131,7 @@ const Checkin = () => {
             {checkinIsCompleted ? (
               <Button
                 style={{ marginTop: "1rem" }}
-                w={imageSize}
+                w={"30vw"}
                 disabled={success === true}
                 colorScheme="teal"
                 onClick={success === false && clearCheckin}
@@ -144,7 +144,7 @@ const Checkin = () => {
             ) : (
               <Button
                 style={{ marginTop: "1rem" }}
-                w={imageSize}
+                w={"30vw"}
                 disabled={imageSrc}
                 colorScheme="teal"
                 onClick={capture}

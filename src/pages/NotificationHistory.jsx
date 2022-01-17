@@ -9,6 +9,7 @@ import moment from "moment";
 import IconButton from "../components/IconButton";
 import { buildBase64URL } from "../utils/photo";
 import Zoom from "react-medium-image-zoom";
+import useOrientation from "../hooks/useOrientation";
 
 export default function NotificationHistory() {
   const baseURL = api.defaults.baseURL;
@@ -17,6 +18,7 @@ export default function NotificationHistory() {
   const [page, setPage] = useState(0);
 
   const userInfo = getProperty("userInfo");
+  const { getOrientationValue } = useOrientation();
 
   function alterPage(cmd) {
     if (cmd === "next") {
@@ -40,17 +42,29 @@ export default function NotificationHistory() {
   return (
     <Flex
       direction="column"
-      justify="flex-start"
+      justify={{
+        base: "flex-start",
+        md: getOrientationValue("flex-start", "center"),
+      }}
       align="center"
       width="100%"
-      h="70%"
+      h="100%"
+      flex={1}
     >
       <Paper>
         <Flex direction="column" w="100%" height="80%">
           <Heading fontSize="3rem" fontWeight="normal">
             Histórico
           </Heading>
-          <Box overflowY="auto" h="55vh">
+          <Box
+            border="1px solid"
+            borderColor="gray.300"
+            borderRadius="8px"
+            overflowY="auto"
+            h={"50vh"}
+            px={"1.25rem"}
+            py={"2rem"}
+          >
             <Table variant="striped">
               <Thead>
                 <Tr>
@@ -79,7 +93,7 @@ export default function NotificationHistory() {
                         <Image
                           w="2.5rem"
                           h="2.5rem"
-                          borderRadius="8px"
+                          borderRadius="50%"
                           src={buildBase64URL(userInfo.photo.image)}
                           alt=""
                         />
@@ -90,7 +104,7 @@ export default function NotificationHistory() {
                         <Image
                           w="2.5rem"
                           h="2.5rem"
-                          borderRadius="8px"
+                          borderRadius="50%"
                           src={baseURL + routes.APITransPhoto(item.id)}
                           alt=""
                         />

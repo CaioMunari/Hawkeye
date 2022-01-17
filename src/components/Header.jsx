@@ -30,7 +30,10 @@ export default function WithSubnavigation() {
       {isAuthenticated() && (
         <Flex align="center">
           <IconButton
-            style={{ marginLeft: "1rem" }}
+            style={{
+              marginLeft: "1rem",
+              display: getOrientationValue("flex", "none"),
+            }}
             onClick={() => navigate("/history")}
             name="spreadsheet"
             size="2rem"
