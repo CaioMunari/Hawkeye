@@ -11,6 +11,8 @@ const SecondStep = ({
   formData,
   validateError,
   errorForm,
+  errorMsgs,
+  isLoading,
 }) => {
   const [enableNextStep, setEnableNextStep] = useState(false);
   useEffect(() => {
@@ -42,15 +44,17 @@ const SecondStep = ({
           <Input
             onChange={handleChange}
             name="userName"
+            maxLength={255}
             placeholder="Nome de usuário"
             value={formData.userName}
-            description="Insira um nome de usuário com ao menos 6 caracteres"
             onBlur={validateError}
             error={errorForm?.userName}
+            errorMsg={errorMsgs?.userName}
           />
           <Input
             onChange={handleChange}
             name="password"
+            maxLength={255}
             placeholder="Senha"
             type="password"
             value={formData.password}
@@ -68,7 +72,6 @@ const SecondStep = ({
           width="40%"
           type="submit"
           onClick={prevStep}
-          loadingText="Submitting"
           style={{
             textTransform: "uppercase",
           }}
@@ -83,8 +86,8 @@ const SecondStep = ({
           style={{ textTransform: "uppercase" }}
           fontWeight="bold"
           onClick={nextStep}
-          loadingText="Submitting"
-          disabled={!enableNextStep}
+          disabled={!enableNextStep || isLoading}
+          isLoading={isLoading}
         >
           Próximo
         </Button>

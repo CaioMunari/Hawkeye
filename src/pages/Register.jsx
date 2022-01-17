@@ -14,9 +14,7 @@ import useOrientation from "../hooks/useOrientation";
 import { useNavigate } from "react-router-dom";
 
 const minLength = {
-  userName: 6,
   password: 6,
-  registration: 6,
 };
 
 const Register = () => {
@@ -36,6 +34,7 @@ const Register = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [inputValidation, setInputValidation] = useState(initialFormData);
   const [errorForm, setErrorForm] = useState(initialFormData);
+  const [errorMsgs, setErrorMsgs] = useState(initialFormData);
 
   const { getOrientationValue } = useOrientation();
   const registerUser = async () => {
@@ -184,6 +183,54 @@ const Register = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageSrc, register]);
 
+  const validateRegistration = async () => {
+    setIsLoading(true);
+    try {
+      const { data: response } = await api.get(
+        routes.APICheckRegistration(formData["registration"])
+      );
+      if (response === false) {
+        setStep(step + 1);
+      } else if (response === true) {
+        setErrorForm({
+          ...errorForm,
+          registration: true,
+        });
+        setErrorMsgs({
+          ...errorMsgs,
+          registration: "Matrícula já cadastrada",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
+  const validateUsername = async () => {
+    setIsLoading(true);
+    try {
+      const { data: response } = await api.get(
+        routes.APICheckUsername(formData["userName"])
+      );
+      if (response === false) {
+        setStep(step + 1);
+      } else if (response === true) {
+        setErrorForm({
+          ...errorForm,
+          userName: true,
+        });
+        setErrorMsgs({
+          ...errorMsgs,
+          userName: "Nome de usuário já cadastrado",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
   const icons = ["user-detail", "key", "face-mask", ""];
   return (
     <Flex
@@ -205,9 +252,11 @@ const Register = () => {
                 formData={formData}
                 handleChange={handleChange}
                 verify={verify}
-                nextStep={() => setStep(step + 1)}
+                nextStep={validateRegistration}
                 validateError={validateError}
                 errorForm={errorForm}
+                errorMsgs={errorMsgs}
+                isLoading={isLoading}
               />
             ),
             2: (
@@ -216,9 +265,11 @@ const Register = () => {
                 handleChange={handleChange}
                 verify={verify}
                 prevStep={() => setStep(step - 1)}
-                nextStep={() => setStep(step + 1)}
+                nextStep={validateUsername}
                 validateError={validateError}
                 errorForm={errorForm}
+                errorMsgs={errorMsgs}
+                isLoading={isLoading}
               />
             ),
             3: (

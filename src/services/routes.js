@@ -10,9 +10,12 @@ export const routes = {
   APIUserView: (userId) => `/user/view/${userId}`,
   APICheckHealth: "/sabis/user/1",
   APITransPhotoThumbnail: (id) => `/photo/trans/thumb/${id}`,
+  APITransPhoto: (id) => `/photo/trans/${id}`,
   APISettings: (userId) => `/settings/score/${userId}`,
   APIPhotoId: (userId) => `/photo/reg/id/${userId}`,
   APIRemoveUser: (userId) => `/user/rollback/{id}?userId=${userId}`,
   APISaveDevice: () => `/device/save`,
   APISaveUsage: () => `/device/usage/save`,
+  APICheckRegistration: (matricula) => `/user/matricula/${matricula}`,
+  APICheckUsername: (username) => `/user/username/${username}`,
 };

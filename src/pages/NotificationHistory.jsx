@@ -7,12 +7,16 @@ import Paper from "../components/Paper";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import moment from "moment";
 import IconButton from "../components/IconButton";
+import { buildBase64URL } from "../utils/photo";
+import Zoom from "react-medium-image-zoom";
 
 export default function NotificationHistory() {
   const baseURL = api.defaults.baseURL;
 
   const [historyList, setHistoryList] = useState([]);
   const [page, setPage] = useState(0);
+
+  const userInfo = getProperty("userInfo");
 
   function alterPage(cmd) {
     if (cmd === "next") {
@@ -51,6 +55,9 @@ export default function NotificationHistory() {
               <Thead>
                 <Tr>
                   <Th fontSize="1.2rem" fontWeight="normal" color="#944CCD">
+                    Cadastro
+                  </Th>
+                  <Th fontSize="1.2rem" fontWeight="normal" color="#944CCD">
                     Foto
                   </Th>
                   <Th fontSize="1.2rem" fontWeight="normal" color="#944CCD">
@@ -68,13 +75,26 @@ export default function NotificationHistory() {
                 {historyList.map((item) => (
                   <Tr key={item.id}>
                     <Td>
-                      <Image
-                        w="2.5rem"
-                        h="2.5rem"
-                        borderRadius="8px"
-                        src={baseURL + routes.APITransPhotoThumbnail(item.id)}
-                        alt=""
-                      />
+                      <Zoom overlayBgColorEnd="rgba(0,0,0,0.7)" zoomMargin={10}>
+                        <Image
+                          w="2.5rem"
+                          h="2.5rem"
+                          borderRadius="8px"
+                          src={buildBase64URL(userInfo.photo.image)}
+                          alt=""
+                        />
+                      </Zoom>
+                    </Td>
+                    <Td>
+                      <Zoom overlayBgColorEnd="rgba(0,0,0,0.7)" zoomMargin={10}>
+                        <Image
+                          w="2.5rem"
+                          h="2.5rem"
+                          borderRadius="8px"
+                          src={baseURL + routes.APITransPhoto(item.id)}
+                          alt=""
+                        />
+                      </Zoom>
                     </Td>
                     <Td>{item.id}</Td>
                     <Td>

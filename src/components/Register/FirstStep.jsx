@@ -12,6 +12,8 @@ const FirstStep = ({
   verify,
   nextStep,
   formData,
+  errorMsgs,
+  isLoading,
 }) => {
   const [enableNextStep, setEnableNextStep] = useState(false);
   const navigate = useNavigate();
@@ -55,6 +57,7 @@ const FirstStep = ({
           align="flex-start"
         >
           <Input
+            maxLength={510}
             errorBorderColor="crimson"
             bg="white"
             onChange={handleChange}
@@ -100,14 +103,14 @@ const FirstStep = ({
           <Input
             errorBorderColor="crimson"
             bg="white"
+            maxLength={255}
             onChange={handleChange}
             name="registration"
             placeholder="Número de matrícula"
             value={formData.registration}
-            description="Insira uma matrícula com ao menos 6 caracteres"
-            min="6"
             onBlur={validateError}
             error={errorForm?.registration}
+            errorMsg={errorMsgs?.registration}
           />
         </Flex>
       </Flex>
@@ -133,8 +136,8 @@ const FirstStep = ({
           style={{ textTransform: "uppercase" }}
           fontWeight="bold"
           onClick={nextStep}
-          loadingText="Submitting"
-          disabled={!enableNextStep}
+          disabled={!enableNextStep || isLoading}
+          isLoading={isLoading}
         >
           Próximo
         </Button>

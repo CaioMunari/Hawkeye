@@ -105,7 +105,7 @@ const Checkin = () => {
               <Heading fontSize="3rem" fontWeight="normal">
                 Check-in
               </Heading>
-              <Heading fontSize="1.5rem" fontWeight="normal">
+              <Heading fontSize="1rem" fontWeight="normal" color="purple.500">
                 {`${user.name} ${user.lastName}`}
               </Heading>
             </Flex>
