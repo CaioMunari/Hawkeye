@@ -14,10 +14,13 @@ import History from "./pages/NotificationHistory";
 import SerialNumber from "./pages/SerialNumber";
 import "boxicons";
 import { SyncProvider } from "./hooks/useSync";
+import { ToastContainer } from "react-toastify";
+
 export default function Routes() {
   return (
     <BrowserRouter>
       <ChakraProvider theme={theme}>
+        <ToastContainer />
         <SyncProvider>
           <Switch>
             <Route
