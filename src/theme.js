@@ -38,6 +38,7 @@ const theme = extendTheme({
         margin: 0,
         padding: 0,
         fontSize: "93.75%",
+        overflowY: "hidden",
       },
       "*": {
         boxSizing: "border-box",

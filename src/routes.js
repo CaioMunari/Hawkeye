@@ -15,12 +15,14 @@ import SerialNumber from "./pages/SerialNumber";
 import "boxicons";
 import { SyncProvider } from "./hooks/useSync";
 import { ToastContainer } from "react-toastify";
+import Install from "./components/Install";
 
 export default function Routes() {
   return (
     <BrowserRouter>
       <ChakraProvider theme={theme}>
         <ToastContainer />
+        <Install />
         <SyncProvider>
           <Switch>
             <Route
