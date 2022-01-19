@@ -1,4 +1,4 @@
-import { getProperty, getSNToken } from "../services/auth";
+import { getAppID, getProperty } from "../services/auth";
 import {
   checkScoreStatus,
   getRandomInt32Id,
@@ -57,7 +57,8 @@ export const getAdminCheckinPayload = (response, photo, afapTransactionId) => {
     imei: "IMEI NOT FOUND",
     regPhoto: getProperty("photoId"),
     score,
-    sn: getSNToken(),
+    // sn: getSNToken(),
+    sn: getAppID(),
     transactionalPhoto: slicedPhoto,
     userId: getProperty("userId"),
   };
@@ -173,6 +174,7 @@ export const getRegisterDevicePayload = (sn) => {
 export const getDeviceUsagePayload = (hours) => {
   return {
     hours,
-    sn: getSNToken(),
+    // sn: getSNToken(),
+    sn: getAppID(),
   };
 };
