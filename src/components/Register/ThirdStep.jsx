@@ -40,8 +40,8 @@ const ThirdStep = ({ nextStep, prevStep, setImageSrc, imageSrc }) => {
               id="teste"
               imageSrc={imageSrc}
               ref={webcamRef}
-              w={{ base: "220px", md: getOrientationValue("16vw", "50vw") }}
-              h={{ base: "220px", md: getOrientationValue("16vw", "50vw") }}
+              w={{ base: "180px", md: getOrientationValue("16vw", "50vw") }}
+              h={{ base: "180px", md: getOrientationValue("16vw", "50vw") }}
             />
           </CameraButton>
         </Flex>

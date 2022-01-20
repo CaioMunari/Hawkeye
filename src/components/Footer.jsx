@@ -8,11 +8,14 @@ const Footer = () => {
   const navigate = useNavigate();
   const { getOrientationValue } = useOrientation();
   return (
-    <Flex w="20%">
+    <Flex
+      alignSelf="center"
+      minWidth={{ base: "85vw", md: getOrientationValue("55vw", "85vw") }}
+      align="flex-start"
+      paddingTop="2rem"
+    >
       <IconButton
         style={{
-          marginLeft: "4rem",
-          marginBottom: "5rem",
           display: getOrientationValue("none", "flex"),
         }}
         onClick={() => navigate("/history")}

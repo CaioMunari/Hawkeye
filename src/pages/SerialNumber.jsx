@@ -86,12 +86,7 @@ const SerialNumber = () => {
             color={error && "red"}
           />
           {error && (
-            <Text
-              color="red"
-              fontSize="0.9rem"
-              style={{ marginTop: 10 }}
-              width="50%"
-            >
+            <Text color="red" fontSize="0.9rem" style={{ marginTop: 10 }}>
               {errorMsg}
             </Text>
           )}
