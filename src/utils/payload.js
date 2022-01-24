@@ -97,12 +97,18 @@ export const getAdminRegisterPayload = (formData, photo) => {
   const now = Date.now();
   const slicedPhoto = slicePhotoString(photo);
   const fullname = formData.name.trim();
-  const [name, lastName] = fullname.split(" ");
+  const nameArr = fullname.split(" ");
+  const name = nameArr[0];
+  let lastName = "";
+  nameArr.forEach(function (word, i) {
+    if (i === 0) return;
+    lastName = lastName + word + " ";
+  });
   return {
     afapTransactionId: now,
     date: timeStamp(),
-    name: name,
-    lastName: lastName,
+    name: name.trim(),
+    lastName: lastName.trim(),
     gender: formData.gender,
     matricula: formData.registration,
     userName: formData.userName,
