@@ -19,6 +19,7 @@ export default function WithSubnavigation() {
       px={getOrientationValue("5em", "2em")}
       py="2em"
       align="center"
+      boxSizing="border-box"
     >
       <img
         style={{ cursor: "pointer" }}
@@ -31,18 +32,30 @@ export default function WithSubnavigation() {
         <Flex align="center">
           <IconButton
             style={{
-              marginLeft: "1rem",
+              marginRight: "1rem",
               display: getOrientationValue("flex", "none"),
             }}
+            _hover={{ backgroundColor: "#6F2FA2" }}
+            onClick={() => navigate("/checkin")}
+            name="check-circle"
+            size="2rem"
+            color="#F8F9FA"
+            text="Fazer Checkin"
+          />
+          <IconButton
+            style={{
+              marginRight: "1rem",
+              display: getOrientationValue("flex", "none"),
+            }}
+            _hover={{ backgroundColor: "#6F2FA2" }}
             onClick={() => navigate("/history")}
             name="spreadsheet"
             size="2rem"
             color="#F8F9FA"
             text="Histórico"
           />
-          <UserInfo style={{ marginLeft: "1rem" }} />
+          <UserInfo style={{ marginRight: "1rem" }} />
           <IconButton
-            style={{ marginLeft: "1rem" }}
             onClick={logout}
             name="log-out"
             size="2rem"

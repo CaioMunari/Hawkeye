@@ -59,6 +59,9 @@ const Install = () => {
                 marginRight="1rem"
                 verticalAlign="middle"
                 fontWeight={500}
+                padding="0.8rem"
+                borderRadius="4px"
+                _hover={{ opacity: 0.5, backgroundColor: "#6F2FA2" }}
               >
                 Agora não
               </Text>
