@@ -67,8 +67,8 @@ const Install = () => {
           </Flex>
         </Flex>
       )}
-      callback={(data) => console.log(data)}
-    ></PWAInstallerPrompt>
+      callback={(data) => true}
+    />
   );
 };
 export default Install;
