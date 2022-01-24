@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Flex, HStack, RadioGroup, Radio, Heading } from "@chakra-ui/react";
+import {
+  Flex,
+  HStack,
+  RadioGroup,
+  Radio,
+  Heading,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Text,
+} from "@chakra-ui/react";
 import Button from "../Button";
 import Input from "../Input";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +30,7 @@ const FirstStep = ({
   isLoading,
 }) => {
   const [enableNextStep, setEnableNextStep] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,19 +40,64 @@ const FirstStep = ({
   }, [formData]);
 
   const getBackToLogin = () => {
-    if (
-      window.confirm(
-        "Deseja voltar à tela de Login? Todos os dados do cadastro serão perdidos!"
-      )
-    ) {
-      navigate("/login");
-    } else {
-      // They clicked no
-    }
+    setIsModalOpen(true);
+    // if (
+    //   window.confirm(
+    //     "Deseja voltar à tela de Login? Todos os dados do cadastro serão perdidos!"
+    //   )
+    // ) {
+    //   navigate("/login");
+    // } else {
+    //   // They clicked no
+    // }
   };
 
   return (
     <>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <ModalOverlay />
+        <ModalContent padding="1rem">
+          <ModalHeader fontSize="2rem" fontWeight="normal" fontFamily="Khand">
+            Sair desta tela
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>
+              As alterações feitas podem não ser salvas. Quer sair assim mesmo?
+            </Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Flex pt={2} width="100%" justify="space-between">
+              <Button
+                width="40%"
+                type="submit"
+                color="gray.400"
+                background="white"
+                border="1px solid #ccc"
+                onClick={() => setIsModalOpen(false)}
+                loadingText="Submitting"
+                style={{
+                  textTransform: "uppercase",
+                }}
+              >
+                Voltar
+              </Button>
+              <Button
+                colorScheme="teal"
+                width="40%"
+                type="submit"
+                style={{ textTransform: "uppercase" }}
+                fontWeight="bold"
+                onClick={() => navigate("/login")}
+                isLoading={isLoading}
+              >
+                Sair
+              </Button>
+            </Flex>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Flex direction="column" w="100%" height="80%">
         <Heading fontSize="3rem" fontWeight="normal">
           Cadastro
