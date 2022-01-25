@@ -51,6 +51,11 @@ const theme = extendTheme({
           fontSize: "87.5%",
         },
       },
+      ".Toastify__toast": {
+        fontFamily: "Inter",
+        color: "#000",
+        fontSize: "12px",
+      },
     },
   },
 });

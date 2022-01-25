@@ -7,7 +7,7 @@ const OfflineNotification = () => {
   useEffect(() => {
     let intervalId;
     intervalId = setTimeout(() => {
-      toastId.current = toast.info(`Você está offline!`, {
+      toastId.current = toast.info(`Você está usando essa aplicação offline!`, {
         toastId: "appUpdateAvailable", // Prevent duplicate toasts
         // closeOnClick: true,
         position: "top-right",
