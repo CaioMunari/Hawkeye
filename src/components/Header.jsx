@@ -33,7 +33,6 @@ export default function WithSubnavigation() {
           <IconButton
             style={{
               marginRight: "1rem",
-              display: getOrientationValue("flex", "none"),
             }}
             _hover={{ backgroundColor: "#6F2FA2" }}
             onClick={() => navigate("/checkin")}

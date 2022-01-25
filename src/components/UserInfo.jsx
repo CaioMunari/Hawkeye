@@ -6,7 +6,18 @@ const UserInfo = ({ style }) => {
   const userInfo = getProperty("userInfo");
   return (
     <Flex align="center" justify="space-between" style={style}>
-      <Heading fontSize="1rem" fontWeight="normal" color="#F8F9FA">
+      <Heading
+        title={userInfo.name + " " + userInfo.lastName}
+        fontSize="1rem"
+        fontWeight="normal"
+        color="#F8F9FA"
+        style={{
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          maxWidth: "100px",
+        }}
+      >
         {userInfo.name + " " + userInfo.lastName}
       </Heading>
       <img
