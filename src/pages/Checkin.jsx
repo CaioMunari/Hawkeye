@@ -15,6 +15,7 @@ import StatusStep from "../components/Register/StatusStep";
 import { useNavigate } from "react-router-dom";
 import { getProperty, setLastCheckin } from "../services/auth";
 import { useSync } from "../hooks/useSync";
+import Footer from "../components/Footer";
 const Checkin = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState(null);
@@ -81,15 +82,15 @@ const Checkin = () => {
     }
   }, [success]);
 
-  const imageSize = getOrientationValue("22vw", "80vw");
+  const imageSize = getOrientationValue("22vw", "50vw");
   return (
     <Flex
       direction="column"
       justify="flex-start"
-      flex={1}
       align="center"
       height="100%"
       width="100%"
+      flex={1}
     >
       <Paper title="Check-in">
         {lastStep !== false ? (
@@ -131,7 +132,6 @@ const Checkin = () => {
             {checkinIsCompleted ? (
               <Button
                 style={{ marginTop: "1rem" }}
-                w={imageSize}
                 disabled={success === true}
                 colorScheme="teal"
                 onClick={success === false && clearCheckin}
@@ -144,7 +144,6 @@ const Checkin = () => {
             ) : (
               <Button
                 style={{ marginTop: "1rem" }}
-                w={imageSize}
                 disabled={imageSrc}
                 colorScheme="teal"
                 onClick={capture}
@@ -156,6 +155,7 @@ const Checkin = () => {
           </>
         )}
       </Paper>
+      <Footer />
     </Flex>
   );
 };

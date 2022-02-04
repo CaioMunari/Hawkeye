@@ -43,10 +43,6 @@ const Register = () => {
       await registerAdmin();
       // removeUserAdmin(response.user.id);
       // await registerEngine(response.user);
-
-      setTimeout(() => {
-        setStep(5);
-      }, 4000);
     } catch (error) {
       console.log(error);
     }
@@ -95,6 +91,9 @@ const Register = () => {
       const adminResponse = await api.put(routes.APIAddUser, payload);
       if (adminResponse?.data?.status === 0) {
         console.log("user register (Admin): " + adminResponse.data.message);
+        setTimeout(() => {
+          setStep(5);
+        }, 4000);
         return adminResponse.data;
       } else {
         console.log("user register (Admin): Fail");
@@ -146,7 +145,7 @@ const Register = () => {
       const key = keys[i];
       if (key === "name") {
         let trimmedName = formData[key].trim().split(" ");
-        if (trimmedName.length === 2) {
+        if (trimmedName.length > 1) {
           tempForm[key] = false;
           numberOfErrors--;
         } else {

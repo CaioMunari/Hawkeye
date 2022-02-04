@@ -91,12 +91,12 @@ const Login = () => {
       <form onSubmit={login}>
         <Stack
           direction="column"
-          width={{ base: "100vw", md: getOrientationValue("25vw", "60vw") }}
+          width={{ base: "85vw", md: getOrientationValue("25vw", "60vw") }}
           bg={"white"}
-          height={{ base: "100vh", md: "auto" }}
+          height={{ base: "55vh", md: "auto" }}
           p={10}
           justify={{ base: "flex-start", md: "flex-start" }}
-          borderRadius={{ base: 0, md: 12 }}
+          borderRadius={12}
         >
           <Heading fontWeight="normal" style={{ marginBottom: "1rem" }}>
             Login

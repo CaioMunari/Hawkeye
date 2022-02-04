@@ -14,10 +14,20 @@ import History from "./pages/NotificationHistory";
 import SerialNumber from "./pages/SerialNumber";
 import "boxicons";
 import { SyncProvider } from "./hooks/useSync";
+import { ToastContainer } from "react-toastify";
+import Install from "./components/Install";
+import { Offline } from "react-detect-offline";
+import OfflineNotification from "./components/OfflineNotification";
+
 export default function Routes() {
   return (
     <BrowserRouter>
       <ChakraProvider theme={theme}>
+        <ToastContainer />
+        <Install />
+        <Offline>
+          <OfflineNotification />
+        </Offline>
         <SyncProvider>
           <Switch>
             <Route

@@ -6,10 +6,10 @@ const Paper = ({ children }) => {
   return (
     <Stack
       direction="column"
-      minWidth={{ base: "100vw", md: getOrientationValue("55vw", "85vw") }}
+      minWidth={{ base: "85vw", md: getOrientationValue("55vw", "85vw") }}
       bg="white"
-      minHeight={{ base: "100%", md: getOrientationValue("65vh", "65vh") }}
-      padding={"3rem"}
+      minHeight="65vh"
+      padding="3rem"
       align="center"
       justify="space-between"
       borderRadius="24px"
