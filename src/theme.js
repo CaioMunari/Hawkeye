@@ -38,6 +38,7 @@ const theme = extendTheme({
         margin: 0,
         padding: 0,
         fontSize: "93.75%",
+        overflowY: "hidden",
       },
       "*": {
         boxSizing: "border-box",
@@ -49,6 +50,11 @@ const theme = extendTheme({
         html: {
           fontSize: "87.5%",
         },
+      },
+      ".Toastify__toast": {
+        fontFamily: "Inter",
+        color: "#000",
+        fontSize: "12px",
       },
     },
   },

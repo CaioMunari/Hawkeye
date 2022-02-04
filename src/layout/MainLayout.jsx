@@ -5,7 +5,7 @@ import Header from "../components/Header";
 const MainLayout = ({ children }) => {
   return (
     <Background>
-      <Flex direction="column" minH="100vh">
+      <Flex direction="column" minH="100vh" overflowY="auto">
         <Header />
         {children}
       </Flex>

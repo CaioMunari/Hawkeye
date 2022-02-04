@@ -1,8 +1,9 @@
 import { Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { clearToken, getToken } from "../services/auth";
+import { clearToken, isAuthenticated } from "../services/auth";
 import useOrientation from "../hooks/useOrientation";
 import IconButton from "./IconButton";
+import UserInfo from "./UserInfo";
 export default function WithSubnavigation() {
   const navigate = useNavigate();
   const { getOrientationValue } = useOrientation();
@@ -18,6 +19,7 @@ export default function WithSubnavigation() {
       px={getOrientationValue("5em", "2em")}
       py="2em"
       align="center"
+      boxSizing="border-box"
     >
       <img
         style={{ cursor: "pointer" }}
@@ -26,21 +28,36 @@ export default function WithSubnavigation() {
         alt="Logo"
         src={"/images/logo.svg"}
       />
-      {getToken() !== null && (
-        <Flex>
+      {isAuthenticated() && (
+        <Flex align="center">
           <IconButton
-            style={{ marginLeft: "1rem" }}
+            style={{
+              marginRight: "1rem",
+            }}
+            _hover={{ backgroundColor: "#6F2FA2" }}
+            onClick={() => navigate("/checkin")}
+            name="check-circle"
+            size="2rem"
+            color="#F8F9FA"
+            text="Fazer Checkin"
+          />
+          <IconButton
+            style={{
+              marginRight: "1rem",
+              display: getOrientationValue("flex", "none"),
+            }}
+            _hover={{ backgroundColor: "#6F2FA2" }}
             onClick={() => navigate("/history")}
             name="spreadsheet"
-            size="2em"
+            size="2rem"
             color="#F8F9FA"
             text="Histórico"
           />
+          <UserInfo style={{ marginRight: "1rem" }} />
           <IconButton
-            style={{ marginLeft: "1rem" }}
             onClick={logout}
             name="log-out"
-            size="2em"
+            size="2rem"
             color="#F8F9FA"
           ></IconButton>
         </Flex>

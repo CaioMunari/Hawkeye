@@ -1,4 +1,7 @@
 export const USER_KEY = "sabis-token";
+export const SERIAL_NUMBER_KEY = "sabis-sn";
+export const APP_ID_KEY = "sabis-appId";
+export const LAST_CHECKIN = "sabis-checkin";
 
 export const isAuthenticated = () => localStorage.getItem(USER_KEY) !== null;
 
@@ -11,6 +14,25 @@ export const getUserId = () => JSON.parse(localStorage.getItem(USER_KEY)).id;
 
 export const clearToken = () => localStorage.removeItem(USER_KEY);
 
+export const setSNToken = (sn) =>
+  localStorage.setItem(SERIAL_NUMBER_KEY, JSON.stringify(sn));
+
+export const getSNToken = () =>
+  JSON.parse(localStorage.getItem(SERIAL_NUMBER_KEY));
+
+export const setLastCheckin = (checkin) =>
+  localStorage.setItem(LAST_CHECKIN, JSON.stringify(checkin));
+
+export const getLastCheckin = () =>
+  JSON.parse(localStorage.getItem(LAST_CHECKIN));
+
+export const setAppID = (appId) =>
+  localStorage.setItem(APP_ID_KEY, JSON.stringify(appId));
+
+export const getAppID = () => JSON.parse(localStorage.getItem(APP_ID_KEY));
+export const isSNRegistered = () =>
+  localStorage.getItem(SERIAL_NUMBER_KEY) !== null;
+
 export const setProperty = (key, value) => {
   let payload = JSON.parse(localStorage.getItem(USER_KEY));
   if (payload === null) {
@@ -22,6 +44,6 @@ export const setProperty = (key, value) => {
 };
 
 export const getProperty = (key) => {
-  let payload = JSON.parse(localStorage.getItem(USER_KEY));
-  return payload[key];
+  let payload = JSON.parse(localStorage.getItem(USER_KEY)) || null;
+  return payload ? payload[key] : null;
 };

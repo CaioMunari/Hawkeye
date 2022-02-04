@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Flex } from "@chakra-ui/react";
-import { api, motorApi } from "../services/api";
-import {
-  getAdminRegisterPayload,
-  getMotorRegisterPayload,
-} from "../utils/payload";
+import { api } from "../services/api";
+import { getAdminRegisterPayload } from "../utils/payload";
 import { routes } from "../services/routes";
 import StepIndicator from "../components/StepIndicator";
 import FirstStep from "../components/Register/FirstStep";
@@ -17,19 +14,17 @@ import useOrientation from "../hooks/useOrientation";
 import { useNavigate } from "react-router-dom";
 
 const minLength = {
-  username: 6,
   password: 6,
-  registration: 6,
 };
 
 const Register = () => {
   const navigate = useNavigate();
-  const [register, setRegister] = useState(false);
+  const [register] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
   const initialFormData = Object.freeze({
-    username: "",
+    userName: "",
     password: "",
     name: "",
     lastName: "",
@@ -39,43 +34,51 @@ const Register = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [inputValidation, setInputValidation] = useState(initialFormData);
   const [errorForm, setErrorForm] = useState(initialFormData);
+  const [errorMsgs, setErrorMsgs] = useState(initialFormData);
 
   const { getOrientationValue } = useOrientation();
   const registerUser = async () => {
     setIsLoading(true);
-    registerAdmin()
-      .then((adminResponse) => {
-        if (adminResponse?.status === 0) {
-          registerEngine(adminResponse.user)
-            .then((engineResponse) => {
-              if (engineResponse?.status === 0) {
-                setRegister(false);
-              } else {
-                console.log(
-                  "Not possible to register user on engine, removing temp records."
-                );
-                removeUserAdmin(adminResponse.user.id);
-                setRegister(false);
-                //TODO: error message
-              }
-            })
-            .catch(() => {
-              console.log(" Engine-Server comunication error");
-              console.log(
-                "Not possible to register user on engine, removing temp records."
-              );
-              removeUserAdmin(adminResponse.user.id);
-              setRegister(false);
-            });
-        } else {
-          setRegister(false);
-          alert("Register error");
-          //TODO: error message
-        }
-      })
-      .catch(() => {
-        console.log(" Admin-Server comunication error");
-      });
+    try {
+      await registerAdmin();
+      // removeUserAdmin(response.user.id);
+      // await registerEngine(response.user);
+    } catch (error) {
+      console.log(error);
+    }
+    // .then((adminResponse) => {
+    //   if (adminResponse?.status === 0) {
+    //     registerEngine(adminResponse.user)
+    //       .then((engineResponse) => {
+    //         if (engineResponse?.status === 0) {
+    //           setRegister(false);
+    //         } else {
+    //           console.log(
+    //             "Not possible to register user on engine, removing temp records."
+    //           );
+    //           removeUserAdmin(adminResponse.user.id);
+    //           setRegister(false);
+    //           //TODO: error message
+    //         }
+    //       })
+    //       .catch(() => {
+    //         console.log(" Engine-Server comunication error");
+    //         console.log(
+    //           "Not possible to register user on engine, removing temp records."
+    //         );
+    //         removeUserAdmin(adminResponse.user.id);
+    //         setRegister(false);
+    //       });
+    //   } else {
+    //     setRegister(false);
+    //     alert("Register error");
+    //     //TODO: error message
+    //   }
+    // })
+    // .catch(() => {
+    //   console.log(" Admin-Server comunication error");
+    // });
+
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
@@ -88,6 +91,9 @@ const Register = () => {
       const adminResponse = await api.put(routes.APIAddUser, payload);
       if (adminResponse?.data?.status === 0) {
         console.log("user register (Admin): " + adminResponse.data.message);
+        setTimeout(() => {
+          setStep(5);
+        }, 4000);
         return adminResponse.data;
       } else {
         console.log("user register (Admin): Fail");
@@ -98,31 +104,31 @@ const Register = () => {
     }
   }
 
-  async function removeUserAdmin(userId) {
-    const adminResponse = await api.delete(routes.APIRemoveUser(userId));
-    console.log("User removal from Admin: " + adminResponse.data);
+  // async function removeUserAdmin(userId) {
+  //   const adminResponse = await api.delete(routes.APIRemoveUser(userId));
+  //   console.log("User removal from Admin: " + adminResponse.data);
 
-    if (adminResponse?.data === "true") {
-      return adminResponse.data;
-    } else {
-      return { status: 500 };
-    }
-  }
+  //   if (adminResponse?.data === "true") {
+  //     return adminResponse.data;
+  //   } else {
+  //     return { status: 500 };
+  //   }
+  // }
 
-  async function registerEngine(user) {
-    const payload = getMotorRegisterPayload(user, formData, imageSrc);
+  // async function registerEngine(user) {
+  //   const payload = getMotorRegisterPayload(user, formData, imageSrc);
 
-    const engineResponse = await motorApi.post(routes.transaction, payload);
+  //   const engineResponse = await motorApi.post(routes.transaction, payload);
 
-    if (engineResponse?.data[0]?.status === 0) {
-      console.log("user register (Engine): " + engineResponse.data[0].message);
-      console.log(engineResponse.data);
-      return engineResponse.data[0];
-    } else {
-      console.log("user register (Engine): Fail");
-      return { status: 500 };
-    }
-  }
+  //   if (engineResponse?.data[0]?.status === 0) {
+  //     console.log("user register (Engine): " + engineResponse.data[0].message);
+  //     console.log(engineResponse.data);
+  //     return engineResponse.data[0];
+  //   } else {
+  //     console.log("user register (Engine): Fail");
+  //     return { status: 500 };
+  //   }
+  // }
 
   function handleChange(e) {
     setFormData({
@@ -139,7 +145,7 @@ const Register = () => {
       const key = keys[i];
       if (key === "name") {
         let trimmedName = formData[key].trim().split(" ");
-        if (trimmedName.length === 2) {
+        if (trimmedName.length > 1) {
           tempForm[key] = false;
           numberOfErrors--;
         } else {
@@ -176,6 +182,54 @@ const Register = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageSrc, register]);
 
+  const validateRegistration = async () => {
+    setIsLoading(true);
+    try {
+      const { data: response } = await api.get(
+        routes.APICheckRegistration(formData["registration"])
+      );
+      if (response === false) {
+        setStep(step + 1);
+      } else if (response === true) {
+        setErrorForm({
+          ...errorForm,
+          registration: true,
+        });
+        setErrorMsgs({
+          ...errorMsgs,
+          registration: "Matrícula já cadastrada",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
+  const validateUsername = async () => {
+    setIsLoading(true);
+    try {
+      const { data: response } = await api.get(
+        routes.APICheckUsername(formData["userName"])
+      );
+      if (response === false) {
+        setStep(step + 1);
+      } else if (response === true) {
+        setErrorForm({
+          ...errorForm,
+          userName: true,
+        });
+        setErrorMsgs({
+          ...errorMsgs,
+          userName: "Nome de usuário já cadastrado",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
   const icons = ["user-detail", "key", "face-mask", ""];
   return (
     <Flex
@@ -184,8 +238,7 @@ const Register = () => {
       justify="flex-start"
       align="center"
       w="100%"
-      minH="90vh"
-      background="transparent"
+      h="90vh"
       px={{ base: "0", md: "5em" }}
       marginTop={{ base: "0", md: getOrientationValue("-3%", 0) }}
     >
@@ -198,9 +251,11 @@ const Register = () => {
                 formData={formData}
                 handleChange={handleChange}
                 verify={verify}
-                nextStep={() => setStep(step + 1)}
+                nextStep={validateRegistration}
                 validateError={validateError}
                 errorForm={errorForm}
+                errorMsgs={errorMsgs}
+                isLoading={isLoading}
               />
             ),
             2: (
@@ -209,9 +264,11 @@ const Register = () => {
                 handleChange={handleChange}
                 verify={verify}
                 prevStep={() => setStep(step - 1)}
-                nextStep={() => setStep(step + 1)}
+                nextStep={validateUsername}
                 validateError={validateError}
                 errorForm={errorForm}
+                errorMsgs={errorMsgs}
+                isLoading={isLoading}
               />
             ),
             3: (

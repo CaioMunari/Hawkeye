@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Flex, Stack, Text } from "@chakra-ui/react";
 import { setProperty } from "../services/auth";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +27,7 @@ const Login = () => {
         userName: user,
       });
       if (data && data.id !== 0) {
+        await getUserInfo(data.id);
         getPhotoId(data.id);
         getSettings(data.id);
         setProperty("userId", data.id);
@@ -52,6 +53,17 @@ const Login = () => {
     }
   };
 
+  const getUserInfo = async (userId) => {
+    try {
+      const { data } = await api.get(routes.APIUserView(userId));
+      if (data) {
+        setProperty("userInfo", data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getSettings = async (userId) => {
     try {
       const { data } = await api.get(routes.APISettings(userId));
@@ -67,10 +79,6 @@ const Login = () => {
     navigate("/register");
   };
 
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
-
   return (
     <Flex
       width="100%"
@@ -83,19 +91,19 @@ const Login = () => {
       <form onSubmit={login}>
         <Stack
           direction="column"
-          minWidth={{ base: "100vw", md: getOrientationValue("25vw", "80vw") }}
-          bg="white"
-          height={{ base: "100vh", md: "auto" }}
-          p={12}
+          width={{ base: "85vw", md: getOrientationValue("25vw", "60vw") }}
+          bg={"white"}
+          height={{ base: "55vh", md: "auto" }}
+          p={10}
           justify={{ base: "flex-start", md: "flex-start" }}
-          borderRadius={{ base: 0, md: 12 }}
+          borderRadius={12}
         >
-          <Heading fontWeight="normal" style={{ marginBottom: 30 }}>
+          <Heading fontWeight="normal" style={{ marginBottom: "1rem" }}>
             Login
           </Heading>
           <Input
             bg="white"
-            placeholder="User"
+            placeholder="Nome de usuário"
             value={user}
             onChange={(e) => setUser(e.target.value)}
             isInvalid={error}
@@ -105,7 +113,7 @@ const Login = () => {
           <Input
             type="password"
             bg="white"
-            placeholder="Password"
+            placeholder="Senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             isInvalid={error}
@@ -116,11 +124,11 @@ const Login = () => {
             <Text
               color="red"
               fontSize="0.9rem"
-              style={{ marginTop: 10 }}
-              textAlign="center"
+              style={{ marginTop: "0.5rem" }}
               width="100%"
             >
-              Suas informações de login não estão corretas!
+              Suas informações de login não estão corretas! Tente novamente. Em
+              caso de persistência, contate o administrador
             </Text>
           )}
           <Button
@@ -129,7 +137,7 @@ const Login = () => {
             backgroundColor="teal.300"
             width="100%"
             type="submit"
-            style={{ marginTop: 25, textTransform: "uppercase" }}
+            style={{ marginTop: "1rem", textTransform: "uppercase" }}
             isLoading={isLoading}
           >
             Entrar
@@ -138,7 +146,7 @@ const Login = () => {
             color="purple.400"
             fontWeight="normal"
             fontSize="1.6em"
-            style={{ marginTop: 50 }}
+            style={{ marginTop: "2rem" }}
             textAlign="center"
             width="100%"
           >
@@ -150,9 +158,9 @@ const Login = () => {
             border="1px solid #ccc"
             width="100%"
             onClick={register}
-            style={{ marginTop: 25, textTransform: "uppercase" }}
+            style={{ marginTop: "1rem", textTransform: "uppercase" }}
           >
-            Cadastrar
+            Quero me cadastrar
           </Button>
         </Stack>
       </form>

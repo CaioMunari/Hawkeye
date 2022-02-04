@@ -1,8 +1,9 @@
-import { getProperty } from "../services/auth";
+import { getProperty, getSNToken } from "../services/auth";
 import {
   checkScoreStatus,
   getRandomInt32Id,
   getScoreFromResponse,
+  generateAppID,
 } from "./common";
 import { slicePhotoString } from "./photo";
 import { timeStamp } from "../utils/time";
@@ -28,7 +29,7 @@ export const getMotorCheckinPayload = (photo) => {
       Users: [
         {
           Id: userId,
-          ReferenceId: userId,
+          ReferenceId: 1,
           Date: now,
           Gender: "M",
           References: [
@@ -56,7 +57,7 @@ export const getAdminCheckinPayload = (response, photo, afapTransactionId) => {
     imei: "IMEI NOT FOUND",
     regPhoto: getProperty("photoId"),
     score,
-    sn: "SN NOT FOUND",
+    sn: getSNToken(),
     transactionalPhoto: slicedPhoto,
     userId: getProperty("userId"),
   };
@@ -96,12 +97,18 @@ export const getAdminRegisterPayload = (formData, photo) => {
   const now = Date.now();
   const slicedPhoto = slicePhotoString(photo);
   const fullname = formData.name.trim();
-  const [name, lastName] = fullname.split(" ");
+  const nameArr = fullname.split(" ");
+  const name = nameArr[0];
+  let lastName = "";
+  nameArr.forEach(function (word, i) {
+    if (i === 0) return;
+    lastName = lastName + word + " ";
+  });
   return {
     afapTransactionId: now,
     date: timeStamp(),
-    name: name,
-    lastName: lastName,
+    name: name.trim(),
+    lastName: lastName.trim(),
     gender: formData.gender,
     matricula: formData.registration,
     userName: formData.userName,
@@ -137,7 +144,7 @@ export const getMotorRegisterPayload = (user, formData, photo) => {
       Users: [
         {
           Id: user.id,
-          ReferenceId: user.id,
+          ReferenceId: 1,
           Gender: formData.gender,
           Date: now,
           References: [
@@ -153,4 +160,25 @@ export const getMotorRegisterPayload = (user, formData, photo) => {
       ],
     },
   ];
+};
+
+export const getRegisterDevicePayload = (sn) => {
+  return {
+    appId: generateAppID(),
+    groupId: 1,
+    id: 0,
+    imei: "IMEI NOT FOUND",
+    macAddress: "MAC ADDRESS NOT FOUND",
+    model: window.navigator.userAgent,
+    origin: 1, //pwa
+    sn,
+    token: "TOKEN NOT FOUND",
+  };
+};
+
+export const getDeviceUsagePayload = (hours) => {
+  return {
+    hours,
+    sn: getSNToken(),
+  };
 };
