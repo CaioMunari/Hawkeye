@@ -31,7 +31,7 @@ const Checkin = () => {
     const sendPhotoToMotor = async (img) => {
       setCheckinIsCompleted(false);
       const payload = getMotorCheckinPayload(img);
-      const { Id: afapTransactionId } = payload;
+      const { Id: afapTransactionId } = payload[0];
       try {
         // await motorApi.post(routes.transaction, payload);
         const response = mockCheckinResponse();
